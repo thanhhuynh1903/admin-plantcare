@@ -1,0 +1,98 @@
+@import "@scss/common.scss";
+
+.page-login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .logo {
+    width: 200px;
+    height: auto;
+  }
+
+  h1 {
+    font-size: 38px;
+    font-weight: 700;
+    color: $secondary-color;
+
+    @media (max-width: 768px) {
+      font-size: 30px;
+    }
+  }
+
+  .main-label {
+    color: $secondary-color;
+    font-size: 17px;
+    font-weight: 300;
+    margin-bottom: 30px;
+
+    @media (max-width: 768px) {
+      font-size: 15px;
+    }
+  }
+
+  .input-field {
+    width: 30vw;
+    margin-bottom: 25px;
+
+    @media (max-width: 1024px) {
+      width: 50vw;
+    }
+
+    @media (max-width: 768px) {
+      width: 70vw;
+    }
+  }
+
+  .meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 15px;
+    color: $font-color;
+    width: 30vw;
+    gap: 15px;
+
+    @media (max-width: 1024px) {
+      width: 50vw;
+    }
+
+    @media (max-width: 768px) {
+      width: 70vw;
+    }
+
+    &-remember-me {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+  }
+
+  .btn-forgot-password {
+    color: #ff0000;
+    text-decoration: none;
+
+    @media (max-width: 768px) {
+      font-size: 14px;
+    }
+
+    &:hover {
+        text-decoration: underline;
+    }
+  }
+
+  .btn-login {
+    width: 30vw;
+    margin-top: 20px;
+    background-color: $primary-color;
+    color: #fff;
+
+    @media (max-width: 1024px) {
+      width: 50vw;
+    }
+
+    @media (max-width: 768px) {
+      width: 70vw;
+    }
+  }
+}
