@@ -1,0 +1,129 @@
+@import "@scss/common.scss";
+
+.common-side-bar {
+  color: #000;
+  transition: flex-basis 0.2s ease;
+  overflow-x: hidden;
+  white-space: nowrap;
+
+  .side-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    height: 100vh;
+    padding: 0.5rem 1rem;
+
+    .logo-container {
+      .logo {
+        width: 130px;
+        height: auto;
+      }
+
+      .logo-collapsed {
+        width: 60px;
+        height: auto;
+      }
+
+      p {
+        color: #000;
+        font-size: 16px;
+        text-align: center;
+        width: 100%;
+        font-weight: 400;
+        top: -15px;
+        position: relative;
+        opacity: 0.5;
+      }
+    }
+
+    .btn {
+      &-menu {
+        cursor: pointer;
+        color: #000;
+        border-radius: 5px;
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        margin-bottom: 15px;
+
+        * {
+          font-size: 38px;
+        }
+      }
+    }
+
+    .list-container {
+      overflow-y: auto;
+    }
+
+    .list-item {
+      position: relative;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      width: 100%;
+      color: $semi-black-color;
+      gap: 15px;
+      margin-bottom: 6px;
+
+      &-active {
+        background-color: #daffdc;
+        position: relative;
+        border-radius: 8px;
+
+        &::after {
+          content: "";
+          position: absolute;
+          width: 5px;
+          height: 70%;
+          border-radius: 8px;
+          left: 0;
+          z-index: 5;
+          background-color: $primary-color;
+        }
+
+        .list-item-text {
+          color: $secondary-color !important;
+          font-weight: 600 !important;
+        }
+
+        .list-item-icon {
+          color: $secondary-color !important;
+        }
+
+        &:hover {
+          background-color: #daffdc !important;
+        }
+      }
+
+      &:hover {
+        background-color: #f3f3f3;
+      }
+
+      &-text {
+        font-weight: 400;
+        font-size: 15px;
+        width: 50%;
+        word-wrap: break-word;
+      }
+
+      &-icon {
+        min-width: 0;
+      }
+
+      &-notify {
+        position: absolute;
+        right: 0px;
+        background-color: $primary-color;
+        width: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 13px;
+        border-radius: 7px;
+      }
+    }
+  }
+}

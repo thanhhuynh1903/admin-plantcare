@@ -1,8 +1,17 @@
 import { Button, TextField } from "@mui/material";
 import "./LoginPage.scss";
 import Checkbox from "../../commons/Checkbox/Checkbox";
+import TextFieldBasic from "../../commons/TextFieldBasic/TextFieldBasic";
+import TextFieldPassword from "../../commons/TextFieldPassword/TextFieldPassword";
+import { setPageHeadTitle } from "../../../utils/util_web";
+import { useEffect } from "react";
 
 export default function LoginPage() {
+
+  useEffect(() => {
+    setPageHeadTitle("Login");
+  }, []);
+
   return (
     <div className="page-login">
       <img className="logo" src="/src/assets/logo.png" alt="logo" />
@@ -11,20 +20,10 @@ export default function LoginPage() {
         Please fill your detail to access your account
       </p>
       <div>
-        <TextField
-          className="input-field"
-          id="outlined-basic"
-          label="Email"
-          variant="outlined"
-        />
+        <TextFieldBasic className="input-field" placeholder="Your email"  />
       </div>
       <div>
-        <TextField
-          className="input-field"
-          id="outlined-basic"
-          label="Password"
-          variant="outlined"
-        />
+        <TextFieldPassword className="input-field" placeholder="Your password" />
       </div>
       <div className="meta">
         <div className="meta-remember-me">

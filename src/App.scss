@@ -4,9 +4,13 @@
   background-color: $tertiary-color;
 }
 
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+.app {
+  .content-sidebar {
+    display: flex;
+    width: 100%;
+
+    .content {
+      flex-grow: 1;
+    }
+  }
 }
