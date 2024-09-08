@@ -1,4 +1,4 @@
-@import '@scss/common.scss';
+@import "@scss/common.scss";
 
 :root {
   background-color: $tertiary-color;
@@ -11,6 +11,16 @@
 
     .content {
       flex-grow: 1;
+      max-height: 100vh;
+      display: grid;
+      grid-template-rows: 60px 1fr;
+      
+      &-main {
+        overflow-x: auto;
+        color: #000;
+        padding: 15px 2.6rem;
+        padding-top: 20px;
+      }
     }
   }
 }

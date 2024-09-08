@@ -1,0 +1,40 @@
+.dashboard-maps-pie-chart {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 15px;
+
+  .controls {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    justify-content: space-between;
+
+    &-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    &-label {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .btn-more {
+      cursor: pointer;
+    }
+  }
+
+  .chart-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-content: center;
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .chart {
+    display: flex;
+    flex-direction: column;
+  }
+}

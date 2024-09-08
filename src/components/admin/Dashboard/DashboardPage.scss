@@ -1,0 +1,92 @@
+@import "@scss/common.scss";
+
+.page-dashboard {
+  .main-label {
+    font-size: 23px;
+    font-weight: 600;
+  }
+
+  .statistic {
+    margin-bottom: 30px;
+  }
+
+  .statistic-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    row-gap: 15px;
+    column-gap: 15px;
+  }
+  .statistic-item {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 15px 1rem;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+
+    &-icon {
+      width: 50px;
+      height: 50px;
+      background-color: #b9e9d8;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #00b074;
+
+      * {
+        font-size: 30px;
+      }
+
+      img {
+        width: 50px;
+        height: 50px;
+      }
+    }
+
+    &-number {
+      font-size: 30px;
+      font-weight: 700;
+      color: $secondary-color;
+    }
+
+    &-label {
+      top: -5px;
+      position: relative;
+    }
+
+    &-increase {
+      display: flex;
+      color: #8b8b8b;
+      font-size: 14px;
+      gap: 10px;
+
+      &-icon {
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+
+        * {
+          font-size: 11px;
+        }
+
+        &-i {
+          @extend .statistic-item-increase-icon;
+          background-color: rgb(213, 255, 220);
+          color: #054d00;
+        }
+
+        &-d {
+          @extend .statistic-item-increase-icon;
+          background-color: rgb(255, 196, 196);
+          color: #de0000;
+        }
+      }
+    }
+  }
+}

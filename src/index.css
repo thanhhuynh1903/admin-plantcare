@@ -31,6 +31,7 @@ h6 {
 button {
   user-select: none;
   cursor: pointer;
+  text-transform: none !important;
 }
 
 body {

@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
+import {
+  Badge,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+} from "@mui/material";
 import "./SideBar.scss";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
@@ -43,7 +49,7 @@ export default function SideBar() {
       link: "/news",
       notify: 0,
     },
-    { icon: <EmailIcon />, label: "Emails", link: "/emails", notify: 0 },
+    { icon: <EmailIcon />, label: "Emails", link: "/emails", notify: 1 },
     {
       icon: <CalendarTodayIcon />,
       label: "Calendar",
@@ -52,7 +58,7 @@ export default function SideBar() {
     },
     {
       icon: <SettingsIcon />,
-      label: "System configuration",
+      label: "System config",
       link: "/settings",
       notify: 0,
     },
@@ -65,7 +71,7 @@ export default function SideBar() {
   return (
     <div
       className="common-side-bar"
-      style={{ flexBasis: isCollapsed ? "70px" : "260px" }}
+      style={{ flexBasis: isCollapsed ? "70px" : "250px" }}
     >
       <div className="side-bar">
         <div className="btn-menu" onClick={handleToggleSidebar}>
@@ -93,9 +99,13 @@ export default function SideBar() {
             >
               <ListItemIcon className="list-item-icon">
                 {item.icon}
+                {
+                  isCollapsed && item.notify > 0 &&<p className="list-item-badge">{item.notify}</p>
+                }
               </ListItemIcon>
+
               {!isCollapsed && <p className="list-item-text">{item.label}</p>}
-              {item.notify == 0 && (
+              {!isCollapsed && item.notify > 0 && (
                 <p className="list-item-notify">{item.notify}</p>
               )}
             </ListItem>
