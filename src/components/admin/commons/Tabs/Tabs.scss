@@ -24,7 +24,7 @@
     }
   
     .MuiTab-root {
-      min-width: auto;
+      min-width: 50px;
       min-height: 0;
       font-size: 14px;
       padding: 4px 10px;
@@ -42,7 +42,7 @@
     .MuiTabs-indicator {
       height: $height;
       border-radius: 20px;
-      background-color: #4caf50;
+      background-color: $primary-color;
       transition: all 0.4s ease;
       z-index: 0;
     }

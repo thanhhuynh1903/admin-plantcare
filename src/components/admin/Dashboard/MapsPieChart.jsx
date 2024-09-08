@@ -3,8 +3,8 @@ import "./MapsPieChart.scss";
 import Tabs from "../commons/Tabs/Tabs";
 import Checkbox from "../commons/Checkbox/Checkbox";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement } from 'chart.js';
-import { Doughnut } from 'react-chartjs-2';
+import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement } from "chart.js";
+import { Doughnut } from "react-chartjs-2";
 import { MapsPieChartData } from "./MapsPieChart.prop";
 
 // Register chart components
@@ -43,16 +43,41 @@ export default function MapsPieChart() {
       </div>
       <div className="chart-container">
         <div className="chart">
-          <Doughnut data={MapsPieChartData.data1} />
-          <p>Total orders</p>
+          <div className="chart-pie">
+            <p className="chart-percentage">
+              {MapsPieChartData.data1.percentage}%
+            </p>
+            <Doughnut
+              data={MapsPieChartData.data1}
+              options={MapsPieChartData.options}
+            />
+          </div>
+
+          <p className="chart-label">Total orders</p>
         </div>
         <div className="chart">
-          <Doughnut data={MapsPieChartData.data2} />
-          <p>Customers Growth</p>
+          <div className="chart-pie">
+            <p className="chart-percentage">
+              {MapsPieChartData.data2.percentage}%
+            </p>
+            <Doughnut
+              data={MapsPieChartData.data2}
+              options={MapsPieChartData.options}
+            />
+          </div>
+          <p className="chart-label">Customers Growth</p>
         </div>
         <div className="chart">
-          <Doughnut data={MapsPieChartData.data3} />
-          <p>Total revenue</p>
+          <div className="chart-pie">
+            <p className="chart-percentage">
+              {MapsPieChartData.data3.percentage}%
+            </p>
+            <Doughnut
+              data={MapsPieChartData.data3}
+              options={MapsPieChartData.options}
+            />
+          </div>
+          <p className="chart-label">Total revenue</p>
         </div>
       </div>
     </div>

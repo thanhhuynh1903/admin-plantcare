@@ -9,6 +9,10 @@ import GradeIcon from "@mui/icons-material/Grade";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import MapsPieChart from "./MapsPieChart";
+import MapsTopSaleProduct from "./MapsTopSaleProduct";
+import MapsChartOrders from "./MapsChartOrders";
+import MapsCustomers from "./MapsCustomers";
+import MapsSales from "./MapsSales";
 
 const StatisticItem = ({ icon, number, label, increase }) => {
   return (
@@ -132,7 +136,21 @@ export default function DashboardPage() {
           }}
         >
           <MapsPieChart />
-          <MapTopSaleProduct />
+          <MapsTopSaleProduct />
+        </div>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "0.7fr 0.3fr",
+            gap: "15px",
+            marginTop: "15px",
+          }}
+        >
+          <MapsChartOrders />
+          <MapsCustomers />
+        </div>
+        <div>
+          <MapsSales />
         </div>
       </div>
     </div>
