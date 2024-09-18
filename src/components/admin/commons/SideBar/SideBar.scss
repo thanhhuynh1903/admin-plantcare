@@ -13,6 +13,7 @@
     align-items: center;
     background-color: #fff;
     height: 100vh;
+    overflow-x: hidden;
     padding: 0.4rem 0.5rem;
 
     .logo-container {
@@ -56,6 +57,7 @@
 
     .list-container {
       overflow-y: auto;
+      overflow-x: hidden;
       width: 100%;
     }
 

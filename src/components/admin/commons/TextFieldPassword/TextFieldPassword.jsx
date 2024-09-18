@@ -24,7 +24,7 @@ const TextFieldPassword = ({
       variant="outlined"
       type={showPassword ? "text" : "password"}
       placeholder={placeholder}
-      sx={{ width: "100%", ...sx }} // Example of applying styles
+      sx={{ width: "100%", ...sx }}
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">
@@ -34,7 +34,7 @@ const TextFieldPassword = ({
           </InputAdornment>
         ),
       }}
-      {...props} // Pass any additional props
+      {...props}
     />
   );
 };

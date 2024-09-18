@@ -9,8 +9,9 @@ import {
   FormControl,
   InputLabel,
   Checkbox,
+  Box,
 } from "@mui/material";
-import "./EmployeeAddPage.scss";
+import "./EmployeesEditPage.scss";
 import { showErrorToast, showSuccessToast } from "../../../utils/util_toastify";
 import { apostFile } from "../../../utils/util_axios";
 import TextFieldPassword from "../../commons/TextFieldPassword/TextFieldPassword";
@@ -37,21 +38,23 @@ const validationSchema = yup.object({
     .required("Password is required"),
 });
 
-export default function EmployeeAddPage() {
+export default function EmployeesEditPage() {
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
 
   const formik = useFormik({
     initialValues: {
-      lastName: "",
-      firstName: "",
-      dob: "",
-      email: "",
-      address: "",
-      contactNumber: "",
-      city: "",
-      state: "",
-      password: "",
+      lastName: "Bozorgi",
+      firstName: "Mehrab",
+      dob: "19/02/2003",
+      email: "Mehrabbozorgi.business@gmail.com",
+      address: "33062 Zboncak Isle",
+      contactNumber: "58077.79",
+      city: "Mehrab",
+      state: "Bozorgi",
+      password: "sbdfbnd65sfdvb s",
+      emailVerified: true,
+      passwordVerified: true,
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
@@ -86,86 +89,79 @@ export default function EmployeeAddPage() {
   };
 
   return (
-    <div className="employee-add-page">
-      <p className="main-label">Add Employee</p>
+    <div className="employees-edit-page">
+      <p className="main-label">Edit Employee</p>
 
       <form onSubmit={formik.handleSubmit} className="form-container">
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "0.3fr 0.7fr",
-            columnGap: "20px",
-          }}
-        >
-          <div>
-            <div
-              className="input-file-avatar"
-              style={{
-                backgroundImage: `url(${
-                  imagePreview
-                    ? imagePreview
-                    : "/src/assets/pages/Employees/EmployeesAddPage/ImageUpload.png"
-                })`,
-              }}
+        <div>
+          <div
+            className="input-file-avatar"
+            style={{
+              backgroundImage: `url(${
+                imagePreview
+                  ? imagePreview
+                  : "/src/assets/pages/Employees/EmployeesAddPage/ImageUpload.png"
+              })`,
+            }}
+          >
+            <input
+              type="file"
+              id="employees-edit-input-avatar"
+              accept="image/*"
+              style={{ display: "none" }}
+              onChange={handleImageChange}
+            />
+
+            <label
+              htmlFor="employees-edit-input-avatar"
+              className="input-file-avatar-btn"
             >
-              <input
-                type="file"
-                id="employees-add-input-avatar"
-                accept="image/*"
-                style={{ display: "none" }}
-                onChange={handleImageChange}
-              />
-
-              <label
-                htmlFor="employees-add-input-avatar"
-                className="input-file-avatar-btn"
-              />
-            </div>
-          </div>
-          <div>
-            <TextField
-              label="First Name"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              id="firstName"
-              name="firstName"
-              value={formik.values.firstName}
-              onChange={formik.handleChange}
-              error={
-                formik.touched.firstName && Boolean(formik.errors.firstName)
-              }
-              helperText={formik.touched.firstName && formik.errors.firstName}
-            />
-
-            {/* Form Fields */}
-            <TextField
-              label="Last Name"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              id="lastName"
-              name="lastName"
-              value={formik.values.lastName}
-              onChange={formik.handleChange}
-              error={formik.touched.lastName && Boolean(formik.errors.lastName)}
-              helperText={formik.touched.lastName && formik.errors.lastName}
-            />
-
-            <TextField
-              label="Date of birth"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              id="dob"
-              name="dob"
-              value={formik.values.dob}
-              onChange={formik.handleChange}
-              error={formik.touched.dob && Boolean(formik.errors.dob)}
-              helperText={formik.touched.dob && formik.errors.dob}
-            />
+              <p>Upload</p>
+            </label>
           </div>
         </div>
+
+        <Box sx={{ display: "flex", gap: 3 }}>
+          <TextField
+            label="First Name"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            id="firstName"
+            name="firstName"
+            value={formik.values.firstName}
+            onChange={formik.handleChange}
+            error={formik.touched.firstName && Boolean(formik.errors.firstName)}
+            helperText={formik.touched.firstName && formik.errors.firstName}
+          />
+
+          {/* Form Fields */}
+          <TextField
+            label="Last Name"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            id="lastName"
+            name="lastName"
+            value={formik.values.lastName}
+            onChange={formik.handleChange}
+            error={formik.touched.lastName && Boolean(formik.errors.lastName)}
+            helperText={formik.touched.lastName && formik.errors.lastName}
+          />
+
+          <TextField
+            label="Date of birth"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            id="dob"
+            name="dob"
+            value={formik.values.dob}
+            onChange={formik.handleChange}
+            error={formik.touched.dob && Boolean(formik.errors.dob)}
+            helperText={formik.touched.dob && formik.errors.dob}
+          />
+        </Box>
 
         {/* Email */}
         <div className="field-with-check">

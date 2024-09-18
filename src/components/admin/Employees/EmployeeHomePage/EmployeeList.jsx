@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Avatar, IconButton, TableSortLabel, TablePagination } from '@mui/material';
 import { Edit, Delete } from '@mui/icons-material';
 import './EmployeeList.scss';
+import { Link } from 'react-router-dom';
 
 const statusClasses = {
   Free: 'status-free',
@@ -102,7 +103,7 @@ export default function EmployeeList({employees}) {
               <TableCell className={statusClasses[employee.status]}>{employee.status}</TableCell>
               <TableCell>{employee.role}</TableCell>
               <TableCell className="action-icons">
-                <IconButton aria-label="edit" className="edit">
+                <IconButton aria-label="edit" className="edit" component={Link} to={`/employees/edit/${employee.id}`}>
                   <Edit />
                 </IconButton>
                 <IconButton aria-label="delete" className="delete">

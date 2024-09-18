@@ -6,8 +6,24 @@ import SideBar from "./components/admin/commons/SideBar/SideBar";
 import NavBar from "./components/admin/commons/NavBar/Navbar";
 import EmployeesHomePage from "./components/admin/Employees/EmployeeHomePage/EmployeesHomePage";
 import EmployeeAddPage from "./components/admin/Employees/EmployeeAddPage/EmployeeAddPage";
+import EmployeesEditPage from "./components/admin/Employees/EmployeesEditPage/EmployeesEditPage";
+import { useEffect } from "react";
 
 const LayoutWithSidebar = ({ children }) => {
+
+  useEffect(() => {
+    const resetScroll = () => {
+      const contentMain = document.querySelector('.content-main')
+      if (contentMain) {
+        setTimeout(() => {
+          contentMain.scrollTop = 0
+        }, 1000);
+      }
+    };
+    
+    resetScroll();
+  }, []);
+
   return (
     <div className="content-sidebar">
       <SideBar />
@@ -44,6 +60,7 @@ function App() {
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/employees" element={<EmployeesHomePage />} />
             <Route path="/employees/add" element={<EmployeeAddPage />} />
+            <Route path="/employees/edit/:id" element={<EmployeesEditPage />} />
           </Routes>
         </LayoutWithSidebar>
       )}
