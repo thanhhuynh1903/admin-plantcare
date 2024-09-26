@@ -7,6 +7,7 @@ import NavBar from "./components/admin/commons/NavBar/Navbar";
 import EmployeesHomePage from "./components/admin/Employees/EmployeeHomePage/EmployeesHomePage";
 import EmployeeAddPage from "./components/admin/Employees/EmployeeAddPage/EmployeeAddPage";
 import EmployeesEditPage from "./components/admin/Employees/EmployeesEditPage/EmployeesEditPage";
+import OrderHomePage from "./components/admin/Orders/OrderHomePage";
 import { useEffect } from "react";
 
 const LayoutWithSidebar = ({ children }) => {
@@ -61,6 +62,7 @@ function App() {
             <Route path="/employees" element={<EmployeesHomePage />} />
             <Route path="/employees/add" element={<EmployeeAddPage />} />
             <Route path="/employees/edit/:id" element={<EmployeesEditPage />} />
+            <Route path="/orders" element={<OrderHomePage />} />
           </Routes>
         </LayoutWithSidebar>
       )}
