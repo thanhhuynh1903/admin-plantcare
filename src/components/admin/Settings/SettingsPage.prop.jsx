@@ -1,4 +1,5 @@
 import countries from '../../countries.json'
+import {showSuccessToast} from '@utils/util_toastify';
 
 export const timeZone = countries
     .filter(c => c.timezones && c.timezones.length > 0)  // Ignore countries without timezones
@@ -31,4 +32,8 @@ export const getCountryLanguages = () => {
 
 export const getCountryLanguageById = (id) => {
     return languages.filter(l => l.prop == id)[0]
+}
+
+export const callSaveAPI = (data) => {
+    showSuccessToast("Save successfully!")
 }

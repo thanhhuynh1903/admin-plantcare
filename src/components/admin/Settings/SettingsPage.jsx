@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { Button, Box, TextareaAutosize, Switch } from "@mui/material";
-import { Chart, ArcElement, Tooltip, Legend } from "chart.js";
-import { Doughnut } from "react-chartjs-2";
+import { Button, Box } from "@mui/material";
 import TextFieldBasic from "../commons/TextFieldBasic/TextFieldBasic";
 import "./SettingsPage.scss";
 import SelectField from "../commons/SelectField/SelectField";
 import {
+  callSaveAPI,
   getCountryLanguageById,
   getCountryLanguages,
   getTimeZoneById,
@@ -13,8 +12,7 @@ import {
 } from "./SettingsPage.prop";
 import TextAreaBasic from "../commons/TextAreaBasic/TextAreaBasic";
 import SwitchBasic from "../commons/SwitchBasic/SwitchBasic";
-
-Chart.register(ArcElement, Tooltip, Legend);
+import { setPageHeadTitle } from "../../utils/util_web";
 
 export default function SettingsPage() {
 	const [logo, setLogo] = useState("/src/assets/logo.png");
@@ -59,13 +57,21 @@ export default function SettingsPage() {
     }
   };
 
+  const saveChanges = () => {
+    callSaveAPI();
+  };
+
+	useState(() => {
+		setPageHeadTitle("System configuration")
+	}, [])
+
   useState((p) => {}, [timeZone, countryLanguage]);
 
   return (
     <div className="page-settings">
       {/* Header */}
       <p className="main-label">System configuration</p>
-      <Button variant="contained" className="btn-save">
+      <Button variant="contained" className="btn-save" onClick={saveChanges}>
         Save settings
       </Button>
 
