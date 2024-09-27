@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import { Input, TextField } from "@mui/material";
 import { SearchOutlined } from "@mui/icons-material";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
@@ -6,22 +7,44 @@ import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import "./NavBar.scss";
+import NotificationMenu from "./NotificationMenu";
+import { getMessageListAPI, getNotificationListAPI } from "./NavBar.prop";
+import MessageMenu from "./MessageMenu";
 
 export default function NavBar() {
+  const [anchorElNotifications, setAnchorElNotifications] = useState(null);
+  const [anchorElMessages, setAnchorElMessages] = useState(null);
+
+  const [notifications, setNotifications] = useState([]);
+  const [messages, setMessages] = useState([]);
+
+  const handleClick = (event, toolName) => {
+    if (toolName === "Notifications") {
+      setAnchorElNotifications(event.currentTarget);
+    } else if (toolName === "Messages") {
+      setAnchorElMessages(event.currentTarget);
+    }
+  };
+
+  const handleClose = () => {
+    setAnchorElNotifications(null);
+    setAnchorElMessages(null);
+  };
+
   const tools = [
     {
       name: "Notifications",
       icon: <NotificationsNoneIcon />,
       color: "#2D9CDB",
       backgroundColor: "#D5E5F3",
-      notify: 0,
+      notify: notifications.length,
     },
     {
       name: "Messages",
       icon: <ChatBubbleOutlineIcon />,
       color: "#2D9CDB",
       backgroundColor: "#D5E5F3",
-      notify: 1,
+      notify: messages.length,
     },
     {
       name: "Gifts",
@@ -36,8 +59,14 @@ export default function NavBar() {
       color: "#FF5B5B",
       backgroundColor: "#F5DBE0",
       notify: 0,
+      redirect: "/settings",
     },
   ];
+
+  useEffect(() => {
+    setNotifications(getNotificationListAPI().items);
+    setMessages(getMessageListAPI().items);
+  }, []);
 
   return (
     <div className="common-navbar">
@@ -63,13 +92,34 @@ export default function NavBar() {
                 backgroundColor: tool.backgroundColor,
                 color: tool.color,
               }}
+              onClick={(e) => {
+                handleClick(e, tool.name);
+                if (tool.redirect) {
+                  window.location.href = tool.redirect;
+                }
+              }}
             >
               {tool.icon}
               {tool.notify ? (
-                <div className="prop-notify" style={{ backgroundColor: tool.color }}>{tool.notify}</div>
+                <div
+                  className="prop-notify"
+                  style={{ backgroundColor: tool.color }}
+                >
+                  {tool.notify}
+                </div>
               ) : null}
             </div>
           ))}
+          <NotificationMenu
+            notificationItems={notifications}
+            anchorEl={anchorElNotifications}
+            handleClose={handleClose}
+          />
+          <MessageMenu
+            messageItems={messages}
+            anchorEl={anchorElMessages}
+            handleClose={handleClose}
+          />
         </div>
 
         <div className="prop-user">

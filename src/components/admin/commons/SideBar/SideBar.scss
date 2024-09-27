@@ -16,6 +16,13 @@
     overflow-x: hidden;
     padding: 0.4rem 0.5rem;
 
+    .btn-menu {
+
+      &-shrink > * {
+        width: 100%;
+      }
+    }
+
     .logo-container {
       .logo {
         width: 130px;

@@ -62,7 +62,7 @@ export default function MapsTopSaleProduct() {
         </div>
         <div className="content">
           {TreeItems[currentIndex].image}
-          <p className="content-label">{TreeItems[currentIndex].content}</p>
+          <div className="content-label">{TreeItems[currentIndex].content}</div>
           <p className="content-price">
             {TreeItems[currentIndex].price}
             {TreeItems[currentIndex].currency}

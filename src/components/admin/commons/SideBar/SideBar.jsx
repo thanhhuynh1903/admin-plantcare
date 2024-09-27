@@ -74,7 +74,7 @@ export default function SideBar() {
       style={{ flexBasis: isCollapsed ? "70px" : "250px" }}
     >
       <div className="side-bar">
-        <div className="btn-menu" onClick={handleToggleSidebar}>
+        <div className={`btn-menu ${isCollapsed ? "btn-menu-shrink" : ""}`}  onClick={handleToggleSidebar}>
           <MenuIcon />
         </div>
         <div className="logo-container">
