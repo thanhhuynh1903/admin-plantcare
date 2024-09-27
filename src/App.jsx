@@ -10,6 +10,7 @@ import EmployeesEditPage from "./components/admin/Employees/EmployeesEditPage/Em
 import OrderHomePage from "./components/admin/Orders/OrderHomePage";
 import { useEffect } from "react";
 import SettingsPage from "./components/admin/Settings/SettingsPage";
+import CalendarPage from "./components/admin/Calendar/CalendarPage";
 
 const LayoutWithSidebar = ({ children }) => {
 
@@ -65,6 +66,7 @@ function App() {
             <Route path="/employees/edit/:id" element={<EmployeesEditPage />} />
             <Route path="/orders" element={<OrderHomePage />} />
             <Route path='/settings' element={<SettingsPage />}></Route>
+            <Route path='/calendar' element={<CalendarPage />}></Route>
           </Routes>
         </LayoutWithSidebar>
       )}
