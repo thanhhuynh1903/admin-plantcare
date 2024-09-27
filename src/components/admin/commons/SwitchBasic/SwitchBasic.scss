@@ -1,0 +1,21 @@
+@import '@scss/common.scss';
+
+.common-switch-basic {
+
+    display: flex;
+    align-items: center;
+
+    .Mui-checked {
+        color: $primary-color !important;
+    }
+
+    .MuiSwitch-track {
+        height: 20px;
+        border-radius: 15px;
+    }
+
+    .Mui-checked+.MuiSwitch-track {
+        background-color: $primary-color !important;
+        opacity: 0.7;
+    }
+}

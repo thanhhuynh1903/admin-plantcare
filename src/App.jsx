@@ -9,6 +9,7 @@ import EmployeeAddPage from "./components/admin/Employees/EmployeeAddPage/Employ
 import EmployeesEditPage from "./components/admin/Employees/EmployeesEditPage/EmployeesEditPage";
 import OrderHomePage from "./components/admin/Orders/OrderHomePage";
 import { useEffect } from "react";
+import SettingsPage from "./components/admin/Settings/SettingsPage";
 
 const LayoutWithSidebar = ({ children }) => {
 
@@ -63,6 +64,7 @@ function App() {
             <Route path="/employees/add" element={<EmployeeAddPage />} />
             <Route path="/employees/edit/:id" element={<EmployeesEditPage />} />
             <Route path="/orders" element={<OrderHomePage />} />
+            <Route path='/settings' element={<SettingsPage />}></Route>
           </Routes>
         </LayoutWithSidebar>
       )}
