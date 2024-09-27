@@ -17,6 +17,7 @@ import { setPageHeadTitle } from "../../utils/util_web";
 export default function SettingsPage() {
 	const [logo, setLogo] = useState("/src/assets/logo.png");
 
+  const [appName, setAppName] = useState("everfresh");
   const [timeZone, setTimeZone] = useState(getTimeZones()[0]);
   const [countryLanguage, setCountryLanguage] = useState(
     getCountryLanguages()[0]
@@ -81,7 +82,7 @@ export default function SettingsPage() {
           <p className="card-title">General settings</p>
           <div className="content-field">
             <p className="label">Application name</p>
-            <TextFieldBasic />
+            <TextFieldBasic value={appName} onChange={(e) => setAppName(e.target.value)} />
           </div>
           <div className="content-field">
             <p className="label">Default system timezone</p>
