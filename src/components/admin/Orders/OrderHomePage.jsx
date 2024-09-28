@@ -59,16 +59,6 @@ export default function OrderHomePage() {
       <div>
         <OrderBudget />
       </div>
-      {/* <div className="add-employee-container">
-        <Button
-          className="btn-add-employee"
-          component={Link}
-          to="/employees/add"
-        >
-          <PersonAddAltOutlinedIcon />
-          <p>Add Employee</p>
-        </Button>
-      </div> */}
       <div>
         <FilterOrder />
       </div>

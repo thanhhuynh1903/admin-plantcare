@@ -16,10 +16,9 @@ import Paper from "@mui/material/Paper";
 import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
 import DeleteIcon from "@mui/icons-material/Delete";
-import FilterListIcon from "@mui/icons-material/FilterList";
+import { Link } from 'react-router-dom';
+import { Button } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import FilterModal from "./FilterModal";
@@ -45,13 +44,14 @@ const rows = [
     4.3,
     <div
       style={{
+        zIndex:10,
         display: "flex",
         width: "75%",
         justifyContent: "space-between",
         alignItems: "center",
       }}
     >
-      <p> View more</p>
+      <Typography component={Link} to="/orders/orderdetail"> View more</Typography>
       <MoreVertIcon />
     </div>
   ),
@@ -64,13 +64,14 @@ const rows = [
     4.9,
     <div
       style={{
+        zIndex:10,
         display: "flex",
         width: "75%",
         justifyContent: "space-between",
         alignItems: "center",
       }}
     >
-      <p> View more</p>
+      <Typography component={Link} to="/orders/orderdetail"> View more</Typography>
       <MoreVertIcon />
     </div>
   ),
@@ -82,16 +83,17 @@ const rows = [
     24,
     6.0,
     <div
-      style={{
-        display: "flex",
-        width: "75%",
-        justifyContent: "space-between",
-        alignItems: "center",
-      }}
-    >
-      <p> View more</p>
-      <MoreVertIcon />
-    </div>
+    style={{
+      zIndex:10,
+      display: "flex",
+      width: "75%",
+      justifyContent: "space-between",
+      alignItems: "center",
+    }}
+  >
+    <Typography component={Link} to="/orders/orderdetail"> View more</Typography>
+    <MoreVertIcon />
+  </div>
   ),
   createData(
     4,
@@ -101,16 +103,17 @@ const rows = [
     24,
     4.0,
     <div
-      style={{
-        display: "flex",
-        width: "75%",
-        justifyContent: "space-between",
-        alignItems: "center",
-      }}
-    >
-      <p> View more</p>
-      <MoreVertIcon />
-    </div>
+    style={{
+      zIndex:10,
+      display: "flex",
+      width: "75%",
+      justifyContent: "space-between",
+      alignItems: "center",
+    }}
+  >
+    <Typography component={Link} to="/orders/orderdetail"> View more</Typography>
+    <MoreVertIcon />
+  </div>
   ),
   createData(
     5,
@@ -120,16 +123,17 @@ const rows = [
     49,
     3.9,
     <div
-      style={{
-        display: "flex",
-        width: "75%",
-        justifyContent: "space-between",
-        alignItems: "center",
-      }}
-    >
-      <p> View more</p>
-      <MoreVertIcon />
-    </div>
+    style={{
+      zIndex:10,
+      display: "flex",
+      width: "75%",
+      justifyContent: "space-between",
+      alignItems: "center",
+    }}
+  >
+    <Typography component={Link} to="/orders/orderdetail"> View more</Typography>
+    <MoreVertIcon />
+  </div>
   ),
   createData(
     6,
@@ -139,16 +143,17 @@ const rows = [
     87,
     6.5,
     <div
-      style={{
-        display: "flex",
-        width: "75%",
-        justifyContent: "space-between",
-        alignItems: "center",
-      }}
-    >
-      <p> View more</p>
-      <MoreVertIcon />
-    </div>
+    style={{
+      zIndex:10,
+      display: "flex",
+      width: "75%",
+      justifyContent: "space-between",
+      alignItems: "center",
+    }}
+  >
+    <Typography component={Link} to="/orders/orderdetail"> View more</Typography>
+    <MoreVertIcon />
+  </div>
   ),
   createData(
     7,
@@ -158,16 +163,17 @@ const rows = [
     37,
     4.3,
     <div
-      style={{
-        display: "flex",
-        width: "75%",
-        justifyContent: "space-between",
-        alignItems: "center",
-      }}
-    >
-      <p> View more</p>
-      <MoreVertIcon />
-    </div>
+    style={{
+      zIndex:10,
+      display: "flex",
+      width: "75%",
+      justifyContent: "space-between",
+      alignItems: "center",
+    }}
+  >
+    <Typography component={Link} to="/orders/orderdetail"> View more</Typography>
+    <MoreVertIcon />
+  </div>
   ),
   createData(
     8,
@@ -177,16 +183,17 @@ const rows = [
     94,
     0.0,
     <div
-      style={{
-        display: "flex",
-        width: "75%",
-        justifyContent: "space-between",
-        alignItems: "center",
-      }}
-    >
-      <p> View more</p>
-      <MoreVertIcon />
-    </div>
+    style={{
+      zIndex:10,
+      display: "flex",
+      width: "75%",
+      justifyContent: "space-between",
+      alignItems: "center",
+    }}
+  >
+    <Typography component={Link} to="/orders/orderdetail"> View more</Typography>
+    <MoreVertIcon />
+  </div>
   ),
   createData(
     9,
@@ -197,13 +204,14 @@ const rows = [
     7.0,
     <div
       style={{
+        zIndex:10,
         display: "flex",
         width: "75%",
         justifyContent: "space-between",
         alignItems: "center",
       }}
     >
-      <p> View more</p>
+      <Typography component={Link} to="/orders/orderdetail"> View more</Typography>
       <MoreVertIcon />
     </div>
   ),
@@ -216,13 +224,14 @@ const rows = [
     0.0,
     <div
       style={{
+        zIndex:10,
         display: "flex",
         width: "75%",
         justifyContent: "space-between",
         alignItems: "center",
       }}
     >
-      <p> View more</p>
+      <Typography component={Link} to="/orders/orderdetail"> View more</Typography>
       <MoreVertIcon />
     </div>
   ),
@@ -234,16 +243,17 @@ const rows = [
     81,
     2.0,
     <div
-      style={{
-        display: "flex",
-        width: "75%",
-        justifyContent: "space-between",
-        alignItems: "center",
-      }}
-    >
-      <p> View more</p>
-      <MoreVertIcon />
-    </div>
+    style={{
+      zIndex:10,
+      display: "flex",
+      width: "75%",
+      justifyContent: "space-between",
+      alignItems: "center",
+    }}
+  >
+    <Typography component={Link} to="/orders/orderdetail"> View more</Typography>
+    <MoreVertIcon />
+  </div>
   ),
   createData(
     12,
@@ -254,13 +264,14 @@ const rows = [
     37.0,
     <div
       style={{
+        zIndex:10,
         display: "flex",
         width: "75%",
         justifyContent: "space-between",
         alignItems: "center",
       }}
     >
-      <p> View more</p>
+      <Typography component={Link} to="/orders/orderdetail"> View more</Typography>
       <MoreVertIcon />
     </div>
   ),
@@ -273,13 +284,14 @@ const rows = [
     4.0,
     <div
       style={{
+        zIndex:10,
         display: "flex",
         width: "75%",
         justifyContent: "space-between",
         alignItems: "center",
       }}
     >
-      <p> View more</p>
+      <Typography component={Link} to="/orders/orderdetail"> View more</Typography>
       <MoreVertIcon />
     </div>
   ),
@@ -565,7 +577,7 @@ export default function OrderList() {
                     tabIndex={-1}
                     key={row.id}
                     selected={isItemSelected}
-                    sx={{ cursor: "pointer" }}
+                    sx={{ cursor: "pointer",zIndex:5 }}
                   >
                     <TableCell padding="checkbox">
                       <Checkbox
