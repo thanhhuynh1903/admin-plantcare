@@ -10,7 +10,8 @@ import EmployeesEditPage from "./components/admin/Employees/EmployeesEditPage/Em
 import OrderHomePage from "./components/admin/Orders/OrderHomePage";
 import { useEffect } from "react";
 import SettingsPage from "./components/admin/Settings/SettingsPage";
-import OrderDetail from "./components/admin/Orders/OrderDetail";import CalendarPage from "./components/admin/Calendar/CalendarPage";
+import OrderDetail from "./components/admin/Orders/OrderDetail";
+import CalendarPage from "./components/admin/Calendar/CalendarPage";
 
 const LayoutWithSidebar = ({ children }) => {
 
