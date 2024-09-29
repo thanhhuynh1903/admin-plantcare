@@ -10,20 +10,27 @@
         width: 100%;
         background-color: $white-color;
         border-radius: 12px;
-        padding: 12px 25px 0;
+        padding: 12px 25px 35px;
         margin-top: 20px;
         max-height: fit-content !important;
     }
 
     .header {
-        display: flex;
-        justify-content: space-between;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
         align-items: center;
+        justify-items: center;
 
         .date-control {
             display: flex;
             align-items: center;
             gap: 15px;
+        }
+
+        .date-label {
+            width: 170px;
+            text-align: center;
+            user-select: none;
         }
 
         .btn-nav {

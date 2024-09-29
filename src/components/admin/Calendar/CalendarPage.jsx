@@ -4,6 +4,8 @@ import "./CalendarPage.scss";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import CalendarViewDay from "./CalendarViewDay";
+import CalendarViewMonth from "./CalendarViewMonth";
+import CalendarViewYear from "./CalendarViewYear";
 
 export default function CalendarPage() {
   const TabArr = [
@@ -34,15 +36,44 @@ export default function CalendarPage() {
     setCurrentDate(new Date(newYear, newMonth));
   };
 
+  const handleSelectMonth = (month) => {
+    setCurrentDate(new Date(currentDate.getFullYear(), month));
+    setSelTab(TabArr[0]); // Switch to Day view
+  };
+
+  const handleSelectYear = (year) => {
+    setCurrentDate(new Date(year, currentDate.getMonth()));
+    setSelTab(TabArr[1]); // Switch to Month view
+  };
+
+  const getRelativeDateLabel = () => {
+    const today = new Date();
+    const diffYears = currentDate.getFullYear() - today.getFullYear();
+    const diffMonths = currentDate.getMonth() - today.getMonth() + diffYears * 12;
+
+    if (diffMonths === 0) {
+      return "This month";
+    } else if (diffMonths < 0) {
+      const absMonths = Math.abs(diffMonths);
+      return absMonths < 12
+        ? `${absMonths} month${absMonths > 1 ? "s" : ""} ago`
+        : `${Math.floor(absMonths / 12)} year${Math.floor(absMonths / 12) > 1 ? "s" : ""} ago`;
+    } else {
+      return diffMonths < 12
+        ? `In ${diffMonths} month${diffMonths > 1 ? "s" : ""}`
+        : `In ${Math.floor(diffMonths / 12)} year${Math.floor(diffMonths / 12) > 1 ? "s" : ""}`;
+    }
+  };
+
   return (
     <div className="page-calendar">
       <p className="main-label">Calendar</p>
       <div className="content">
         <div className="header">
-          <p>Today</p>
+          <p>{getRelativeDateLabel()}</p>
           <div className="date-control">
             <ArrowLeftIcon className="btn-nav btn-prev" onClick={() => handleMonthChange(-1)} />
-            <p>{currentDate.toLocaleString('default', { month: 'long' })} {currentDate.getFullYear()}</p>
+            <p className="date-label">{currentDate.toLocaleString('default', { month: 'long' })} {currentDate.getFullYear()}</p>
             <ArrowRightIcon className="btn-nav btn-next" onClick={() => handleMonthChange(1)} />
           </div>
           <Tabs
@@ -51,7 +82,9 @@ export default function CalendarPage() {
             handleChange={handleChangeTab}
           />
         </div>
-        <CalendarViewDay currentDate={currentDate} />
+        {selTab.id === 0 && <CalendarViewDay currentDate={currentDate} />}
+        {selTab.id === 1 && <CalendarViewMonth currentDate={currentDate} onSelectMonth={handleSelectMonth} />}
+        {selTab.id === 2 && <CalendarViewYear currentDate={currentDate} onSelectYear={handleSelectYear} />}
       </div>
     </div>
   );

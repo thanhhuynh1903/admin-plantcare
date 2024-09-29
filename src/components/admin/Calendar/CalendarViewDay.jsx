@@ -1,12 +1,18 @@
-import React from 'react';
-import './CalendarViewDay.scss';
+import React from "react";
+import "./CalendarViewDay.scss";
+import { Link } from "react-router-dom";
+import { Box } from "@mui/material";
 
-const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 export default function CalendarViewDay({ currentDate }) {
   const today = new Date();
   const isToday = (day, month, year) => {
-    return day === today.getDate() && month === today.getMonth() && year === today.getFullYear();
+    return (
+      day === today.getDate() &&
+      month === today.getMonth() &&
+      year === today.getFullYear()
+    );
   };
 
   const getDaysInMonth = (month, year) => {
@@ -15,6 +21,13 @@ export default function CalendarViewDay({ currentDate }) {
 
   const getFirstDayOfMonth = (month, year) => {
     return new Date(year, month, 1).getDay();
+  };
+
+  const formatUrl = (year, month, day) => {
+    // Format year, month, and day as yyyyMMdd
+    const formattedMonth = (month + 1).toString().padStart(2, "0"); // Month is 0-indexed
+    const formattedDay = day.toString().padStart(2, "0");
+    return `/calendar/${year}${formattedMonth}${formattedDay}`;
   };
 
   const renderDays = () => {
@@ -32,9 +45,14 @@ export default function CalendarViewDay({ currentDate }) {
 
     for (let i = firstDay - 1; i > 0; i--) {
       days.push(
-        <div key={`prev-${i}`} className="calendar-day prev-month">
+        <Box
+          key={`prev-${i}`}
+          className="calendar-day prev-month"
+          component={Link}
+          to={formatUrl(prevMonthYear, prevMonth, daysInPrevMonth - i + 1)}
+        >
           <p>{daysInPrevMonth - i + 1}</p>
-        </div>
+        </Box>
       );
     }
 
@@ -42,9 +60,16 @@ export default function CalendarViewDay({ currentDate }) {
     for (let day = 1; day <= daysInMonth; day++) {
       const isCurrentDay = isToday(day, month, year);
       days.push(
-        <div key={day} className={`calendar-day current-month ${isCurrentDay ? 'current-day' : ''}`}>
+        <Box
+          key={day}
+          className={`calendar-day current-month ${
+            isCurrentDay ? "current-day" : ""
+          }`}
+          component={Link}
+          to={formatUrl(year, month, day)}
+        >
           <p>{day}</p>
-        </div>
+        </Box>
       );
     }
 
@@ -54,9 +79,14 @@ export default function CalendarViewDay({ currentDate }) {
 
     for (let i = 1; i <= nextMonthDays; i++) {
       days.push(
-        <div key={`next-${i}`} className="calendar-day next-month">
+        <Box
+          key={`next-${i}`}
+          className="calendar-day next-month"
+          component={Link}
+          to={formatUrl(year, month + 1, i)}
+        >
           <p>{i}</p>
-        </div>
+        </Box>
       );
     }
 
@@ -69,7 +99,7 @@ export default function CalendarViewDay({ currentDate }) {
     // Remove the last week if all days are from the next month
     const lastWeek = weeks[weeks.length - 1];
     const allNextMonth = lastWeek.every(
-      (day) => day.key && day.key.startsWith('next-')
+      (day) => day.key && day.key.startsWith("next-")
     );
 
     if (allNextMonth) {
@@ -86,9 +116,7 @@ export default function CalendarViewDay({ currentDate }) {
           <p key={day}>{day}</p>
         ))}
       </div>
-      <div className="calendar-days-grid">
-        {renderDays()}
-      </div>
+      <div className="calendar-days-grid">{renderDays()}</div>
     </div>
   );
 }
