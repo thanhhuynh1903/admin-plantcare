@@ -12,6 +12,8 @@ import { useEffect } from "react";
 import SettingsPage from "./components/admin/Settings/SettingsPage";
 import OrderDetail from "./components/admin/Orders/OrderDetail";
 import CalendarPage from "./components/admin/Calendar/CalendarPage";
+import ReviewsGrid from "./components/admin/Reviews/ReviewsGrid";
+// import ReviewsTable from "./components/admin/Reviews/ReviewsTable";
 
 const LayoutWithSidebar = ({ children }) => {
 
@@ -67,6 +69,7 @@ function App() {
             <Route path="/orders/orderdetail" element={<OrderDetail />} />
             <Route path="/employees/edit/:id" element={<EmployeesEditPage />} />
             <Route path="/orders" element={<OrderHomePage />} />
+            <Route path="/reviews" element={<ReviewsGrid />} />
             <Route path='/settings' element={<SettingsPage />}></Route>
             <Route path='/calendar' element={<CalendarPage />}></Route>
           </Routes>
