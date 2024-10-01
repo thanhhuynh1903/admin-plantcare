@@ -1,82 +1,175 @@
-import React, { useState } from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, MenuItem } from '@mui/material';
-import Transition from './Transition';
-import './EditEventDialog.scss';
+import React from "react";
+import { DialogContent, Button, TextField, MenuItem, Box } from "@mui/material";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
+import { Formik, Form } from "formik";
+import DialogBasic from "../../commons/DialogBasic/DialogBasic";
+import * as Yup from "yup";
+import "./EditEventDialog.scss";
 
 const tags = ["Custom", "Important", "News", "Optional", "Event"];
 
-export default function EditEventDialog({ open, onClose, initialEvent, onSave }) {
-  const [event, setEvent] = useState(initialEvent);
+// Yup validation schema
+const validationSchema = Yup.object().shape({
+  title: Yup.string().required("Title is required"),
+  description: Yup.string().required("Description is required"),
+  startTime: Yup.date().required("Start time is required").nullable(),
+  endTime: Yup.date()
+    .required("End time is required")
+    .nullable()
+    .min(Yup.ref("startTime"), "End time cannot be before start time"),
+});
 
-  const handleSave = () => {
-    onSave(event);
-    onClose();
-  };
+export default function EditEventDialog({
+  open,
+  onClose,
+  onSubmit,
+  initialEvent,
+}) {
+  const isEdit = Boolean(initialEvent)
 
   return (
-    <Dialog open={open} TransitionComponent={Transition} onClose={onClose} className="calendar-edit-event-dialog">
-      <DialogTitle>Edit Event</DialogTitle>
-      <DialogContent>
-        <TextField
-          fullWidth
-          label="Title"
-          value={event.title}
-          onChange={(e) => setEvent({ ...event, title: e.target.value })}
-          margin="normal"
-        />
-        <TextField
-          fullWidth
-          label="Description"
-          multiline
-          rows={4}
-          value={event.description}
-          onChange={(e) => setEvent({ ...event, description: e.target.value })}
-          margin="normal"
-        />
-        <TextField
-          fullWidth
-          select
-          label="Tag"
-          value={event.tag}
-          onChange={(e) => setEvent({ ...event, tag: e.target.value })}
-          margin="normal"
-        >
-          {tags.map((tag) => (
-            <MenuItem key={tag} value={tag}>
-              {tag}
-            </MenuItem>
-          ))}
-        </TextField>
-        <TextField
-          fullWidth
-          label="Start Time"
-          type="datetime-local"
-          value={event.startTime}
-          onChange={(e) => setEvent({ ...event, startTime: e.target.value })}
-          margin="normal"
-          InputLabelProps={{ shrink: true }}
-        />
-        <TextField
-          fullWidth
-          label="End Time"
-          type="datetime-local"
-          value={event.endTime}
-          onChange={(e) => setEvent({ ...event, endTime: e.target.value })}
-          margin="normal"
-          InputLabelProps={{ shrink: true }}
-        />
-        <TextField
-          fullWidth
-          label="Location (Optional)"
-          value={event.location}
-          onChange={(e) => setEvent({ ...event, location: e.target.value })}
-          margin="normal"
-        />
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
-        <Button onClick={handleSave}>Save</Button>
-      </DialogActions>
-    </Dialog>
+    <DialogBasic
+      title={isEdit ? "Edit Event" : "Add Event"}
+      open={open}
+      onClose={onClose}
+      className="calendar-edit-event-dialog"
+      maxWidth={"sm"}
+      footer={
+        <>
+          <Button onClick={onClose}>Cancel</Button>
+          <Button type="submit">{isEdit ? "Save Changes" : "Add Event"}</Button>
+        </>
+      }
+    >
+      <Formik
+        initialValues={{
+          title: initialEvent?.title || "",
+          description: initialEvent?.description || "",
+          tag: initialEvent?.tag || "Custom",
+          startTime: initialEvent?.startTime || null,
+          endTime: initialEvent?.endTime || null,
+          location: initialEvent?.location || "",
+        }}
+        validationSchema={validationSchema}
+        onSubmit={(values, { setSubmitting }) => {
+          onSubmit(values); // Call onSubmit for both add and edit actions
+          onClose();
+          setSubmitting(false);
+        }}
+      >
+        {({
+          values,
+          setFieldValue,
+          handleChange,
+          handleSubmit,
+          touched,
+          errors,
+        }) => (
+          <Form onSubmit={handleSubmit}>
+            <DialogContent>
+              {/* Title */}
+              <TextField
+                fullWidth
+                name="title"
+                label="Title"
+                value={values.title}
+                onChange={handleChange}
+                error={touched.title && Boolean(errors.title)}
+                helperText={touched.title && errors.title}
+                margin="normal"
+              />
+
+              {/* Description */}
+              <TextField
+                fullWidth
+                name="description"
+                label="Description"
+                multiline
+                rows={4}
+                value={values.description}
+                onChange={handleChange}
+                error={touched.description && Boolean(errors.description)}
+                helperText={touched.description && errors.description}
+                margin="normal"
+              />
+
+              {/* Tag */}
+              <TextField
+                fullWidth
+                select
+                name="tag"
+                label="Tag"
+                value={values.tag}
+                onChange={handleChange}
+                margin="normal"
+              >
+                {tags.map((tag) => (
+                  <MenuItem key={tag} value={tag}>
+                    {tag}
+                  </MenuItem>
+                ))}
+              </TextField>
+
+              {/* Date and Time Pickers */}
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    gap: 2,
+                  }}
+                >
+                  {/* Start Time */}
+                  <DateTimePicker
+                    label="Start Time"
+                    value={values.startTime}
+                    onChange={(newValue) =>
+                      setFieldValue("startTime", newValue)
+                    }
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        fullWidth
+                        margin="normal"
+                        error={touched.startTime && Boolean(errors.startTime)}
+                        helperText={touched.startTime && errors.startTime}
+                      />
+                    )}
+                  />
+
+                  {/* End Time */}
+                  <DateTimePicker
+                    label="End Time"
+                    value={values.endTime}
+                    onChange={(newValue) => setFieldValue("endTime", newValue)}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        fullWidth
+                        margin="normal"
+                        error={touched.endTime && Boolean(errors.endTime)}
+                        helperText={touched.endTime && errors.endTime}
+                      />
+                    )}
+                  />
+                </Box>
+              </LocalizationProvider>
+
+              {/* Location */}
+              <TextField
+                fullWidth
+                name="location"
+                label="Location (Optional)"
+                value={values.location}
+                onChange={handleChange}
+                margin="normal"
+              />
+            </DialogContent>
+          </Form>
+        )}
+      </Formik>
+    </DialogBasic>
   );
 }

@@ -1,9 +1,17 @@
-import React, { useState } from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField } from '@mui/material';
-import Transition from './Transition';
-import './EditDateDescriptionDialog.scss';
+import React, { useRef, useState } from "react";
+import {
+  Button,
+} from "@mui/material";
+import "./EditDateDescriptionDialog.scss";
+import DialogBasic from "../../commons/DialogBasic/DialogBasic";
+import TextEditor from "../../commons/TextEditor/TextEditor";
 
-export default function EditDateDescriptionDialog({ open, onClose, initialDescription, onSave }) {
+export default function EditDateDescriptionDialog({
+  open,
+  onClose,
+  initialDescription,
+  onSave,
+}) {
   const [description, setDescription] = useState(initialDescription);
 
   const handleSave = () => {
@@ -12,22 +20,20 @@ export default function EditDateDescriptionDialog({ open, onClose, initialDescri
   };
 
   return (
-    <Dialog open={open} TransitionComponent={Transition} onClose={onClose} className="calendar-edit-date-dialog">
-      <DialogTitle>Edit Date Description</DialogTitle>
-      <DialogContent>
-        <TextField
-          fullWidth
-          label="Description"
-          multiline
-          rows={4}
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
-        <Button onClick={handleSave}>Save</Button>
-      </DialogActions>
-    </Dialog>
+    <DialogBasic
+      open={open}
+      title={"Edit day description"}
+      onClose={onClose}
+      className="calendar-edit-date-dialog"
+      footer={(
+        <>
+          <Button onClick={onClose}>Cancel</Button>
+          <Button onClick={handleSave}>Save</Button>
+        </>
+      )}
+    >
+      <p className="title">Edit description</p>
+      <TextEditor />
+    </DialogBasic>
   );
 }

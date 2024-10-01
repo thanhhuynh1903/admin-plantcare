@@ -1,19 +1,33 @@
-import React from 'react';
-import { Dialog, DialogTitle, DialogActions, Button } from '@mui/material';
-import Transition from './Transition';
-import './DeleteEventDialog.scss';
+import React from "react";
+import { Button } from "@mui/material";
+import "./DeleteEventDialog.scss";
+import DialogBasic from "../../commons/DialogBasic/DialogBasic";
 
-export default function DeleteEventDialog({ open, onClose, onDelete, eventTitle }) {
+export default function DeleteEventDialog({
+  open,
+  onClose,
+  onDelete,
+  eventTitle,
+}) {
   return (
-    <Dialog open={open} TransitionComponent={Transition} onClose={onClose} className="calendar-delete-event-dialog">
-      <DialogTitle>Delete Event</DialogTitle>
-      <DialogActions>
-        <p>Are you sure you want to delete the event "{eventTitle}"?</p>
-        <Button onClick={onClose}>Cancel</Button>
-        <Button onClick={onDelete} color="error">
-          Delete
-        </Button>
-      </DialogActions>
-    </Dialog>
+    <DialogBasic
+      title="Delete Event"
+      maxWidth={"sm"}
+      open={open}
+      onClose={onClose}
+      className="calendar-delete-event-dialog"
+      footer={
+        <>
+          <Button onClick={onClose}>Cancel</Button>
+          <Button onClick={onDelete} color="error">
+            Delete
+          </Button>
+        </>
+      }
+    >
+      <p>Are you sure you want to delete the event "{eventTitle}"?</p>
+      <br />
+      <p><b>You cannot undo this decision once it is deleted.</b></p>
+    </DialogBasic>
   );
 }
