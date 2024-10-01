@@ -1,0 +1,20 @@
+@import "@scss/common.scss";
+
+.news-create-page {
+  .btn-back {
+    cursor: pointer;
+    font-size: 30px;
+    background-color: #fff;
+    color: $black-color;
+    border-radius: 50%;
+    text-decoration: none;
+  }
+
+  .main-label {
+    font-size: 23px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+}
