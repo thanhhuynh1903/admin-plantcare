@@ -13,6 +13,7 @@ import SettingsPage from "./components/admin/Settings/SettingsPage";
 import OrderDetail from "./components/admin/Orders/OrderDetail";
 import CalendarPage from "./components/admin/Calendar/CalendarPage";
 import ReviewsGrid from "./components/admin/Reviews/ReviewsGrid";
+import CalendarDetailPage from "./components/admin/Calendar/CalendarDetail/CalendarDetailPage";
 // import ReviewsTable from "./components/admin/Reviews/ReviewsTable";
 
 const LayoutWithSidebar = ({ children }) => {
@@ -72,6 +73,7 @@ function App() {
             <Route path="/reviews" element={<ReviewsGrid />} />
             <Route path='/settings' element={<SettingsPage />}></Route>
             <Route path='/calendar' element={<CalendarPage />}></Route>
+            <Route path='/calendar/:date' element={<CalendarDetailPage />}></Route>
           </Routes>
         </LayoutWithSidebar>
       )}

@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Tabs from "../commons/Tabs/Tabs";
+import {setPageHeadTitle} from "../../utils/util_web";
 import "./CalendarPage.scss";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
@@ -64,6 +65,10 @@ export default function CalendarPage() {
         : `In ${Math.floor(diffMonths / 12)} year${Math.floor(diffMonths / 12) > 1 ? "s" : ""}`;
     }
   };
+
+  useEffect(() => {
+    setPageHeadTitle("Calendar");
+  }, [])
 
   return (
     <div className="page-calendar">

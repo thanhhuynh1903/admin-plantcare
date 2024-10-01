@@ -32,6 +32,8 @@
     border: 1px solid #00000022;
     width: 100%;
     height: 100%;
+    display: grid;
+    grid-template-rows: 0.1fr 1fr;
 
     &:hover {
       cursor: pointer;
@@ -46,6 +48,28 @@
         user-select: none;
         font-size: 18px;
         color: #646464 !important;
+    }
+
+    .event-list {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      align-items: flex-end;
+      justify-content: flex-end;
+      width: 100%;
+      gap: 4px;
+    }
+
+    .event-node {
+      background-color: #8181817b;
+      width: 100%;
+      text-align: right;
+      padding: 3px 5px;
+      color: #4d4d4d;
+      font-size: 14px;
+      border-left: 5px solid #000000;
+      font-weight: bold;
     }
   }
 

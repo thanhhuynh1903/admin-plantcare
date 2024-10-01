@@ -2,10 +2,13 @@ import React from "react";
 import "./CalendarViewDay.scss";
 import { Link } from "react-router-dom";
 import { Box } from "@mui/material";
+import { getApiCalendarDay, DATE_TYPE } from "./CalendarViewDay.prop";
 
 const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 export default function CalendarViewDay({ currentDate }) {
+  const [calendarDays, setCalendarDays] = React.useState(getApiCalendarDay());
+
   const today = new Date();
   const isToday = (day, month, year) => {
     return (
@@ -25,9 +28,23 @@ export default function CalendarViewDay({ currentDate }) {
 
   const formatUrl = (year, month, day) => {
     // Format year, month, and day as yyyyMMdd
-    const formattedMonth = (month + 1).toString().padStart(2, "0"); // Month is 0-indexed
+    const formattedMonth = (month + 1).toString().padStart(2, "0");
     const formattedDay = day.toString().padStart(2, "0");
     return `/calendar/${year}${formattedMonth}${formattedDay}`;
+  };
+
+  const findEventsForDay = (day, month, year) => {
+    return calendarDays.find(
+      (d) => d.day === day && d.month === month + 1 && d.year === year
+    )?.events || [];
+  };
+
+  const renderEventNodes = (events) => {
+    return events.map((event) => (
+      <div key={event.id} className="event-node" style={DATE_TYPE[event.type]}>
+        <p>{event.name}</p>
+      </div>
+    ));
   };
 
   const renderDays = () => {
@@ -38,20 +55,23 @@ export default function CalendarViewDay({ currentDate }) {
 
     const days = [];
 
-    // Previous month's days
     const prevMonth = month === 0 ? 11 : month - 1;
     const prevMonthYear = month === 0 ? year - 1 : year;
     const daysInPrevMonth = getDaysInMonth(prevMonth, prevMonthYear);
 
+    // Previous month's days
     for (let i = firstDay - 1; i > 0; i--) {
+      const prevDay = daysInPrevMonth - i + 1;
+      const events = findEventsForDay(prevDay, prevMonth, prevMonthYear);
       days.push(
         <Box
           key={`prev-${i}`}
           className="calendar-day prev-month"
           component={Link}
-          to={formatUrl(prevMonthYear, prevMonth, daysInPrevMonth - i + 1)}
+          to={formatUrl(prevMonthYear, prevMonth, prevDay)}
         >
-          <p>{daysInPrevMonth - i + 1}</p>
+          <p>{prevDay}</p>
+          <Box className="event-list">{renderEventNodes(events)}</Box>
         </Box>
       );
     }
@@ -59,6 +79,7 @@ export default function CalendarViewDay({ currentDate }) {
     // Current month's days
     for (let day = 1; day <= daysInMonth; day++) {
       const isCurrentDay = isToday(day, month, year);
+      const events = findEventsForDay(day, month, year);
       days.push(
         <Box
           key={day}
@@ -69,6 +90,7 @@ export default function CalendarViewDay({ currentDate }) {
           to={formatUrl(year, month, day)}
         >
           <p>{day}</p>
+          <Box className="event-list">{renderEventNodes(events)}</Box>
         </Box>
       );
     }
@@ -78,6 +100,7 @@ export default function CalendarViewDay({ currentDate }) {
     const nextMonthDays = 42 - totalDaysDisplayed; // 6 weeks = 42 days
 
     for (let i = 1; i <= nextMonthDays; i++) {
+      const events = findEventsForDay(i, month + 1, year);
       days.push(
         <Box
           key={`next-${i}`}
@@ -86,6 +109,7 @@ export default function CalendarViewDay({ currentDate }) {
           to={formatUrl(year, month + 1, i)}
         >
           <p>{i}</p>
+          <Box className="event-list">{renderEventNodes(events)}</Box>
         </Box>
       );
     }
