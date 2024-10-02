@@ -108,7 +108,7 @@ export default function NewsPage() {
                 <TableCell>Status</TableCell>
                 <TableCell>Release date</TableCell>
                 <TableCell>Tags</TableCell>
-                <TableCell align="center">Actions</TableCell>
+                <TableCell sx={{textAlign:'center !important'}}>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
