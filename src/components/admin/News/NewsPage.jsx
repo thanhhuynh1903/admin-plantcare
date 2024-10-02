@@ -16,6 +16,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import "./NewsPage.scss";
 import { setPageHeadTitle } from "../../utils/util_web";
 import { Link } from "react-router-dom";
+import DialogBasic from "../commons/DialogBasic/DialogBasic";
+import NewsDeleteDialog from "./NewsDeleteDialog";
 
 export default function NewsPage() {
   useEffect(() => {
@@ -24,6 +26,7 @@ export default function NewsPage() {
 
   const newsData = [
     {
+      id: 1,
       submitter: "John David",
       title: 'Grand opening - "everfresh"',
       status: "Released",
@@ -31,6 +34,7 @@ export default function NewsPage() {
       tags: "Official",
     },
     {
+      id: 2,
       submitter: "John David",
       title: "Special event",
       status: "Draft",
@@ -38,6 +42,7 @@ export default function NewsPage() {
       tags: "Official",
     },
     {
+      id: 3,
       submitter: "John David",
       title: "New plant released",
       status: "Released",
@@ -45,17 +50,19 @@ export default function NewsPage() {
       tags: "Official",
     },
     {
+      id: 4,
       submitter: "John David",
       title: "Quarterly earning report",
       status: "Draft",
       date: "25/06/2024",
       tags: "Official",
     },
-    // Add more news data as needed
   ];
 
   const [page, setPage] = useState(0); // Current page
   const [rowsPerPage, setRowsPerPage] = useState(5); // Rows per page
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [selectedArticle, setSelectedArticle] = useState(null);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -66,13 +73,28 @@ export default function NewsPage() {
     setPage(0); // Reset to first page
   };
 
+  const handleDeleteClick = (article) => {
+    setSelectedArticle(article);
+    setOpenDeleteDialog(true);
+  };
+
+  const closeDialog = () => {
+    setOpenDeleteDialog(false);
+  };
+
   return (
     <div className="page-news">
       <div className="main-label">
         <p>News / Articles</p>
       </div>
       <div className="tool">
-        <Button className="btn-news-create" variant="contained" color="success" component={Link} to="/news/create">
+        <Button
+          className="btn-news-create"
+          variant="contained"
+          color="success"
+          component={Link}
+          to="/news/create"
+        >
           + Publish new page
         </Button>
       </div>
@@ -106,10 +128,18 @@ export default function NewsPage() {
                     <TableCell>{news.date}</TableCell>
                     <TableCell>{news.tags}</TableCell>
                     <TableCell className="icon-cell">
-                      <IconButton aria-label="edit">
+                      <IconButton
+                        color="primary"
+                        aria-label="edit"
+                        component={Link} to={`/news/edit/${news.id}`}
+                      >
                         <EditIcon />
                       </IconButton>
-                      <IconButton aria-label="delete">
+                      <IconButton
+                        color="error"
+                        aria-label="delete"
+                        onClick={() => handleDeleteClick(news)}
+                      >
                         <DeleteIcon />
                       </IconButton>
                     </TableCell>
@@ -133,6 +163,9 @@ export default function NewsPage() {
           />
         </TableContainer>
       </div>
+
+      {/* Delete Dialog */}
+      <NewsDeleteDialog open={openDeleteDialog} onClose={closeDialog} onDelete={closeDialog} article={selectedArticle} />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import "./NewsCreatePage.scss";
+import "./NewsEditPage.scss";
 
 import Button from "@mui/material/Button";
 import ArrowCircleLeftOutlinedIcon from "@mui/icons-material/ArrowCircleLeftOutlined";
@@ -13,7 +13,7 @@ import TextEditor from "../../commons/TextEditor/TextEditor";
 import { setPageHeadTitle } from "../../../utils/util_web";
 import Checkbox from "../../commons/Checkbox/Checkbox";
 
-export default function NewsCreatePage() {
+export default function NewsEditPage() {
   const TAGS = ["Tech", "Business", "Science"];
 
   const [tagList, setTagList] = useState([]);
@@ -28,16 +28,16 @@ export default function NewsCreatePage() {
     setTagList(tags);
     setTag(tags[0]);
 
-    setPageHeadTitle("Create new article");
+    setPageHeadTitle("Editing article");
   }, []);
 
   return (
-    <div className="news-create-page">
+    <div className="news-edit-page">
       <div className="main-label">
         <Button component={Link} to="/news">
           <ArrowCircleLeftOutlinedIcon className="btn-back" />
         </Button>
-        <p>News - Create new article</p>
+        <p>News - Now editing article</p>
       </div>
 
       <div className="content">
@@ -97,7 +97,7 @@ export default function NewsCreatePage() {
             Save as draft
           </Button>
           <Button variant="contained" color="success" className="publish-btn">
-            Publish new page
+            Finish editing page
           </Button>
         </div>
       </div>

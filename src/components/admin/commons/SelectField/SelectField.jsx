@@ -4,6 +4,8 @@ import { MenuItem, Select } from '@mui/material';
 
 export default function SelectField({ sx = {}, prop, items = [], ...props }) {
 
+  //Items have the following structure: {prop: "", value: ""}
+
   useEffect(() => {
 
   }, [prop]);

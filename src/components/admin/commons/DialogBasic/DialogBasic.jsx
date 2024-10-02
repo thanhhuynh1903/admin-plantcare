@@ -7,6 +7,7 @@ export default function DialogBasic({
   className,
   title = "Dialog",
   maxWidth = 'md',
+  minHeight = 'fit-content',
   open,
   onClose = () => {},
   children,
@@ -22,6 +23,7 @@ export default function DialogBasic({
       maxWidth={maxWidth}
       onClose={onClose}
       TransitionComponent={Transition}
+      PaperProps={{ style: { minHeight: minHeight } }}
       {...props}
     >
       <div className="dialog-titlebar">
