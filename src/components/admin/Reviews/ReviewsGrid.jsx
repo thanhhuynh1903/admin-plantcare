@@ -121,7 +121,8 @@ const ReviewsGrid = () => {
   const handleChange = (event, value) => {
     setPage(value);
   };
-
+  console.log(viewMode);
+  
   const toggleViewMode = (mode) => {
     setViewMode(mode);
   };
@@ -137,7 +138,7 @@ console.log(viewMode);
     // setEmployees(initialEmployeeData);
   }, []);
   return (
-    <Container>
+    <Box sx={{ maxWidth: 1100, margin: 'auto' }} >
       <Typography variant="h4" component="h1" gutterBottom>
         Review - View all ratings
       </Typography>
@@ -210,9 +211,14 @@ console.log(viewMode);
       </Box>
       </div>
       : 
+      viewMode === "table" ?
       <ReviewsTable/>
+      :
+      <div>
+        filter
+      </div>
       }
-    </Container>
+    </Box>
   );
 };
 

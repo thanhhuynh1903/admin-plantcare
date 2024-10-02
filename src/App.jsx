@@ -17,6 +17,7 @@ import CalendarDetailPage from "./components/admin/Calendar/CalendarDetail/Calen
 import NewsPage from "./components/admin/News/NewsPage";
 import NewsCreatePage from "./components/admin/News/NewsCreate/NewsCreatePage";
 import NewsEditPage from "./components/admin/News/NewsEdit/NewsEditPage";
+import ReviewDetail from "./components/admin/Reviews/ReviewDetail";
 // import ReviewsTable from "./components/admin/Reviews/ReviewsTable";
 
 const LayoutWithSidebar = ({ children }) => {
@@ -74,6 +75,7 @@ function App() {
             <Route path="/employees/edit/:id" element={<EmployeesEditPage />} />
             <Route path="/orders" element={<OrderHomePage />} />
             <Route path="/reviews" element={<ReviewsGrid />} />
+            <Route path="/reviews/detail" element={<ReviewDetail />} />
             <Route path='/settings' element={<SettingsPage />}></Route>
             <Route path='/calendar' element={<CalendarPage />}></Route>
             <Route path='/calendar/:date' element={<CalendarDetailPage />}></Route>

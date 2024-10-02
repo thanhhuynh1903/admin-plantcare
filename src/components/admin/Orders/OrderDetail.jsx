@@ -92,35 +92,37 @@ const OrderDetail = () => {
             <TableBody>
               {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
                 <TableRow key={row.id}>
-                  <TableCell sx={{display:"flex", textAlign:"center",alignItems:"center",fontSize:"18px",fontWeight:"500"}}>
+                  <TableCell sx={{display:"flex", textAlign:"center",alignItems:"center",fontSize:"15px",fontWeight:"500"}}>
                     <Checkbox />
                     <img src={SmartPlanter} alt="smart planter" style={{width:"95px", height:"90px",objectFit:"fill"}} />
                     {row.item}
                     <Box>
                     </Box>
                   </TableCell>
-                  <TableCell sx={{fontSize:"18px",color:"#6E6893"}}>Last update: {row.date}</TableCell>
-                  <TableCell >
+                  <TableCell sx={{fontSize:"15px",color:"#6E6893"}}>Last update: {row.date}</TableCell>
+                  <TableCell>
                     <Box
                       sx={{
                         backgroundColor: "#CDFFCD",
                         color: "#23B000",
                         fontWeight: 600,
                         borderRadius: "20px",
-                        width: "90px",
+                        width: "80px",
                         paddingX:"6px",
-                        paddingY:"3px"
+                        paddingY:"3px",
+                      
                       }}
                       variant="contained"
                       color="success"
-                    >
-                      <CircleIcon sx={{color:"#23B000",paddingTop:"5px"}} fontSize="9"/>
-                      {row.status}
+                    > <p style={{fontSize:"13px"}}>
+                      <CircleIcon sx={{color:"#23B000",paddingTop:"5px"}} fontSize="8"/>
+                     
+                      {row.status}</p>
                     </Box>
                   </TableCell>
                   <TableCell >{row.quantity}</TableCell>
-                  <TableCell sx={{fontSize:"18px",color:"#6E6893"}}>{row.tax}</TableCell>
-                  <TableCell sx={{fontSize:"18px",color:"#6E6893"}}>{row.price}</TableCell>
+                  <TableCell sx={{fontSize:"15px",color:"#6E6893"}}>{row.tax}</TableCell>
+                  <TableCell sx={{fontSize:"15px",color:"#6E6893"}}>{row.price}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

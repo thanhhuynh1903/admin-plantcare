@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, CardContent, Typography, Avatar, Box, Rating } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const ReviewCard = ({ review }) => {
   return (
@@ -23,7 +24,10 @@ const ReviewCard = ({ review }) => {
         </Typography>
        </Box>
        <Typography variant="body1" mt={2} style={{fontSize:"11.5px",cursor:"pointer",textAlign:"end",textDecoration:"underline",color:"#989898"}}>
+          <Link  style={{color:"#989898"}} to={'/reviews/detail'}>
           {">>"} View more 
+          </Link>
+          
         </Typography>
       </CardContent>
 
