@@ -19,6 +19,8 @@ import NewsCreatePage from "./components/admin/News/NewsCreate/NewsCreatePage";
 import NewsEditPage from "./components/admin/News/NewsEdit/NewsEditPage";
 import ReviewDetail from "./components/admin/Reviews/ReviewDetail";
 // import ReviewsTable from "./components/admin/Reviews/ReviewsTable";
+import CustomerHomepage from "./components/admin/Customer/CustomerHomepage/CustomerHomepage";
+import CustomerEditPage from "./components/admin/Customer/CustomerEditpage/CustomerEditPage";
 
 const LayoutWithSidebar = ({ children }) => {
 
@@ -70,6 +72,8 @@ function App() {
             <Route path="/" element={<DashboardPage />} />
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/employees" element={<EmployeesHomePage />} />
+            <Route path="/customers" element={<CustomerHomepage />} />
+            <Route path="/customers/edit/:id" element={<CustomerEditPage />} />
             <Route path="/employees/add" element={<EmployeeAddPage />} />
             <Route path="/orders/orderdetail" element={<OrderDetail />} />
             <Route path="/employees/edit/:id" element={<EmployeesEditPage />} />
