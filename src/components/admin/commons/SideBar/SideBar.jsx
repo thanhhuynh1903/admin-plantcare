@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  Badge,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-} from "@mui/material";
+import { Badge, List, ListItem, ListItemIcon } from "@mui/material";
 import "./SideBar.scss";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
@@ -16,10 +10,10 @@ import {
   StorefrontOutlined as StorefrontIcon,
   RateReviewOutlined as RateReviewIcon,
   ArticleOutlined as ArticleIcon,
-  EmailOutlined as EmailIcon,
   CalendarTodayOutlined as CalendarTodayIcon,
   SettingsOutlined as SettingsIcon,
 } from "@mui/icons-material";
+import ConfirmationNumberOutlinedIcon from "@mui/icons-material/ConfirmationNumberOutlined";
 import { Link, useLocation } from "react-router-dom";
 
 export default function SideBar() {
@@ -49,7 +43,12 @@ export default function SideBar() {
       link: "/news",
       notify: 0,
     },
-    { icon: <EmailIcon />, label: "Emails", link: "/emails", notify: 1 },
+    {
+      icon: <ConfirmationNumberOutlinedIcon />,
+      label: "Tickets",
+      link: "/tickets",
+      notify: 1,
+    },
     {
       icon: <CalendarTodayIcon />,
       label: "Calendar",
@@ -74,7 +73,10 @@ export default function SideBar() {
       style={{ flexBasis: isCollapsed ? "70px" : "250px" }}
     >
       <div className="side-bar">
-        <div className={`btn-menu ${isCollapsed ? "btn-menu-shrink" : ""}`}  onClick={handleToggleSidebar}>
+        <div
+          className={`btn-menu ${isCollapsed ? "btn-menu-shrink" : ""}`}
+          onClick={handleToggleSidebar}
+        >
           <MenuIcon />
         </div>
         <div className="logo-container">
@@ -99,9 +101,9 @@ export default function SideBar() {
             >
               <ListItemIcon className="list-item-icon">
                 {item.icon}
-                {
-                  isCollapsed && item.notify > 0 &&<p className="list-item-badge">{item.notify}</p>
-                }
+                {isCollapsed && item.notify > 0 && (
+                  <p className="list-item-badge">{item.notify}</p>
+                )}
               </ListItemIcon>
 
               {!isCollapsed && <p className="list-item-text">{item.label}</p>}

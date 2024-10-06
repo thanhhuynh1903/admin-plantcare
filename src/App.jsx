@@ -21,6 +21,7 @@ import ReviewDetail from "./components/admin/Reviews/ReviewDetail";
 // import ReviewsTable from "./components/admin/Reviews/ReviewsTable";
 import CustomerHomepage from "./components/admin/Customer/CustomerHomepage/CustomerHomepage";
 import CustomerEditPage from "./components/admin/Customer/CustomerEditpage/CustomerEditPage";
+import TicketsPage from "./components/admin/Tickets/TicketsPage";
 
 const LayoutWithSidebar = ({ children }) => {
 
@@ -86,6 +87,7 @@ function App() {
             <Route path='/news' element={<NewsPage />}></Route>
             <Route path="/news/create" element={<NewsCreatePage />} />
             <Route path='/news/edit/:id' element={<NewsEditPage />} />
+            <Route path='/tickets' element={<TicketsPage />}></Route>
           </Routes>
         </LayoutWithSidebar>
       )}

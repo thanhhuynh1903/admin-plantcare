@@ -1,0 +1,65 @@
+@import "@scss/common.scss";
+
+.page-tickets {
+  .main-label {
+    font-size: 23px;
+    font-weight: 600;
+  }
+
+  .tool {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 15px;
+  }
+
+  .content {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    background-color: #FFF;
+    padding: 15px 2rem;
+    min-height: 200px;
+  }
+
+  .btn-manual-create {
+    background-color: $primary-color;
+    text-transform: none !important;
+    border-radius: 10px;
+  }
+
+  .tabs-filter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    .priority-select {
+      width: 200px;
+    }
+  }
+
+  .pagination-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    margin-top: 20px;
+    border-top: 1px solid #ddd;
+
+    .pagination-info {
+      font-size: 14px;
+      color: #666;
+    }
+
+    .pagination-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      .rows-per-page-select {
+        width: 120px;
+      }
+    }
+  }
+}

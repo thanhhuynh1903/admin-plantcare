@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import TextField from '@mui/material/TextField';
 import { MenuItem, Select } from '@mui/material';
+import './SelectField.scss';
 
 export default function SelectField({ sx = {}, prop, items = [], ...props }) {
 
@@ -14,7 +14,6 @@ export default function SelectField({ sx = {}, prop, items = [], ...props }) {
     <Select
       className="common-select-field"
       id="outlined-basic"
-      label={props?.label}
       variant="outlined"
       sx={{ width: '100%', ...sx }}
       value={prop}
