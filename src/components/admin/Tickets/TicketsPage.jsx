@@ -82,7 +82,6 @@ export default function TicketsPage() {
     { name: "Resolved" },
   ];
 
-  // Prepare the items for the SelectField dropdown
   const typeItems = [{ prop: "all", value: "All" }, ...types.map(type => ({
     prop: type.id.toString(),
     value: type.name
@@ -99,7 +98,7 @@ export default function TicketsPage() {
           variant="contained"
           color="success"
           component={Link}
-          to="/news/create"
+          to="/tickets/create"
         >
           + Add manual ticket
         </Button>
@@ -115,9 +114,8 @@ export default function TicketsPage() {
 
           <SelectField
             prop={selectedType}
-            label="Select Type"
             items={typeItems}
-            sx={{ width: "100px" }}
+            sx={{ width: "150px" }}
             onChange={handleTypeChange}
           />
         </div>

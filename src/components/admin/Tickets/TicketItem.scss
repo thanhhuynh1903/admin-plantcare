@@ -18,6 +18,13 @@
     gap: 10px;
   }
 
+  .ticket-circle {
+    $size: 20px;
+    width: $size;
+    height: $size;
+    border-radius: 50%;
+  }
+
   .ticket-id {
     font-weight: 600;
     font-size: 20px;

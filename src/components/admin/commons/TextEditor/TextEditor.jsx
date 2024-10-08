@@ -3,9 +3,25 @@ import "./TextEditor.scss";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
 
-const fontSizeArr = ['8px', '9px', '10px', '12px', '14px', '16px', '20px', '24px', '32px', '42px'];
+const fontSizeArr = [
+  "8px",
+  "9px",
+  "10px",
+  "12px",
+  "14px",
+  "16px",
+  "20px",
+  "24px",
+  "32px",
+  "42px",
+];
 
-export default function TextEditor({ ref = useRef(), maxLimit = 2000, ...props }) {
+export default function TextEditor({
+  ref = useRef(),
+  defaultValue = "",
+  maxLimit = 2000,
+  ...props
+}) {
   const [charCount, setCharCount] = useState(0);
 
   useEffect(() => {
@@ -19,7 +35,7 @@ export default function TextEditor({ ref = useRef(), maxLimit = 2000, ...props }
           [{ header: [1, 2, false] }],
           ["bold", "italic", "underline"],
           [{ size: fontSizeArr }],
-          ["link", "image", "code-block", "formula"], // Added 'link' and 'formula'
+          ["link", "image", "code-block", "formula"],
         ],
       },
       placeholder: "Enter content...",
@@ -27,8 +43,10 @@ export default function TextEditor({ ref = useRef(), maxLimit = 2000, ...props }
     });
 
     // Set default font size to 12px
-    const defaultFontSize = '12px';
-    quill.format('size', defaultFontSize);
+    const defaultFontSize = "12px";
+    quill.format("size", defaultFontSize);
+
+    quill.setText(defaultValue);
 
     quill.on("text-change", () => {
       setCharCount(quill.getText().trim().length);
@@ -39,7 +57,7 @@ export default function TextEditor({ ref = useRef(), maxLimit = 2000, ...props }
       quill.deleteText(0, quill.getLength());
       ref.current = null;
     };
-  }, []);
+  }, [defaultValue]);
 
   const isLimitReached = charCount >= maxLimit;
 
