@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import "./EmployeeAddPage.scss";
 import { showErrorToast, showSuccessToast } from "../../../utils/util_toastify";
-import { apostFile } from "../../../utils/util_axios";
+import { apostfile } from "../../../utils/util_axios";
 import TextFieldPassword from "../../commons/TextFieldPassword/TextFieldPassword";
 
 // Validation Schema using Yup
@@ -67,7 +67,7 @@ export default function EmployeeAddPage() {
       formData.append("password", values.password);
       formData.append("image", image);
 
-      apostFile("/api/employee/add", formData, (res) => {
+      apostfile("/api/employee/add", formData, (res) => {
         if (res.status === 200) {
           showSuccessToast("Employee added successfully");
         } else {

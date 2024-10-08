@@ -1,65 +1,73 @@
 import axios from "axios";
 
+const MASTER_URL = "https://everfresh-server.onrender.com/api";
+
 const axiosInstance = axios.create({
-  baseURL: "https://everfresh-server.onrender.com/api",
-  timeout: 5000,
+  baseURL: MASTER_URL,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-// Function to handle errors and call the callback
-const handleResponse = (callback) => (response) => {
-  if (response.status >= 200 && response.status < 300) {
-    callback(null, response.data);
-  } else {
-    callback(response.statusText || "Unknown error", null);
+axiosInstance.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+}, (error) => {
+  return Promise.reject(error);
+});
+
+export const apost = async (path, data) => {
+  try {
+    const response = await axiosInstance.post(path, data);
+    return response;
+  } catch (error) {
+    throw error;
   }
 };
 
-// GET request
-export const aget = (url, callback) => {
-  axiosInstance
-    .get(url)
-    .then(handleResponse(callback))
-    .catch((error) => callback(error.message, null));
-};
-
-// POST request
-export const apost = (url, json, callback) => {
-  axiosInstance
-    .post(url, json)
-    .then(handleResponse(callback))
-    .catch((error) => callback(error.message, null));
-};
-
-// POST request for file upload
-export const apostFile = (url, file, callback) => {
+export const apostfile = async (path, selectedFile, dataObject) => {
   const formData = new FormData();
-  formData.append("file", file);
+  formData.append("file", selectedFile);
+  Object.entries(dataObject).forEach(([key, value]) => {
+    formData.append(key, value);
+  });
 
-  axiosInstance
-    .post(url, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
-    .then(handleResponse(callback))
-    .catch((error) => callback(error.message, null));
+  try {
+    const response = await axiosInstance.post(path, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    return response;
+  } catch (error) {
+    throw error;
+  }
 };
 
-// PUT request
-export const aput = (url, json, callback) => {
-  axiosInstance
-    .put(url, json)
-    .then(handleResponse(callback))
-    .catch((error) => callback(error.message, null));
+export const aget = async (path) => {
+  try {
+    const response = await axiosInstance.get(path);
+    return response;
+  } catch (error) {
+    throw error;
+  }
 };
 
-// DELETE request
-export const adelete = (url, callback) => {
-  axiosInstance
-    .delete(url)
-    .then(handleResponse(callback))
-    .catch((error) => callback(error.message, null));
+export const adelete = async (path) => {
+  try {
+    const response = await axiosInstance.delete(path);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const aupdate = async (path, data) => {
+  try {
+    const response = await axiosInstance.put(path, data);
+    return response;
+  } catch (error) {
+    throw error;
+  }
 };
