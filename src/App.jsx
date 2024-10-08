@@ -24,7 +24,7 @@ import CustomerEditPage from "./components/admin/Customer/CustomerEditpage/Custo
 import TicketsPage from "./components/admin/Tickets/TicketsPage";
 import TicketsCreateManualPage from "./components/admin/Tickets/TicketsCreateManual/TicketsCreateManualPage";
 import TicketsDetailPage from "./components/admin/Tickets/TicketsDetail/TicketsDetailPage";
-
+import ProductHomepage from "./components/admin/Products/ProductHomePage";
 const LayoutWithSidebar = ({ children }) => {
 
   useEffect(() => {
@@ -75,6 +75,7 @@ function App() {
             <Route path="/" element={<DashboardPage />} />
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/employees" element={<EmployeesHomePage />} />
+            <Route path="/products" element={<ProductHomepage />} />
             <Route path="/customers" element={<CustomerHomepage />} />
             <Route path="/customers/edit/:id" element={<CustomerEditPage />} />
             <Route path="/employees/add" element={<EmployeeAddPage />} />
