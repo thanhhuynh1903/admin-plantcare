@@ -10,11 +10,15 @@ import {
 import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Link } from "react-router-dom";
+import ModalDelete from "../../ModalDelete/ModalDelete";
 
 const ModalPopup = ({ employee }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [openModal, setOpenModal] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
 
+  const handleOpenDelete = () => setOpenDelete(true);
+  const handleCloseDelete = () => setOpenDelete(false);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -25,6 +29,7 @@ const ModalPopup = ({ employee }) => {
 
   const handleOpenModal = () => {
     setOpenModal(true);
+    handleOpenDelete();
     handleClose();
   };
 
@@ -83,6 +88,12 @@ const ModalPopup = ({ employee }) => {
           </Typography>
         </Box>
       </Popover>
+      <Modal open={openDelete} onClose={handleCloseDelete}>
+      <ModalDelete 
+          open={openDelete} 
+          onClose={handleCloseDelete} 
+        />
+      </Modal>
     </div>
   );
 };
