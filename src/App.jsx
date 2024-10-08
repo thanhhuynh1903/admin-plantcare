@@ -3,7 +3,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import LoginPage from "./components/admin/Login/LoginPage/LoginPage";
 import DashboardPage from "./components/admin/Dashboard/DashboardPage";
 import SideBar from "./components/admin/commons/SideBar/SideBar";
-import NavBar from "./components/admin/commons/NavBar/Navbar";
+import NavBar from "./components/admin/commons/NavBar/NavBar";
 import EmployeesHomePage from "./components/admin/Employees/EmployeeHomePage/EmployeesHomePage";
 import EmployeeAddPage from "./components/admin/Employees/EmployeeAddPage/EmployeeAddPage";
 import EmployeesEditPage from "./components/admin/Employees/EmployeesEditPage/EmployeesEditPage";
