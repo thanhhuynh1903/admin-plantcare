@@ -12,14 +12,17 @@ import OrderBudget from "./OrderBudget";
 import { Link } from "react-router-dom";
 import OrderList from "./OrderList";
 import FilterOrder from "./FilterOrder";
+
+import logo from "@assets/logo.png";
+
 // const initialEmployeeData = [
-//   { name: 'Darlene Robertson', email: 'trungkien.spktnd@gmail.com', status: 'Free', role: 'Reporter', avatar: '/src/assets/avatar.jpg' },
-//   { name: 'Devon Lane', email: 'tranthuy.nute@gmail.com', status: 'Busy', role: 'Bot Analyst', avatar: 'link_to_avatar' },
-//   { name: 'Cody Fisher', email: 'tienlap.spktnd@gmail.com', status: 'Working', role: 'Sales Manager', avatar: 'link_to_avatar' },
-//   { name: 'Theresa Webb', email: 'thuhang.nute@gmail.com', status: 'Free', role: 'Broadcaster', avatar: 'link_to_avatar' },
-//   { name: 'Marvin McKinney', email: 'binhan628@gmail.com', status: 'Free', role: 'Team Editor', avatar: 'link_to_avatar' },
-//   { name: 'Jerome Bell', email: 'nvt.isst.nute@gmail.com', status: 'Busy', role: 'Team Owner', avatar: 'link_to_avatar' },
-//   { name: 'Eleanor Pena', email: 'vuhaithuong.nute@gmail.com', status: 'On Vacation', role: 'Analytics Admin', avatar: 'link_to_avatar' }
+//   { name: 'Darlene Robertson', email: 'trungkien.spktnd@gmail.com', status: 'Free', role: 'Reporter', avatar: logo },
+//   { name: 'Devon Lane', email: 'tranthuy.nute@gmail.com', status: 'Busy', role: 'Bot Analyst', avatar: logo },
+//   { name: 'Cody Fisher', email: 'tienlap.spktnd@gmail.com', status: 'Working', role: 'Sales Manager', avatar: logo },
+//   { name: 'Theresa Webb', email: 'thuhang.nute@gmail.com', status: 'Free', role: 'Broadcaster', avatar: logo },
+//   { name: 'Marvin McKinney', email: 'binhan628@gmail.com', status: 'Free', role: 'Team Editor', avatar: logo },
+//   { name: 'Jerome Bell', email: 'nvt.isst.nute@gmail.com', status: 'Busy', role: 'Team Owner', avatar: logo },
+//   { name: 'Eleanor Pena', email: 'vuhaithuong.nute@gmail.com', status: 'On Vacation', role: 'Analytics Admin', avatar: logo }
 // ];
 
 export default function OrderHomePage() {
@@ -68,3 +71,4 @@ export default function OrderHomePage() {
     </div>
   );
 }
+

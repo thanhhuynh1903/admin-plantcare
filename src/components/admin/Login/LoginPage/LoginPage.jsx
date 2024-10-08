@@ -11,6 +11,7 @@ import {
   validatePassword,
 } from "./LoginPage.prop";
 import { useNavigate } from "react-router-dom";
+import logo from "@assets/logo.png";
 
 const initialState = {
   errorState: "",
@@ -89,7 +90,7 @@ export default function LoginPage() {
 
   return (
     <div className="page-login">
-      <img className="logo" src="/src/assets/logo.png" alt="logo" />
+      <img className="logo" src={logo} alt="logo" />
       <h1>Adminstrative Login</h1>
       <p className="main-label">
         Please fill your detail to access your account
@@ -147,4 +148,5 @@ export default function LoginPage() {
     </div>
   );
 }
+
 

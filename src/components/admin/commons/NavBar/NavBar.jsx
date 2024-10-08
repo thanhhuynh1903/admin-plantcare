@@ -11,6 +11,8 @@ import NotificationMenu from "./NotificationMenu";
 import { getMessageListAPI, getNotificationListAPI } from "./NavBar.prop";
 import MessageMenu from "./MessageMenu";
 
+import avatar from '@assets/avatar.jpg';
+
 export default function NavBar() {
   const [anchorElNotifications, setAnchorElNotifications] = useState(null);
   const [anchorElMessages, setAnchorElMessages] = useState(null);
@@ -124,7 +126,7 @@ export default function NavBar() {
 
         <div className="prop-user">
           <div className="user-avatar">
-            <img className="avatar" src="/src/assets/avatar.jpg" alt="avatar" />
+            <img className="avatar" src={avatar} alt="avatar" />
           </div>
           <div className="user-meta">
             <p className="user-name">thienbao860</p>

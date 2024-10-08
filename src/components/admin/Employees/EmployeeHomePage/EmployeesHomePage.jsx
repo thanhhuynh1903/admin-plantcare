@@ -7,13 +7,13 @@ import KeyboardArrowRightOutlinedIcon from "@mui/icons-material/KeyboardArrowRig
 import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
 import { useEffect, useState } from "react";
 import { setPageHeadTitle } from "../../../utils/util_web";
-import { Sort } from "@mui/icons-material";
 import BudgetList from "./BudgetList";
 import EmployeeList from "./EmployeeList";
 import { Link } from "react-router-dom";
+import logo from "@assets/avatar.jpg";
 
 const initialEmployeeData = [
-  { name: 'Darlene Robertson', email: 'trungkien.spktnd@gmail.com', status: 'Free', role: 'Reporter', avatar: '/src/assets/avatar.jpg' },
+  { name: 'Darlene Robertson', email: 'trungkien.spktnd@gmail.com', status: 'Free', role: 'Reporter', avatar: logo },
   { name: 'Devon Lane', email: 'tranthuy.nute@gmail.com', status: 'Busy', role: 'Bot Analyst', avatar: 'link_to_avatar' },
   { name: 'Cody Fisher', email: 'tienlap.spktnd@gmail.com', status: 'Working', role: 'Sales Manager', avatar: 'link_to_avatar' },
   { name: 'Theresa Webb', email: 'thuhang.nute@gmail.com', status: 'Free', role: 'Broadcaster', avatar: 'link_to_avatar' },
@@ -71,3 +71,4 @@ export default function EmployeesHomePage() {
     </div>
   );
 }
+

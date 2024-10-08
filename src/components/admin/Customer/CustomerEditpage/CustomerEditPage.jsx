@@ -8,7 +8,6 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
-  Checkbox,
   Box,
   Modal
 } from "@mui/material";
@@ -17,6 +16,7 @@ import { showErrorToast, showSuccessToast } from "../../../utils/util_toastify";
 import { apostfile } from "../../../utils/util_axios";
 import TextFieldPassword from "../../commons/TextFieldPassword/TextFieldPassword";
 import ModalDelete from "../ModalDelete/ModalDelete";
+import logo from "@assets/pages/Employees/EmployeesAddPage/ImageUpload.png";
 // Validation Schema using Yup
 const validationSchema = yup.object({
   lastName: yup.string().required("Last Name is required"),
@@ -108,7 +108,7 @@ export default function CustomerEditPage() {
                 backgroundImage: `url(${
                   imagePreview
                     ? imagePreview
-                    : "/src/assets/pages/Employees/EmployeesAddPage/ImageUpload.png"
+                    : logo
                 })`,
               }}
             >
@@ -300,3 +300,4 @@ export default function CustomerEditPage() {
     
   );
 }
+

@@ -11,6 +11,7 @@ import {
   Checkbox,
   Box,
 } from "@mui/material";
+import logo from "@assets/pages/Employees/EmployeesAddPage/ImageUpload.png";
 import "./EmployeesEditPage.scss";
 import { showErrorToast, showSuccessToast } from "../../../utils/util_toastify";
 import { apostfile } from "../../../utils/util_axios";
@@ -100,7 +101,7 @@ export default function EmployeesEditPage() {
               backgroundImage: `url(${
                 imagePreview
                   ? imagePreview
-                  : "/src/assets/pages/Employees/EmployeesAddPage/ImageUpload.png"
+                  : logo
               })`,
             }}
           >
@@ -281,3 +282,4 @@ export default function EmployeesEditPage() {
     </div>
   );
 }
+
