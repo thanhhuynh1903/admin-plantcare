@@ -14,6 +14,11 @@ import MapsChartOrders from "./MapsChartOrders";
 import MapsCustomers from "./MapsCustomers";
 import MapsSales from "./MapsSales";
 
+import TotalOrders from '@assets/pages/Dashboard/TotalOrders.png';
+import TotalDelivered from '@assets/pages/Dashboard/TotalDelivered.png';
+import TotalCancelled from '@assets/pages/Dashboard/TotalCancelled.png';
+import TotalRevenue from '@assets/pages/Dashboard/TotalRevenue.png';
+
 const StatisticItem = ({ icon, number, label, increase }) => {
   return (
     <div className="statistic-item">
@@ -80,45 +85,25 @@ export default function DashboardPage() {
         </div>
         <div className="statistic-row">
           <StatisticItem
-            icon={
-              <img
-                src="/src/assets/pages/Dashboard/TotalOrders.png"
-                alt="TotalOrders"
-              />
-            }
+            icon={<img src={TotalOrders} alt="TotalOrders" />}
             number={formatNumber(100)}
             label="Total orders"
             increase={10}
           />
           <StatisticItem
-            icon={
-              <img
-                src="/src/assets/pages/Dashboard/TotalDelivered.png"
-                alt="TotalDelivered"
-              />
-            }
+            icon={<img src={TotalDelivered} alt="TotalDelivered" />}
             number={formatNumber(100)}
             label="Total delivered"
             increase={10}
           />
           <StatisticItem
-            icon={
-              <img
-                src="/src/assets/pages/Dashboard/TotalCancelled.png"
-                alt="TotalCancelled"
-              />
-            }
+            icon={<img src={TotalCancelled} alt="TotalCancelled" />}
             number={formatNumber(100)}
             label="Total cancelled"
             increase={10}
           />
           <StatisticItem
-            icon={
-              <img
-                src="/src/assets/pages/Dashboard/TotalRevenue.png"
-                alt="TotalRevenue"
-              />
-            }
+            icon={<img src={TotalRevenue} alt="TotalRevenue" />}
             number={`${formatNumber(1000000)}đ`}
             label="Total revenue (VND)"
             increase={10}
@@ -156,3 +141,4 @@ export default function DashboardPage() {
     </div>
   );
 }
+

@@ -16,6 +16,8 @@ import {
 import ConfirmationNumberOutlinedIcon from "@mui/icons-material/ConfirmationNumberOutlined";
 import { Link, useLocation } from "react-router-dom";
 
+import logo from '@assets/logo.png';
+
 export default function SideBar() {
   const location = useLocation(); // Hook to get the current location
   const [isCollapsed, setIsCollapsed] = useState(false); // State to control sidebar collapse
@@ -82,7 +84,7 @@ export default function SideBar() {
         <div className="logo-container">
           <img
             className={`logo ${isCollapsed ? "logo-collapsed" : ""}`}
-            src="/src/assets/logo.png"
+            src={logo}
             alt="everfresh logo"
           />
           {!isCollapsed && <p>Admin Dashboard</p>}

@@ -13,11 +13,10 @@ import {
 import TextAreaBasic from "../commons/TextAreaBasic/TextAreaBasic";
 import SwitchBasic from "../commons/SwitchBasic/SwitchBasic";
 import { setPageHeadTitle } from "../../utils/util_web";
+import logo from "@assets/logo.png";
 
 export default function SettingsPage() {
-	const [logo, setLogo] = useState("/src/assets/logo.png");
-
-  const [appName, setAppName] = useState("everfresh");
+	const [appName, setAppName] = useState("everfresh");
   const [timeZone, setTimeZone] = useState(getTimeZones()[0]);
   const [countryLanguage, setCountryLanguage] = useState(
     getCountryLanguages()[0]
@@ -241,3 +240,4 @@ export default function SettingsPage() {
     </div>
   );
 }
+
