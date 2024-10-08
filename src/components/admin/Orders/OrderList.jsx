@@ -17,19 +17,20 @@ import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import FilterModal from "./FilterModal";
-function createData(id, name, calories, fat, carbs, protein, options) {
+import "./OrderList.scss";
+import CircleRoundedIcon from "@mui/icons-material/CircleRounded";
+function createData(id, name, calories, fat, carbs, options) {
   return {
     id,
     name,
     calories,
     fat,
     carbs,
-    protein,
     options,
   };
 }
@@ -38,260 +39,286 @@ const rows = [
   createData(
     1,
     "Cupcake",
-    305,
-    3.7,
-    67,
-    4.3,
+    "Active",
+    "Paid",
+    "200.000",
     <div
       style={{
-        zIndex:10,
+        zIndex: 10,
         display: "flex",
-        width: "75%",
-        justifyContent: "space-between",
+        width: "100%",
+        justifyContent: "end",
         alignItems: "center",
       }}
     >
-      <Typography component={Link} to="/orders/orderdetail"> View more</Typography>
+      <Typography component={Link} to="/orders/orderdetail" sx={{margin:'auto'}}>
+        {" "}
+        View more
+      </Typography>
       <MoreVertIcon />
     </div>
   ),
   createData(
     2,
-    "Donut",
-    452,
-    25.0,
-    51,
-    4.9,
+    "Cupcake",
+    "Inactive",
+    "Unpaid",
+    "200.000",
     <div
       style={{
-        zIndex:10,
+        zIndex: 10,
         display: "flex",
-        width: "75%",
-        justifyContent: "space-between",
+        width: "100%",
+        justifyContent: "end",
         alignItems: "center",
       }}
     >
-      <Typography component={Link} to="/orders/orderdetail"> View more</Typography>
+      <Typography component={Link} to="/orders/orderdetail" sx={{margin:'auto'}}>
+        {" "}
+        View more
+      </Typography>
       <MoreVertIcon />
     </div>
   ),
   createData(
     3,
-    "Eclair",
-    262,
-    16.0,
-    24,
-    6.0,
-    <div
-    style={{
-      zIndex:10,
-      display: "flex",
-      width: "75%",
-      justifyContent: "space-between",
-      alignItems: "center",
-    }}
-  >
-    <Typography component={Link} to="/orders/orderdetail"> View more</Typography>
-    <MoreVertIcon />
-  </div>
-  ),
-  createData(
-    4,
-    "Frozen yoghurt",
-    159,
-    6.0,
-    24,
-    4.0,
-    <div
-    style={{
-      zIndex:10,
-      display: "flex",
-      width: "75%",
-      justifyContent: "space-between",
-      alignItems: "center",
-    }}
-  >
-    <Typography component={Link} to="/orders/orderdetail"> View more</Typography>
-    <MoreVertIcon />
-  </div>
-  ),
-  createData(
-    5,
-    "Gingerbread",
-    356,
-    16.0,
-    49,
-    3.9,
-    <div
-    style={{
-      zIndex:10,
-      display: "flex",
-      width: "75%",
-      justifyContent: "space-between",
-      alignItems: "center",
-    }}
-  >
-    <Typography component={Link} to="/orders/orderdetail"> View more</Typography>
-    <MoreVertIcon />
-  </div>
-  ),
-  createData(
-    6,
-    "Honeycomb",
-    408,
-    3.2,
-    87,
-    6.5,
-    <div
-    style={{
-      zIndex:10,
-      display: "flex",
-      width: "75%",
-      justifyContent: "space-between",
-      alignItems: "center",
-    }}
-  >
-    <Typography component={Link} to="/orders/orderdetail"> View more</Typography>
-    <MoreVertIcon />
-  </div>
-  ),
-  createData(
-    7,
-    "Ice cream sandwich",
-    237,
-    9.0,
-    37,
-    4.3,
-    <div
-    style={{
-      zIndex:10,
-      display: "flex",
-      width: "75%",
-      justifyContent: "space-between",
-      alignItems: "center",
-    }}
-  >
-    <Typography component={Link} to="/orders/orderdetail"> View more</Typography>
-    <MoreVertIcon />
-  </div>
-  ),
-  createData(
-    8,
-    "Jelly Bean",
-    375,
-    0.0,
-    94,
-    0.0,
-    <div
-    style={{
-      zIndex:10,
-      display: "flex",
-      width: "75%",
-      justifyContent: "space-between",
-      alignItems: "center",
-    }}
-  >
-    <Typography component={Link} to="/orders/orderdetail"> View more</Typography>
-    <MoreVertIcon />
-  </div>
-  ),
-  createData(
-    9,
-    "KitKat",
-    518,
-    26.0,
-    65,
-    7.0,
+    "Cupcake",
+    "Active",
+    "Overdue",
+    "200.000",
     <div
       style={{
-        zIndex:10,
+        zIndex: 10,
         display: "flex",
-        width: "75%",
-        justifyContent: "space-between",
+        width: "100%",
+        justifyContent: "end",
         alignItems: "center",
       }}
     >
-      <Typography component={Link} to="/orders/orderdetail"> View more</Typography>
+      <Typography component={Link} to="/orders/orderdetail" sx={{margin:'auto'}}>
+        {" "}
+        View more
+      </Typography>
+      <MoreVertIcon />
+    </div>
+  ),
+  createData(
+    4,
+    "Cupcake",
+    "Active",
+    "Paid",
+    "200.000",
+    <div
+      style={{
+        zIndex: 10,
+        display: "flex",
+        width: "100%",
+        justifyContent: "end",
+        alignItems: "center",
+      }}
+    >
+      <Typography component={Link} to="/orders/orderdetail" sx={{margin:'auto'}}>
+        {" "}
+        View more
+      </Typography>
+      <MoreVertIcon />
+    </div>
+  ),
+  createData(
+    5,
+    "Cupcake",
+    "Active",
+    "Paid",
+    "200.000",
+    <div
+      style={{
+        zIndex: 10,
+        display: "flex",
+        width: "100%",
+        justifyContent: "end",
+        alignItems: "center",
+      }}
+    >
+      <Typography component={Link} to="/orders/orderdetail" sx={{margin:'auto'}}>
+        {" "}
+        View more
+      </Typography>
+      <MoreVertIcon />
+    </div>
+  ),
+  createData(
+    6,
+    "Cupcake",
+    "Active",
+    "Paid",
+    "200.000",
+    <div
+      style={{
+        zIndex: 10,
+        display: "flex",
+        width: "100%",
+        justifyContent: "end",
+        alignItems: "center",
+      }}
+    >
+      <Typography component={Link} to="/orders/orderdetail" sx={{margin:'auto'}}>
+        {" "}
+        View more
+      </Typography>
+      <MoreVertIcon />
+    </div>
+  ),
+  createData(
+    7,
+    "Cupcake",
+    "Active",
+    "Paid",
+    "200.000",
+    <div
+      style={{
+        zIndex: 10,
+        display: "flex",
+        width: "100%",
+        justifyContent: "end",
+        alignItems: "center",
+      }}
+    >
+      <Typography component={Link} to="/orders/orderdetail" sx={{margin:'auto'}}>
+        {" "}
+        View more
+      </Typography>
+      <MoreVertIcon />
+    </div>
+  ),
+  createData(
+    8,
+    "Cupcake",
+    "Active",
+    "Paid",
+    "200.000",
+    <div
+      style={{
+        zIndex: 10,
+        display: "flex",
+        width: "100%",
+        justifyContent: "end",
+        alignItems: "center",
+      }}
+    >
+      <Typography component={Link} to="/orders/orderdetail" sx={{margin:'auto'}}>
+        {" "}
+        View more
+      </Typography>
+      <MoreVertIcon />
+    </div>
+  ),
+  createData(
+    9,
+    "Cupcake",
+    "Active",
+    "Paid",
+    "200.000",
+    <div
+      style={{
+        zIndex: 10,
+        display: "flex",
+        width: "100%",
+        justifyContent: "end",
+        alignItems: "center",
+      }}
+    >
+      <Typography component={Link} to="/orders/orderdetail" sx={{margin:'auto'}}>
+        {" "}
+        View more
+      </Typography>
       <MoreVertIcon />
     </div>
   ),
   createData(
     10,
-    "Lollipop",
-    392,
-    0.2,
-    98,
-    0.0,
+    "Cupcake",
+    "Active",
+    "Paid",
+    "200.000",
     <div
       style={{
-        zIndex:10,
+        zIndex: 10,
         display: "flex",
-        width: "75%",
-        justifyContent: "space-between",
+        width: "100%",
+        justifyContent: "end",
         alignItems: "center",
       }}
     >
-      <Typography component={Link} to="/orders/orderdetail"> View more</Typography>
+      <Typography component={Link} to="/orders/orderdetail" sx={{margin:'auto'}}>
+        {" "}
+        View more
+      </Typography>
       <MoreVertIcon />
     </div>
   ),
   createData(
     11,
-    "Marshmallow",
-    318,
-    0,
-    81,
-    2.0,
-    <div
-    style={{
-      zIndex:10,
-      display: "flex",
-      width: "75%",
-      justifyContent: "space-between",
-      alignItems: "center",
-    }}
-  >
-    <Typography component={Link} to="/orders/orderdetail"> View more</Typography>
-    <MoreVertIcon />
-  </div>
-  ),
-  createData(
-    12,
-    "Nougat",
-    360,
-    19.0,
-    9,
-    37.0,
+    "Cupcake",
+    "Active",
+    "Paid",
+    "200.000",
     <div
       style={{
-        zIndex:10,
+        zIndex: 10,
         display: "flex",
-        width: "75%",
-        justifyContent: "space-between",
+        width: "100%",
+        justifyContent: "end",
         alignItems: "center",
       }}
     >
-      <Typography component={Link} to="/orders/orderdetail"> View more</Typography>
+      <Typography component={Link} to="/orders/orderdetail" sx={{margin:'auto'}}>
+        {" "}
+        View more
+      </Typography>
+      <MoreVertIcon />
+    </div>
+  ),
+  createData(
+    12,
+    "Cupcake",
+    "Active",
+    "Paid",
+    "200.000",
+    <div
+      style={{
+        zIndex: 10,
+        display: "flex",
+        width: "100%",
+        justifyContent: "end",
+        alignItems: "center",
+      }}
+    >
+      <Typography component={Link} to="/orders/orderdetail" sx={{margin:'auto'}}>
+        {" "}
+        View more
+      </Typography>
       <MoreVertIcon />
     </div>
   ),
   createData(
     13,
-    "Oreo",
-    437,
-    18.0,
-    63,
-    4.0,
+    "Cupcake",
+    "Active",
+    "Paid",
+    "200.000",
     <div
       style={{
-        zIndex:10,
+        zIndex: 10,
         display: "flex",
-        width: "75%",
-        justifyContent: "space-between",
+        width: "100%",
+        justifyContent: "end",
         alignItems: "center",
       }}
     >
-      <Typography component={Link} to="/orders/orderdetail"> View more</Typography>
+      <Typography component={Link} to="/orders/orderdetail" sx={{margin:'auto'}}>
+        {" "}
+        View more
+      </Typography>
       <MoreVertIcon />
     </div>
   ),
@@ -337,12 +364,6 @@ const headCells = [
     numeric: true,
     disablePadding: false,
     label: "PRICE",
-  },
-  {
-    id: "protein",
-    numeric: true,
-    disablePadding: false,
-    label: "",
   },
   {
     id: "options",
@@ -440,12 +461,19 @@ function EnhancedTableToolbar(props) {
           </IconButton>
         </Tooltip>
       ) : (
-        <Box >
-        <Tooltip title="Filter list">
-          <IconButton sx={{paddingX:"10px", paddingY:"15px", borderColor:"#C6C2DE",borderRadius:"10px"}}>
-            <FilterModal/>
-          </IconButton>
-        </Tooltip>
+        <Box>
+          <Tooltip title="Filter list">
+            <IconButton
+              sx={{
+                paddingX: "10px",
+                paddingY: "15px",
+                borderColor: "#C6C2DE",
+                borderRadius: "10px",
+              }}
+            >
+              <FilterModal />
+            </IconButton>
+          </Tooltip>
         </Box>
       )}
 
@@ -460,13 +488,24 @@ function EnhancedTableToolbar(props) {
         </Typography>
       ) : (
         <Typography
-          sx={{ display:"flex", width:"100%" ,justifyContent:"end"}}
+          sx={{ display: "flex", width: "100%", justifyContent: "end" }}
           variant="h6"
           id="tableTitle"
           component="div"
         >
-          <Box sx={{marginRight:"20px",fontSize:"15px",background:"#009e71",fontWeight:"bold",color:"#FFF",paddingX:"8px",paddingY:"10px",borderRadius:"10px" }}>
-          PAY DUES
+          <Box
+            sx={{
+              marginRight: "20px",
+              fontSize: "15px",
+              background: "#009e71",
+              fontWeight: "bold",
+              color: "#FFF",
+              paddingX: "8px",
+              paddingY: "10px",
+              borderRadius: "10px",
+            }}
+          >
+            PAY DUES
           </Box>
         </Typography>
       )}
@@ -577,7 +616,7 @@ export default function OrderList() {
                     tabIndex={-1}
                     key={row.id}
                     selected={isItemSelected}
-                    sx={{ cursor: "pointer",zIndex:5 }}
+                    sx={{ cursor: "pointer", zIndex: 5 }}
                   >
                     <TableCell padding="checkbox">
                       <Checkbox
@@ -596,12 +635,64 @@ export default function OrderList() {
                     >
                       {row.name}
                     </TableCell>
-                    <TableCell align="right">{row.calories}</TableCell>
-                    <TableCell align="right">{row.fat}</TableCell>
-                    <TableCell align="right">{row.carbs}</TableCell>
-                    <TableCell align="right">{row.protein}</TableCell>
-                    <TableCell align="right" sx={{ display: "flex" }}>
-                      {row.options}
+                    <TableCell align="right">
+                      <span
+                        style={{
+                          display: "inline-block",
+                          fontSize: "14px",
+                          padding: "3px 10px",
+                          borderRadius: "15px",
+                          backgroundColor:
+                            row.calories === "Active"
+                              ? "#F0F1FA"
+                              : row.calories === "Inactive"
+                              ? "#E9EDF5"
+                              : "#FAF0F3",
+                          color:
+                            row.calories === "Active"
+                              ? "#4F5AED"
+                              : row.calories === "Inactive"
+                              ? "#5A6376"
+                              : "#D12953",
+                        }}
+                      >
+                        <CircleRoundedIcon
+                          sx={{ marginTop: "5px", fontSize: "10px" }}
+                        />{" "}
+                        {row.calories}
+                      </span>
+                    </TableCell>
+                    <TableCell align="right">
+                      <span
+                        style={{
+                          display: "inline-block",
+                          fontSize: "14px",
+                          padding: "3px 10px",
+                          borderRadius: "15px",
+                          backgroundColor:
+                            row.fat === "Paid"
+                              ? "#CDFFCD"
+                              : row.fat === "Unpaid"
+                              ? "#FFECCC"
+                              : "#FFE0E0",
+
+                          color:
+                            row.fat === "Paid"
+                              ? "#007F00"
+                              : row.fat === "Unpaid"
+                              ? "#CE8500"
+                              : "#D12953",
+                        }}
+                      >
+                        <CircleRoundedIcon
+                          sx={{ marginTop: "5px", fontSize: "10px" }}
+                        />{" "}
+                        {row.fat}
+                      </span>
+                    </TableCell>
+                    <TableCell align="right" sx={{fontWeight:'bold'}}>{row.carbs} <br/> <p style={{fontSize:'12px', fontWeight:'bold',opacity:'0.5'}}>VND</p></TableCell>
+                    <TableCell align="right">
+                      {row.options}  
                     </TableCell>
                   </TableRow>
                 );
