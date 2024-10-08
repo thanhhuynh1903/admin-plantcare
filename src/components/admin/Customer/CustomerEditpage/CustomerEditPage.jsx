@@ -10,12 +10,13 @@ import {
   InputLabel,
   Checkbox,
   Box,
+  Modal
 } from "@mui/material";
 import "./CustomerEditPage.scss";
 import { showErrorToast, showSuccessToast } from "../../../utils/util_toastify";
 import { apostfile } from "../../../utils/util_axios";
 import TextFieldPassword from "../../commons/TextFieldPassword/TextFieldPassword";
-
+import ModalDelete from "../ModalDelete/ModalDelete";
 // Validation Schema using Yup
 const validationSchema = yup.object({
   lastName: yup.string().required("Last Name is required"),
@@ -41,6 +42,7 @@ const validationSchema = yup.object({
 export default function CustomerEditPage() {
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
+  const [open, setOpen] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -87,6 +89,10 @@ export default function CustomerEditPage() {
       setImagePreview(URL.createObjectURL(file));
     }
   };
+
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   return (
     <div className="employees-edit-page">
@@ -267,9 +273,10 @@ export default function CustomerEditPage() {
 
         {/* Action Buttons */}
         <div className="action-buttons">
-        <Button variant="outlined" color="error" className="cancel-button">
+        <Button variant="outlined" color="error" className="cancel-button" onClick={handleOpen}>
             Delete
           </Button>
+          
           {/* <Button variant="outlined" color="error" className="cancel-button">
             Cancel
           </Button>
@@ -281,8 +288,15 @@ export default function CustomerEditPage() {
           >
             Save
           </Button> */}
+           <Modal open={open} onClose={handleClose}>
+      <ModalDelete 
+          open={open} 
+          onClose={handleClose} 
+        />
+      </Modal>
         </div>
       </form>
     </div>
+    
   );
 }
