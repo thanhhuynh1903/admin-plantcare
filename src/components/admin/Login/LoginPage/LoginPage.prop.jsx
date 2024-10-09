@@ -18,15 +18,16 @@ export async function requestLoginAPI(email, password) {
   try {
     let res = await apost("/auth/login", { email: email, password: password });
 
+    console.log(res.data);
+
     if (res.status === 200) {
       return {
         status: 200,
-        data: res.data,
+        accessToken: res.data.accessToken,
       };
     } else {
       return {
         status: 400,
-        message: res.data.message,
       };
     }
   } catch (err) {
