@@ -77,8 +77,8 @@ export default function LoginPage() {
 
     try {
       let res = await requestLoginAPI(state.email, state.password);
+
       if (res.status === 200) {
-        
         setCookie("e_token", res.accessToken, state.rememberMe ? 90 : 1);
         window.location.href = '/'
       } else {

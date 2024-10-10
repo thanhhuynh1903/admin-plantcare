@@ -15,27 +15,46 @@ export async function requestLoginAPI(email, password) {
     };
   }
 
-  try {
-    let res = await apost("/auth/login", { email: email, password: password });
+  let res = await apost("/auth/login", { email: email, password: password })
+    .then((res) => {
+      if (res.status === 200) {
+        return {
+          status: 200,
+          message: "Login successful",
+          accessToken: res.data.accessToken,
+        };
+      }
+    })
+    .catch((err) => {
+      if (err.response.status === 400) {
+        return {
+          status: 400,
+          message: "Email and password are required",
+        };
+      } else if (err.response.status === 401) {
+        return {
+          status: 401,
+          message: "Invalid login credentials. Try again",
+        };
+      } else if (err.response.status === 404) {
+        return {
+          status: 404,
+          message: "User not found. Try again",
+        };
+      } else if (err.response.status === 500) {
+        return {
+          status: 500,
+          message: "Internal server error. Try again",
+        };
+      } else {
+        return {
+          status: 500,
+          message: "Internal server error. Try again",
+        };
+      }
+    });
 
-    console.log(res.data);
-
-    if (res.status === 200) {
-      return {
-        status: 200,
-        accessToken: res.data.accessToken,
-      };
-    } else {
-      return {
-        status: 400,
-      };
-    }
-  } catch (err) {
-    return {
-      status: 404,
-      message: "An error has occured. Please try again later.",
-    };
-  }
+  return res;
 }
 
 export function validateEmail(email) {
