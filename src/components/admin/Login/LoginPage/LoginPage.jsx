@@ -12,7 +12,7 @@ import {
 } from "./LoginPage.prop";
 import { useNavigate } from "react-router-dom";
 import logo from "@assets/logo.png";
-import { setCookie } from "../../../utils/util_cookie";
+import { setCookie } from "@utils/util_cookie";
 
 const initialState = {
   errorState: "",
@@ -79,7 +79,7 @@ export default function LoginPage() {
       let res = await requestLoginAPI(state.email, state.password);
       if (res.status === 200) {
         
-        setCookie("e_token", res.accessToken);
+        setCookie("e_token", res.accessToken, state.rememberMe ? 90 : 1);
         window.location.href = '/'
       } else {
         dispatch({ type: "SET_ERROR_STATE", payload: res.message });

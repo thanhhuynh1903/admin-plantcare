@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Menu, MenuItem, ListItemIcon } from "@mui/material";
 import { Input, TextField } from "@mui/material";
 import { SearchOutlined } from "@mui/icons-material";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
@@ -6,16 +7,19 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import LogoutIcon from "@mui/icons-material/Logout";
 import "./NavBar.scss";
 import NotificationMenu from "./NotificationMenu";
 import { getMessageListAPI, getNotificationListAPI } from "./NavBar.prop";
 import MessageMenu from "./MessageMenu";
-
 import avatar from '@assets/avatar.jpg';
+import {deleteCookie} from "@utils/util_cookie"
 
 export default function NavBar() {
   const [anchorElNotifications, setAnchorElNotifications] = useState(null);
   const [anchorElMessages, setAnchorElMessages] = useState(null);
+  const [anchorElUserMenu, setAnchorElUserMenu] = useState(null);
 
   const [notifications, setNotifications] = useState([]);
   const [messages, setMessages] = useState([]);
@@ -31,6 +35,19 @@ export default function NavBar() {
   const handleClose = () => {
     setAnchorElNotifications(null);
     setAnchorElMessages(null);
+  };
+
+  const handleUserMenuClick = (event) => {
+    setAnchorElUserMenu(event.currentTarget);
+  };
+
+  const handleUserMenuClose = () => {
+    setAnchorElUserMenu(null);
+  };
+
+  const logout = () => {
+    deleteCookie("e_token");
+    window.location.reload();
   };
 
   const tools = [
@@ -133,11 +150,30 @@ export default function NavBar() {
             <p className="user-role">Admin</p>
           </div>
           <div className="user-btn-settings">
-            <div className="btn-settings">
+            <div className="btn-settings" onClick={handleUserMenuClick}>
               <ArrowDropDownIcon />
             </div>
           </div>
         </div>
+
+        <Menu
+          anchorEl={anchorElUserMenu}
+          open={Boolean(anchorElUserMenu)}
+          onClose={handleUserMenuClose}
+        >
+          <MenuItem onClick={handleUserMenuClose}>
+            <ListItemIcon>
+              <AccountCircleIcon fontSize="small" />
+            </ListItemIcon>
+            Profile
+          </MenuItem>
+          <MenuItem onClick={logout}>
+            <ListItemIcon>
+              <LogoutIcon fontSize="small" />
+            </ListItemIcon>
+            Logout
+          </MenuItem>
+        </Menu>
       </div>
     </div>
   );
