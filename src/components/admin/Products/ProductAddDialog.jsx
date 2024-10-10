@@ -62,7 +62,7 @@ export default function ProductAddDialog({
   };
 
   const isFormValid = useMemo(() => {
-    return Object.values(formData).every((value) => value.trim() !== "");
+    return Object.values(formData).every((value) => value && value.trim() !== "");
   }, [formData]);
 
   const handleSubmit = () => {

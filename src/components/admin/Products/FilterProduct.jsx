@@ -22,7 +22,7 @@ export default function FilterProduct({ data, selectedFilterType, handleChangeFi
         aria-label="order status tabs"
       >
         <Tab value={0} label="All" />
-        <Tab value={1} label="Instock" />
+        <Tab value={1} label="In stock" />
         <Tab value={2} label="Out of stock" />
         <Tab value={3} label="Unknown" />
       </Tabs>

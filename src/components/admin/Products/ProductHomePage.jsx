@@ -1,4 +1,4 @@
-import { Button, Typography } from "@mui/material";
+import { Button } from "@mui/material";
 import "./ProductHomePage.scss";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import SortOutlinedIcon from "@mui/icons-material/SortOutlined";
@@ -7,10 +7,8 @@ import KeyboardArrowRightOutlinedIcon from "@mui/icons-material/KeyboardArrowRig
 import { useEffect, useState } from "react";
 import { setPageHeadTitle } from "../../utils/util_web";
 import ProductBudget from "./ProductBudget";
-import { Link } from "react-router-dom";
 import ProductList from "./ProductList";
 import FilterProduct from "./FilterProduct";
-import logo from "@assets/logo.png";
 import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
 import { aget } from "../../utils/util_axios";
 import ProductAddDialog from "./ProductAddDialog";

@@ -14,5 +14,10 @@
     .btn-save {
         background-color: $primary-color;
         color: #FFF;
+
+        &:disabled {
+            background-color: #b3b3b3;
+            color: #FFF;
+        }
     }
 }
