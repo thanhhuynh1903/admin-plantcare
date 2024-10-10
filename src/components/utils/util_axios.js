@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getCookie } from "./util_cookie";
 
 const MASTER_URL = "https://everfresh-server.onrender.com/api";
 
@@ -10,10 +11,11 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
+  const token = getCookie("e_token");
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+  
   return config;
 }, (error) => {
   return Promise.reject(error);

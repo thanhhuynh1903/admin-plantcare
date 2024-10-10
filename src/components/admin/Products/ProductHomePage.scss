@@ -25,6 +25,12 @@
   }
 
   .btn {
+
+    &-add-product {
+      background-color: $primary-color;
+      color: #FFF;
+    }
+
     &-tool {
       background-color: #fff;
       border-radius: 9px;

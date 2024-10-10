@@ -42,5 +42,18 @@
 
     .dialog-content {
         overflow-y: auto;
+        max-height: 80vh;
+
+        @media (max-height: 800px) {
+            max-height: 70vh;
+        }
+
+        @media (max-height: 700px) {
+            max-height: 60vh;
+        }
+
+        @media (max-height: 600px) {
+            max-height: 50vh;
+        }
     }
 }

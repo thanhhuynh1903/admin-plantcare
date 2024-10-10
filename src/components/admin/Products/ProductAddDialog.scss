@@ -1,0 +1,18 @@
+@import "@scss/common.scss";
+
+.product-add-dialog {
+
+    .dialog-content {
+        padding: 20px 2rem;  
+    }
+
+    .btn-cancel {
+        background-color: #ff5454;
+        color: #FFF;
+    }
+
+    .btn-save {
+        background-color: $primary-color;
+        color: #FFF;
+    }
+}
