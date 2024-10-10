@@ -78,7 +78,7 @@ const protectedRoutes = [
   { path: "/employees", element: <EmployeesHomePage /> },
   { path: "/products", element: <ProductHomepage /> },
   { path: "/customers", element: <CustomerHomepage /> },
-  { path: "/customers/edit/:id", element: <CustomerEditPage /> },
+  { path: "/customers/edit/:userId", element: <CustomerEditPage /> },
   { path: "/employees/add", element: <EmployeeAddPage /> },
   { path: "/employees/edit/:id", element: <EmployeesEditPage /> },
   { path: "/orders", element: <OrderHomePage /> },
