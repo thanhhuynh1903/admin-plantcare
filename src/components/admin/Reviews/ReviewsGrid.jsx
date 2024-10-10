@@ -3,10 +3,10 @@ import { Grid, Container, Box, Pagination, Typography } from "@mui/material";
 import ReviewCard from "./ReviewCard";
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import AppsOutlinedIcon from '@mui/icons-material/AppsOutlined';
-import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import { setPageHeadTitle } from "../../utils/util_web";
 import ReviewsTable from "./ReviewsTable";
+import FilterPoppup from "./FilterPoppup";
 
 const reviews = [
   {
@@ -100,7 +100,7 @@ const reviews = [
     text: "Lorem ipsum...",
   },
   {
-    id: 5,
+    id: 10,
     author: "John E.",
     avatar: "/path/to/avatar.jpg",
     date: "29/05/2023",
@@ -113,15 +113,15 @@ const reviews = [
 ];
 
 const ReviewsGrid = () => {
-  const [page, setPage] = React.useState(1);
+  const [page, setPage] = useState(1);
   const reviewsPerPage = 8;
-  const [viewMode, setViewMode] = React.useState('grid'); // State to manage view mode
+  const [viewMode, setViewMode] = useState('grid'); // State to manage view mode
+  const [sortBy, setSortBy] = useState('Default');
   const totalPages = Math.ceil(reviews.length / reviewsPerPage);
 
   const handleChange = (event, value) => {
     setPage(value);
   };
-  console.log(viewMode);
   
   const toggleViewMode = (mode) => {
     setViewMode(mode);
@@ -129,33 +129,30 @@ const ReviewsGrid = () => {
 
   const startIndex = (page - 1) * reviewsPerPage + 1;
   const endIndex = Math.min(page * reviewsPerPage, reviews.length);
-
-console.log(viewMode);
-
   
   useEffect(() => {
     setPageHeadTitle("Review");
     // setEmployees(initialEmployeeData);
   }, []);
+
   return (
     <Box sx={{ maxWidth: 1100, margin: 'auto' }} >
       <Typography variant="h4" component="h1" gutterBottom>
         Review - View all ratings
       </Typography>
       <Box display="flex" justifyContent="end" mb={2}>
+    
         <Box
           sx={{
             backgroundColor: viewMode === 'filter' ? "#CFCFCF" : "#FFF",
             marginX: "5px",
-            paddingTop: "2px",
-            paddingX: "6px",
             border: "1px solid #E0E0E0",
             borderRadius: "10px",
             cursor: "pointer"
           }}
-          onClick={() => toggleViewMode('filter')}
+        
         >
-          <FilterAltOutlinedIcon />
+           <FilterPoppup setSortBy={setSortBy}/>
         </Box>
         <Box
           sx={{
@@ -211,12 +208,9 @@ console.log(viewMode);
       </Box>
       </div>
       : 
-      viewMode === "table" ?
+      viewMode === "table" &&
       <ReviewsTable/>
-      :
-      <div>
-        filter
-      </div>
+      
       }
     </Box>
   );
