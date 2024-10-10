@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   IconButton,
@@ -16,7 +16,6 @@ const ModalPopup = ({ employee }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [openModal, setOpenModal] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
-
   const handleOpenDelete = () => setOpenDelete(true);
   const handleCloseDelete = () => setOpenDelete(false);
   const handleClick = (event) => {
@@ -42,7 +41,10 @@ const ModalPopup = ({ employee }) => {
 
   return (
     <div>
-      <IconButton onClick={handleClick} sx={{ padding: "0px", zIndex: 10 }}>
+      <IconButton
+        onClick={handleClick}
+        sx={{ padding: "0px", zIndex: open ? 10 : 4 }}
+      >
         {open ? <HighlightOffOutlinedIcon /> : <MoreVertIcon />}
       </IconButton>
       <Popover
@@ -54,7 +56,7 @@ const ModalPopup = ({ employee }) => {
           vertical: "bottom",
           horizontal: "left",
         }}
-        sx={{ left: "-90px", top: "-5px", zIndex: 5 }}
+        sx={{ left: "-120px", top: "-5px", zIndex: 5 }}
       >
         <Box sx={{ p: 2, width: "150px !important" }}>
           <Typography
@@ -69,14 +71,11 @@ const ModalPopup = ({ employee }) => {
                         <DeleteIcon />
                       </IconButton>
                     </TableCell> */}
-            <Link to={`/customers/edit/${employee.id}`} className="edit-link">
+            <Link to={`/customers/edit/${employee._id}`} className="edit-link">
               View Profile
             </Link>
           </Typography>
-          <Typography
-            onClick={handleOpenModal}
-            sx={{ cursor: "pointer", mb: 1 }}
-          >
+          <Typography sx={{ cursor: "pointer", mb: 1 }}>
             Activate User
           </Typography>
           <hr style={{ borderColor: "#FFF" }} />
@@ -89,10 +88,7 @@ const ModalPopup = ({ employee }) => {
         </Box>
       </Popover>
       <Modal open={openDelete} onClose={handleCloseDelete}>
-      <ModalDelete 
-          open={openDelete} 
-          onClose={handleCloseDelete} 
-        />
+        <ModalDelete open={openDelete} onClose={handleCloseDelete} />
       </Modal>
     </div>
   );

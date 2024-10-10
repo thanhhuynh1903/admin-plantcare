@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-import { useFormik } from "formik";
-import * as yup from "yup";
+import React, { useState, useEffect } from "react";
 import {
   TextField,
   Button,
@@ -9,7 +7,7 @@ import {
   FormControl,
   InputLabel,
   Box,
-  Modal
+  Modal,
 } from "@mui/material";
 import "./CustomerEditPage.scss";
 import { showErrorToast, showSuccessToast } from "../../../utils/util_toastify";
@@ -17,70 +15,34 @@ import { apostfile } from "../../../utils/util_axios";
 import TextFieldPassword from "../../commons/TextFieldPassword/TextFieldPassword";
 import ModalDelete from "../ModalDelete/ModalDelete";
 import logo from "@assets/pages/Employees/EmployeesAddPage/ImageUpload.png";
-// Validation Schema using Yup
-const validationSchema = yup.object({
-  lastName: yup.string().required("Last Name is required"),
-  firstName: yup.string().required("First Name is required"),
-  dob: yup.string().required("Date of Birth is required"),
-  email: yup
-    .string()
-    .email("Enter a valid email")
-    .required("Email is required"),
-  address: yup.string().required("Address is required"),
-  contactNumber: yup
-    .string()
-    .matches(/^[0-9]+$/, "Contact Number must be digits")
-    .required("Contact Number is required"),
-  city: yup.string().required("City is required"),
-  state: yup.string().required("State is required"),
-  password: yup
-    .string()
-    .min(8, "Password should be of minimum 8 characters length")
-    .required("Password is required"),
-});
+import { aget } from "../../../utils/util_axios";
+import { useParams } from "react-router-dom";
+
+// Validation schema removed since we're not using formik anymore
 
 export default function CustomerEditPage() {
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
   const [open, setOpen] = useState(false);
-
-  const formik = useFormik({
-    initialValues: {
-      lastName: "Bozorgi",
-      firstName: "Mehrab",
-      dob: "19/02/2003",
-      email: "Mehrabbozorgi.business@gmail.com",
-      address: "33062 Zboncak Isle",
-      contactNumber: "58077.79",
-      city: "Mehrab",
-      state: "Bozorgi",
-      password: "sbdfbnd65sfdvb s",
-      emailVerified: true,
-      passwordVerified: true,
-    },
-    validationSchema: validationSchema,
-    onSubmit: (values) => {
-      const formData = new FormData();
-      formData.append("lastName", values.lastName);
-      formData.append("firstName", values.firstName);
-      formData.append("dob", values.dob);
-      formData.append("email", values.email);
-      formData.append("address", values.address);
-      formData.append("contactNumber", values.contactNumber);
-      formData.append("city", values.city);
-      formData.append("state", values.state);
-      formData.append("password", values.password);
-      formData.append("image", image);
-
-      apostfile("/api/employee/add", formData, (res) => {
-        if (res.status === 200) {
-          showSuccessToast("Employee added successfully");
-        } else {
-          showErrorToast(res.data.message);
-        }
-      });
-    },
+  const [profile, setProfile] = useState({});
+  const [formData, setFormData] = useState({
+    lastName: "",
+    firstName: "",
+    dob: "",
+    email: "",
+    address: "",
+    contactNumber: "",
+    city: "",
+    state: "",
+    password: "",
   });
+
+  let { userId } = useParams();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -90,26 +52,85 @@ export default function CustomerEditPage() {
     }
   };
 
+  useEffect(() => {
+    fetchUserId();
+  }, []);
+
+  const formatDate = (timestamp) => {
+    const date = new Date(timestamp);
+    return date.toLocaleDateString();
+  };
+
+  const fetchUserId = async () => {
+    try {
+      const response = await aget(`/users/${userId}`);
+      const userData = response.data;
+      setProfile(userData);
+      setFormData({
+        lastName: userData?.name?.split(" ")[0] || "",
+        firstName: userData?.name?.split(" ")[1] || "",
+        dob: formatDate(userData.createdAt),
+        email: userData.email || "",
+        address: "33062 Zboncak Isle",
+        contactNumber: "58077.79",
+        city: "Mehrab",
+        state: "Bozorgi",
+        password: userData.password || "",
+      });
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      throw error;
+    }
+  };
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = new FormData();
+    data.append("lastName", formData.lastName);
+    data.append("firstName", formData.firstName);
+    data.append("dob", formData.dob);
+    data.append("email", formData.email);
+    data.append("address", formData.address);
+    data.append("contactNumber", formData.contactNumber);
+    data.append("city", formData.city);
+    data.append("state", formData.state);
+    data.append("password", formData.password);
+    data.append("image", image);
+
+    // Implement the submission logic here
+    // For example, you could call the API to update the user
+    try {
+      await apostfile("/users/update", data); // Adjust the endpoint accordingly
+      showSuccessToast("User updated successfully!");
+    } catch (error) {
+      showErrorToast("Failed to update user.");
+    }
+  };
 
   return (
     <div className="employees-edit-page">
       <p className="main-label">Customer Detail</p>
 
-      <form onSubmit={formik.handleSubmit} className="form-container">
+      <form onSubmit={handleSubmit} className="form-container">
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div style={{fontSize:'32px', fontWeight:600,display:'flex',alignItems:'center'}}>Profile customer</div>
+          <div
+            style={{
+              fontSize: "32px",
+              fontWeight: 600,
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            Profile customer
+          </div>
           <div>
             <div
               className="input-file-avatar"
               style={{
-                backgroundImage: `url(${
-                  imagePreview
-                    ? imagePreview
-                    : logo
-                })`,
+                backgroundImage: `url(${imagePreview ? imagePreview : logo})`,
               }}
             >
               <input
@@ -119,7 +140,6 @@ export default function CustomerEditPage() {
                 style={{ display: "none" }}
                 onChange={handleImageChange}
               />
-
               <label
                 htmlFor="employees-edit-input-avatar"
                 className="input-file-avatar-btn"
@@ -137,13 +157,11 @@ export default function CustomerEditPage() {
             margin="normal"
             id="firstName"
             name="firstName"
-            value={formik.values.firstName}
-            onChange={formik.handleChange}
-            error={formik.touched.firstName && Boolean(formik.errors.firstName)}
-            helperText={formik.touched.firstName && formik.errors.firstName}
+            value={formData.firstName}
+            onChange={handleChange}
+            // Add error handling if needed
           />
 
-          {/* Form Fields */}
           <TextField
             label="Last Name"
             variant="outlined"
@@ -151,41 +169,36 @@ export default function CustomerEditPage() {
             margin="normal"
             id="lastName"
             name="lastName"
-            value={formik.values.lastName}
-            onChange={formik.handleChange}
-            error={formik.touched.lastName && Boolean(formik.errors.lastName)}
-            helperText={formik.touched.lastName && formik.errors.lastName}
+            value={formData.lastName}
+            onChange={handleChange}
+            // Add error handling if needed
           />
 
-          {/* <TextField
+          <TextField
             label="Date of birth"
             variant="outlined"
             fullWidth
             margin="normal"
             id="dob"
             name="dob"
-            value={formik.values.dob}
-            onChange={formik.handleChange}
-            error={formik.touched.dob && Boolean(formik.errors.dob)}
-            helperText={formik.touched.dob && formik.errors.dob}
-          /> */}
+            value={formData.dob}
+            onChange={handleChange}
+            // Add error handling if needed
+          />
         </Box>
 
         {/* Email */}
-        <div className="field-with-check">
-          <TextField
-            label="Email"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            id="email"
-            name="email"
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            error={formik.touched.email && Boolean(formik.errors.email)}
-            helperText={formik.touched.email && formik.errors.email}
-          />
-        </div>
+        <TextField
+          label="Email"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          id="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          // Add error handling if needed
+        />
 
         {/* Address and Contact Number */}
         <TextField
@@ -195,10 +208,9 @@ export default function CustomerEditPage() {
           margin="normal"
           id="address"
           name="address"
-          value={formik.values.address}
-          onChange={formik.handleChange}
-          error={formik.touched.address && Boolean(formik.errors.address)}
-          helperText={formik.touched.address && formik.errors.address}
+          value={formData.address}
+          onChange={handleChange}
+          // Add error handling if needed
         />
 
         <TextField
@@ -208,14 +220,9 @@ export default function CustomerEditPage() {
           margin="normal"
           id="contactNumber"
           name="contactNumber"
-          value={formik.values.contactNumber}
-          onChange={formik.handleChange}
-          error={
-            formik.touched.contactNumber && Boolean(formik.errors.contactNumber)
-          }
-          helperText={
-            formik.touched.contactNumber && formik.errors.contactNumber
-          }
+          value={formData.contactNumber}
+          onChange={handleChange}
+          // Add error handling if needed
         />
 
         {/* City and State Dropdowns */}
@@ -225,16 +232,12 @@ export default function CustomerEditPage() {
             <Select
               id="city"
               name="city"
-              value={formik.values.city}
-              onChange={formik.handleChange}
-              error={formik.touched.city && Boolean(formik.errors.city)}
+              value={formData.city}
+              onChange={handleChange}
             >
               <MenuItem value="Mehrab">Mehrab</MenuItem>
               {/* Add more cities */}
             </Select>
-            {formik.touched.city && formik.errors.city && (
-              <p className="error-text">{formik.errors.city}</p>
-            )}
           </FormControl>
 
           <FormControl fullWidth margin="normal">
@@ -242,62 +245,48 @@ export default function CustomerEditPage() {
             <Select
               id="state"
               name="state"
-              value={formik.values.state}
-              onChange={formik.handleChange}
-              error={formik.touched.state && Boolean(formik.errors.state)}
+              value={formData.state}
+              onChange={handleChange}
             >
               <MenuItem value="Bozorgi">Bozorgi</MenuItem>
               {/* Add more states */}
             </Select>
-            {formik.touched.state && formik.errors.state && (
-              <p className="error-text">{formik.errors.state}</p>
-            )}
           </FormControl>
         </div>
 
         {/* Password with Verified Checkmark */}
-        <div className="field-with-check">
-          <TextFieldPassword
-            sx={{ marginTop: "25px" }}
-            label="Password"
-            variant="outlined"
-            fullWidth
-            id="password"
-            name="password"
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            error={formik.touched.password && Boolean(formik.errors.password)}
-            helperText={formik.touched.password && formik.errors.password}
-          />
-        </div>
+        <TextFieldPassword
+          sx={{ marginTop: "25px" }}
+          label="Password"
+          variant="outlined"
+          fullWidth
+          id="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          // Add error handling if needed
+        />
 
         {/* Action Buttons */}
         <div className="action-buttons">
-        <Button variant="outlined" color="error" className="cancel-button" onClick={handleOpen}>
+          <Button
+            variant="outlined"
+            color="error"
+            className="cancel-button"
+            onClick={handleOpen}
+          >
             Delete
           </Button>
-          
-          {/* <Button variant="outlined" color="error" className="cancel-button">
-            Cancel
-          </Button>
-          <Button
-            variant="contained"
-            color="success"
-            type="submit"
-            className="save-button"
-          >
+
+          {/* <Button variant="contained" color="success" type="submit" className="save-button">
             Save
           </Button> */}
-           <Modal open={open} onClose={handleClose}>
-      <ModalDelete 
-          open={open} 
-          onClose={handleClose} 
-        />
-      </Modal>
+
+          <Modal open={open} onClose={handleClose}>
+            <ModalDelete open={open} onClose={handleClose} />
+          </Modal>
         </div>
       </form>
     </div>
-    
   );
 }
-

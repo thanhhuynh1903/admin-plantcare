@@ -33,6 +33,8 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import BpCheckbox from "./BpCheckbox/BpCheckbox";
 import ModalPopup from "./ModalPopup/ModalPopup";
 import { useEffect } from "react";
+import CircleRoundedIcon from "@mui/icons-material/CircleRounded";
+
 const statusClasses = {
   Free: "status-free",
   Busy: "status-busy",
@@ -44,15 +46,14 @@ const headCells = [
   { id: "ID", numeric: false, disablePadding: false, label: "#" },
   { id: "NAME", numeric: false, disablePadding: false, label: "NAME" },
   {
-    id: "DESCRIPTION",
+    id: "EMAIL",
     numeric: false,
     disablePadding: false,
-    label: "DESCRIPTION",
+    label: "EMAIL",
   },
   { id: "STATUS", numeric: false, disablePadding: false, label: "STATUS" },
-  { id: "RATE", numeric: false, disablePadding: false, label: "RATE" },
-  { id: "BALANCE", numeric: false, disablePadding: false, label: "BALANCE" },
-  { id: "DEPOSITE", numeric: false, disablePadding: false, label: "DEPOSITE" },
+  { id: "RANK", numeric: false, disablePadding: false, label: "RANK" },
+  { id: "DOB", numeric: false, disablePadding: false, label: "DOB" },
   {
     id: "ACTION",
     numeric: false,
@@ -62,7 +63,7 @@ const headCells = [
 ];
 
 function descendingComparator(a, b, orderBy) {
-  if (typeof a[orderBy] === 'number' && typeof b[orderBy] === 'number') {
+  if (typeof a[orderBy] === "number" && typeof b[orderBy] === "number") {
     return b[orderBy] - a[orderBy];
   }
   if (b[orderBy] < a[orderBy]) return -1;
@@ -141,11 +142,21 @@ function EnhancedTableToolbar(props) {
   return (
     <Toolbar style={{ backgroundColor: "#F4F7FC" }}>
       {numSelected > 0 ? (
-        <Typography sx={{ flex: "1 1 100%" }} color="inherit" variant="subtitle1" component="div">
+        <Typography
+          sx={{ flex: "1 1 100%" }}
+          color="inherit"
+          variant="subtitle1"
+          component="div"
+        >
           {numSelected} selected
         </Typography>
       ) : (
-        <Typography sx={{ flex: "1 1 100%" }} variant="h6" id="tableTitle" component="div"></Typography>
+        <Typography
+          sx={{ flex: "1 1 100%" }}
+          variant="h6"
+          id="tableTitle"
+          component="div"
+        ></Typography>
       )}
       {numSelected > 0 ? (
         <Tooltip title="Delete">
@@ -167,7 +178,6 @@ function EnhancedTableToolbar(props) {
 EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
-
 
 export default function CustomerList({ employees }) {
   const [order, setOrder] = useState("asc");
@@ -235,19 +245,21 @@ export default function CustomerList({ employees }) {
   );
 
   const visibleRows = useMemo(
-    () => sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
+    () =>
+      sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
     [sortedData, page, rowsPerPage]
   );
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
-
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - employeeData.length) : 0;
 
-  const truncate = (str, n) => {
-    return str?.length > n ? str.substr(0, n - 1) + "..." : str;
+  const formatDate = (timestamp) => {
+    const date = new Date(timestamp);
+    return date.toLocaleDateString();
   };
+
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
@@ -306,7 +318,11 @@ export default function CustomerList({ employees }) {
                         {row.name}
                       </Box>
                     </TableCell>
-                    <TableCell sx={{ width: "270px", height: "40px" }}>
+                    <TableCell
+                      component="th"
+                      id={labelId}
+                      sx={{ width: "270px", height: "40px" }}
+                    >
                       <Box
                         component="div"
                         sx={{
@@ -316,7 +332,7 @@ export default function CustomerList({ employees }) {
                           display: "block",
                         }}
                       >
-                        {truncate(row.description, 65)}{" "}
+                        {row.email}
                         {/* Adjust the number 50 as needed */}
                       </Box>
                     </TableCell>
@@ -328,24 +344,12 @@ export default function CustomerList({ employees }) {
                           padding: "3px 10px",
                           borderRadius: "15px",
                           backgroundColor:
-                          row.status === "Open"
-                              ? "#F0F1FA"
-                              : row.status === "Paid"
-                              ? "#E1FCEF"
-                              : row.status === "Inactive"
-                              ? "#E9EDF5"
-                              : "#FAF0F3",
-                          color:
-                          row.status === "Open"
-                              ? "#4F5AED"
-                              : row.status === "Paid"
-                              ? "#14804A"
-                              : row.status === "Inactive"
-                              ? "#5A6376"
-                              : "#D12953",
+                            row.status === true ? "#F0F1FA" : "#E9EDF5",
+
+                          color: row.status === true ? "#4F5AED" : "#5A6376",
                         }}
                       >
-                        {row.status}
+                        {row.status === true ? "Active" : "Inactive"}
                       </span>
                     </TableCell>
                     <TableCell
@@ -355,27 +359,23 @@ export default function CustomerList({ employees }) {
                       padding="16px"
                       sx={{ fontSize: "14px", color: "#464F60" }}
                     >
-                      {row.rate}
-                      <p style={{ fontSize: "12px", color: "#687182" }}>VND</p>
-                    </TableCell>
-                    <TableCell
-                      component="th"
-                      id={labelId}
-                      scope="row"
-                      padding="16px"
-                    >
-                      <Box
-                        display="flex"
-                        alignItems="center"
-                        sx={{
-                          color: row.balance.includes("-")
-                            ? "#D12953"
-                            : "#14804A",
+                      <span
+                        className={`status ${statusClasses[row.rank]}`}
+                        style={{
+                          fontSize: "14px",
+                          padding: "3px 10px",
+                          borderRadius: "15px",
+                          backgroundColor:
+                            row.rank === "Premium" ? "#FFECCC" : "#CDFFCD",
+
+                          color: row.rank === "Premium" ? "#965E00" : "#007F00",
                         }}
                       >
-                        {row.balance}
-                      </Box>
-                      <p style={{ fontSize: "12px", color: "#687182" }}>VND</p>
+                        <CircleRoundedIcon
+                          sx={{ marginTop: "5px", fontSize: "10px" }}
+                        />{" "}
+                        {row.rank}
+                      </span>
                     </TableCell>
                     <TableCell
                       component="th"
@@ -384,9 +384,8 @@ export default function CustomerList({ employees }) {
                       padding="16px"
                     >
                       <Box display="flex" alignItems="center">
-                        {row.deposite}
+                        {formatDate(row.createdAt)}
                       </Box>
-                      <p style={{ fontSize: "12px", color: "#687182" }}>VND</p>
                     </TableCell>
                     <TableCell
                       component="th"

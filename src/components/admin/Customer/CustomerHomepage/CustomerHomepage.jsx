@@ -11,6 +11,8 @@ import { Sort } from "@mui/icons-material";
 import CustomerList from "./CustomerList";
 import { Link } from "react-router-dom";
 import PermIdentityOutlinedIcon from '@mui/icons-material/PermIdentityOutlined';
+import { aget } from "../../../utils/util_axios";
+import CircularIndeterminate from "../Loading/Loading";
 
 const initialEmployeeData = [
   { name: 'Darlene Robertson', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla...', status: 'Open', rate:"150.000" ,balance: '+270.000',deposite:'500.000'  },
@@ -23,12 +25,41 @@ const initialEmployeeData = [
 ];
 
 export default function CustomerHomepage() {
-  const [employees, setEmployees] = useState([]);
+  const [loading, setLoading] = useState(true); // Initial loading state
+  const [employees, setEmployees] = useState([
+    {
+      _id: "",
+      email: "",
+      password: "",
+      role: "",
+      status: false,
+      createdAt: "",
+      updatedAt: "",
+      __v: 0,
+      name: "",
+      rank: ""
+    }
+  ]);
 
   useEffect(() => {
     setPageHeadTitle("Customers");
-    setEmployees(initialEmployeeData);
+    fetchUser();
   }, []);
+
+
+  const fetchUser = async () => {
+    try {
+      setLoading(true); // Start loading
+      const response = await aget(`/users`);
+      const userData = response.data;
+      setEmployees(userData);
+    } catch (error) {
+      console.error('Error fetching user:', error);
+      throw error;
+    } finally {
+      setLoading(false); // End loading
+    }
+  };
 
   return (
     <div className="page-employees-home">
@@ -56,12 +87,19 @@ export default function CustomerHomepage() {
       </div>
       <div className="tool-container" style={{marginBottom:"15px"}}>
         <div>
-          <p className="text-result">{employees.length} results found</p>
+          {!loading &&
+          <p className="text-result">{employees?.length} results found</p>
+}
         </div>
 
       </div>
       <div>
-        <CustomerList employees={initialEmployeeData} />
+      {loading ? (
+        <CircularIndeterminate />
+      ) : (
+        <CustomerList employees={employees} />
+      )
+    }
       </div>
     </div>
   );
