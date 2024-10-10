@@ -19,11 +19,13 @@ import NewsPage from "./components/admin/News/NewsPage";
 import NewsCreatePage from "./components/admin/News/NewsCreate/NewsCreatePage";
 import NewsEditPage from "./components/admin/News/NewsEdit/NewsEditPage";
 import ProductHomepage from "./components/admin/Products/ProductHomePage";
+import ProductDetailPage from "./components/admin/Products/ProductDetail/ProductDetailPage";
 import CustomerHomepage from "./components/admin/Customer/CustomerHomepage/CustomerHomepage";
 import CustomerEditPage from "./components/admin/Customer/CustomerEditpage/CustomerEditPage";
 import TicketsPage from "./components/admin/Tickets/TicketsPage";
 import TicketsCreateManualPage from "./components/admin/Tickets/TicketsCreateManual/TicketsCreateManualPage";
 import TicketsDetailPage from "./components/admin/Tickets/TicketsDetail/TicketsDetailPage";
+
 import "./App.scss";
 
 const ProtectedRoute = ({ element, ...rest }) => {
@@ -77,6 +79,7 @@ const protectedRoutes = [
   { path: "/dashboard", element: <DashboardPage /> },
   { path: "/employees", element: <EmployeesHomePage /> },
   { path: "/products", element: <ProductHomepage /> },
+  { path: "/products/p/:id", element: <ProductDetailPage /> },
   { path: "/customers", element: <CustomerHomepage /> },
   { path: "/customers/edit/:userId", element: <CustomerEditPage /> },
   { path: "/employees/add", element: <EmployeeAddPage /> },

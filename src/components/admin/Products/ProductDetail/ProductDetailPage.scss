@@ -1,0 +1,35 @@
+@import "@scss/common.scss";
+
+.product-detail-page {
+  .btn-back {
+    cursor: pointer;
+    font-size: 30px;
+    background-color: #fff;
+    color: $black-color;
+    border-radius: 50%;
+    text-decoration: none;
+  }
+
+  .main-label {
+    font-size: 23px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .content {
+    display: block !important;
+    width: 100%;
+    background-color: $white-color;
+    border-radius: 12px;
+    padding: 12px 6rem 35px;
+    margin-top: 20px;
+    max-height: fit-content !important;
+  }
+
+  .product-img {
+    width: 250px !important;
+    height: 250px !important;
+  }
+}
