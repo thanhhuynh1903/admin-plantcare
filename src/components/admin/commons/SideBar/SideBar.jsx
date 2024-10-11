@@ -29,7 +29,7 @@ export default function SideBar() {
       link: "/dashboard",
       notify: 0,
     },
-  
+
     { icon: <PersonIcon />, label: "Customers", link: "/customers", notify: 0 },
     { icon: <ShoppingCartIcon />, label: "Orders", link: "/orders", notify: 0 },
     {
@@ -100,23 +100,22 @@ export default function SideBar() {
           {menuItems.map((item, index) => (
             <ListItem
               key={index}
-              className={
-                `list-item ${!item.hidden && location.pathname.startsWith(item.link)
+              className={`list-item ${
+                !item.hidden && location.pathname.startsWith(item.link)
                   ? "list-item-active"
                   : ""
-                } ${item.hidden ? "list-item-hidden" : ""}`
-              }
+              } ${item.hidden ? "list-item-hidden" : ""}`}
               component={item.hidden ? "div" : Link}
               to={item.hidden ? "" : item.link}
             >
-              {
-                item.hidden && (
-                  <div className="list-item-unavailable">
-                  <p className="list-item-unavailable-text">Unavailable</p>
+              {item.hidden && (
+                <div className="list-item-unavailable">
+                  {!isCollapsed && (
+                    <p className="list-item-unavailable-text">Unavailable</p>
+                  )}
                 </div>
-                )
-              }
-             
+              )}
+
               <div className="list-item-grid">
                 <ListItemIcon className="list-item-icon">
                   {item.icon}
