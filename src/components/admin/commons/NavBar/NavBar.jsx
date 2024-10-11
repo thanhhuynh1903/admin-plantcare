@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Menu, MenuItem, ListItemIcon } from "@mui/material";
-import { Input, TextField } from "@mui/material";
+import React, { useEffect, useState, useRef } from "react";
+import { Button, Menu, MenuItem, Popover } from "@mui/material";
 import { SearchOutlined } from "@mui/icons-material";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
@@ -13,16 +12,21 @@ import "./NavBar.scss";
 import NotificationMenu from "./NotificationMenu";
 import { getMessageListAPI, getNotificationListAPI } from "./NavBar.prop";
 import MessageMenu from "./MessageMenu";
-import avatar from '@assets/avatar.jpg';
-import {deleteCookie} from "@utils/util_cookie"
+import avatar from "@assets/avatar.jpg";
+import { deleteCookie } from "@utils/util_cookie";
+import { useNavigate } from "react-router-dom"; // Import useNavigate hook
+import ListItemIcon from "@mui/material/ListItemIcon";
 
 export default function NavBar() {
   const [anchorElNotifications, setAnchorElNotifications] = useState(null);
   const [anchorElMessages, setAnchorElMessages] = useState(null);
   const [anchorElUserMenu, setAnchorElUserMenu] = useState(null);
-
   const [notifications, setNotifications] = useState([]);
   const [messages, setMessages] = useState([]);
+  const [searchQuery, setSearchQuery] = useState(""); // To store the search input
+  const [anchorElSearch, setAnchorElSearch] = useState(null); // To control the search menu
+  const inputRef = useRef(null);
+  const navigate = useNavigate(); // React Router hook for navigation
 
   const handleClick = (event, toolName) => {
     if (toolName === "Notifications") {
@@ -87,21 +91,70 @@ export default function NavBar() {
     setMessages(getMessageListAPI().items);
   }, []);
 
+  const handleSearchInputChange = (event) => {
+    setSearchQuery(event.target.value);
+    if (event.target.value) {
+      setAnchorElSearch(event.currentTarget);
+    } else {
+      setAnchorElSearch(null);
+    }
+  };
+
+  const handleSearchSelect = () => {
+    navigate(`/searches/products/${searchQuery}`);
+    setAnchorElSearch(null);
+  };
+
+  const handleSearchMenuClose = () => {
+    setAnchorElSearch(null);
+  };
+
   return (
     <div className="common-navbar">
       <div className="navbar">
         <div className="prop-search">
-          <div className="input-field-container">
+          <div className="input-field-container" ref={inputRef}>
             <input
               className="input-field"
               type="text"
               placeholder="Search here"
+              value={searchQuery}
+              onChange={handleSearchInputChange}
             />
             <div className="btn-search">
               <SearchOutlined />
             </div>
           </div>
+
+          {/* Search Menu */}
+          <Popover
+            className="search-menu-popover"
+            anchorEl={anchorElSearch}
+            open={Boolean(anchorElSearch) && searchQuery.length > 0}
+            onClose={handleSearchMenuClose}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "left",
+            }}
+            PaperProps={{
+              style: {
+                width: inputRef.current ? inputRef.current.offsetWidth : "auto", // Set the menu width equal to the input field
+              },
+            }}
+            disableAutoFocus // Prevents Menu from taking focus away from input
+            disableEnforceFocus // Prevents Menu from forcing focus
+            keepMounted // Keep the Menu mounted to allow seamless interaction
+          >
+            <Button className="btn-search-menu" onClick={handleSearchSelect}>
+              Search "{searchQuery}" in Products
+            </Button>
+          </Popover>
         </div>
+
         <div className="prop-tools">
           {tools.map((tool, i) => (
             <div

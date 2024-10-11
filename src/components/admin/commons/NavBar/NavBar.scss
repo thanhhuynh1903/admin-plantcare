@@ -17,6 +17,7 @@
   .prop {
     &-search {
       width: 100%;
+      z-index: 1500;
 
       * {
         color: $semi-black-color;
@@ -149,5 +150,15 @@
         }
       }
     }
+  }
+}
+
+.search-menu-popover {
+  .btn-search-menu {
+    width: 100%;
+    display: flex;
+    justify-content: left;
+    color: #000;
+    padding: 10px 15px;
   }
 }

@@ -27,6 +27,7 @@ import TicketsCreateManualPage from "./components/admin/Tickets/TicketsCreateMan
 import TicketsDetailPage from "./components/admin/Tickets/TicketsDetail/TicketsDetailPage";
 
 import "./App.scss";
+import SearchProductPage from "./components/admin/Search/SearchProduct/SearchProductPage";
 
 const ProtectedRoute = ({ element, ...rest }) => {
   const token = getCookie("e_token");
@@ -77,7 +78,7 @@ const publicRoutes = [
 ];
 
 const protectedRoutes = [
-  { path: "/", element: <DashboardPage /> },
+  { path: "*", element: <Navigate to="/" /> },
   { path: "/dashboard", element: <DashboardPage /> },
   { path: "/employees", element: <EmployeesHomePage /> },
   { path: "/products", element: <ProductHomepage /> },
@@ -98,6 +99,7 @@ const protectedRoutes = [
   { path: "/tickets", element: <TicketsPage /> },
   { path: "/tickets/create", element: <TicketsCreateManualPage /> },
   { path: "/tickets/t/:id", element: <TicketsDetailPage /> },
+  { path: '/searches/products/:query', element: <SearchProductPage /> }
 ];
 
 function App() {
