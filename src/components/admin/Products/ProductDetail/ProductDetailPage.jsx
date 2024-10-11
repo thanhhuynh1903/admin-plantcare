@@ -37,7 +37,7 @@ export default function ProductDetailPage() {
         <Button component={Link} to="/products">
           <ArrowCircleLeftOutlinedIcon className="btn-back" />
         </Button>
-        <p>Product detail</p>
+        <p>Product detail - {product?.name}</p>
       </div>
 
       <div className="content">

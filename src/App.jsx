@@ -39,18 +39,20 @@ const ProtectedRoute = ({ element, ...rest }) => {
 };
 
 const LayoutWithSidebar = ({ children }) => {
+  const location = useLocation();
+
   useEffect(() => {
-    const resetScroll = () => {
-      const contentMain = document.querySelector('.content-main');
-      if (contentMain) {
-        setTimeout(() => {
+    const contentMain = document.querySelector('.content-main');
+    if (contentMain) {
+      const timer = setInterval(() => {
+        if (contentMain.scrollTop === 0) {
+          clearInterval(timer);
+        } else {
           contentMain.scrollTop = 0;
-        }, 1000);
-      }
-    };
-    
-    resetScroll();
-  }, []);
+        }
+      }, 50);
+    }
+  }, [location]);
 
   return (
     <div className="content-sidebar">
@@ -114,6 +116,10 @@ function App() {
 
   if (isAuthenticated === null) {
     return null;
+  }
+
+  if (isAuthenticated && isLoginPage) {
+    return <Navigate to="/" />; // Redirect authenticated users away from /login
   }
 
   return (
