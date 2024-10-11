@@ -57,7 +57,7 @@ export default function SearchProductPage() {
           <CircularProgress className="loading-icon" />
         ) : (
           <>
-            <p className="text-result">{productData.length} results found matches for: <span className="query">{query}</span> </p>
+            <p className="text-result">{productData.length} results matches for: <span className="query">{query}</span> </p>
             {
               productData.length === 0 && (
                 <p className="text-result-empty">No results found</p>
