@@ -1,26 +1,26 @@
 import { Button } from "@mui/material";
-import "./ProductHomePage.scss";
+import "./PlantsHomePage.scss";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import SortOutlinedIcon from "@mui/icons-material/SortOutlined";
 import KeyboardArrowLeftOutlinedIcon from "@mui/icons-material/KeyboardArrowLeftOutlined";
 import KeyboardArrowRightOutlinedIcon from "@mui/icons-material/KeyboardArrowRightOutlined";
 import { useEffect, useState } from "react";
 import { setPageHeadTitle } from "../../utils/util_web";
-import ProductBudget from "./ProductBudget";
-import ProductList from "./ProductList";
-import FilterProduct from "./FilterProduct";
+import PlantsBudget from "./PlantsBudget";
+import PlantsList from "./PlantsList";
+import FilterPlants from "./FilterPlants";
 import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
 import { aget } from "../../utils/util_axios";
-import ProductAddDialog from "./ProductAddDialog";
-import ProductEditDialog from "./ProductEditDialog";
+import PlantsAddDialog from "./PlantsAddDialog";
+import PlantsEditDialog from "./PlantsEditDialog";
 
-export default function ProductHomepage() {
+export default function PlantsHomepage() {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
 
-  const [openAddProductDialog, setOpenAddProductDialog] = useState(false);
+  const [openAddPlantsDialog, setOpenAddPlantsDialog] = useState(false);
 
-  const obtainProductAPI = async () => {
+  const obtainPlantsAPI = async () => {
     aget("/plants")
       .then((response) => {
         setData(response.data);
@@ -39,9 +39,8 @@ export default function ProductHomepage() {
   };
 
   useEffect(() => {
-    setPageHeadTitle("Products");
-
-    obtainProductAPI();
+    setPageHeadTitle("Plants");
+    obtainPlantsAPI();
   }, []);
 
   const filterType = [
@@ -84,12 +83,12 @@ export default function ProductHomepage() {
   };
 
   return (
-    <div className="page-employees-home">
+    <div className="page-plants-home">
       <div
         className="main-label"
         style={{ display: "flex", alignItems: "center" }}
       >
-        <Inventory2OutlinedIcon sx={{ marginRight: 1 }} /> Products
+        <Inventory2OutlinedIcon sx={{ marginRight: 1 }} /> Plants
       </div>
       <div className="tool-container">
         <div>
@@ -98,7 +97,7 @@ export default function ProductHomepage() {
         <div className="tool-container-btn">
           <Button
             className="btn-add-product"
-            onClick={() => setOpenAddProductDialog(true)}
+            onClick={() => setOpenAddPlantsDialog(true)}
           >
             + Add product
           </Button>
@@ -121,26 +120,26 @@ export default function ProductHomepage() {
         </div>
       </div>
       <div>
-        <ProductBudget />
+        <PlantsBudget />
       </div>
       <div>
-        <FilterProduct
+        <FilterPlants
           data={data}
           selectedFilterType={selectedFilterType}
           handleChangeFilterType={handleChangeFilterType}
         />
       </div>
       <div>
-        <ProductList
+        <PlantsList
           data={filteredData}
           onFinishEditing={() => {
-            obtainProductAPI();
+            obtainPlantsAPI();
           }}
         />
       </div>
-      <ProductAddDialog
-        open={openAddProductDialog}
-        onClose={() => setOpenAddProductDialog(false)}
+      <PlantsAddDialog
+        open={openAddPlantsDialog}
+        onClose={() => setOpenAddPlantsDialog(false)}
       />
     </div>
   );

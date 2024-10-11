@@ -1,19 +1,19 @@
 import DialogBasic from "../commons/DialogBasic/DialogBasic";
 import Button from "@mui/material/Button";
 import LinearProgress from "@mui/material/LinearProgress";
-import "./ProductDeleteDialog.scss";
+import "./PlantsDeleteDialog.scss";
 import { adelete } from "../../utils/util_axios";
 import { showSuccessToast } from "../../utils/util_toastify";
 import { useState } from "react";
 
-export default function ProductDeleteDialog({ onClose, onFinish, item }) {
+export default function PlantsDeleteDialog({ onClose, onFinish, item }) {
   const [isProcessing, setIsProcessing] = useState(false);
 
   const handleDelete = () => {
     setIsProcessing(true);
-    adelete(`/products/${item.id}`)
+    adelete(`/plants/${item.id}`)
       .then((p) => {
-        showSuccessToast("Product deleted successfully");
+        showSuccessToast("Plants deleted successfully");
         onFinish();
       })
       .finally(() => {
@@ -24,8 +24,8 @@ export default function ProductDeleteDialog({ onClose, onFinish, item }) {
 
   return (
     <DialogBasic
-      className="product-delete-dialog"
-      title="Now deleting product"
+      className="plants-delete-dialog"
+      title="Now deleting plant"
       open={item}
       onClose={onClose}
       maxWidth="sm"

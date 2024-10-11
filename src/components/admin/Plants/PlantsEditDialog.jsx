@@ -1,9 +1,15 @@
 import { useState, useMemo, useEffect } from "react";
-import { Button, TextField, DialogActions, Grid, Autocomplete } from "@mui/material";
+import {
+  Button,
+  TextField,
+  DialogActions,
+  Grid,
+  Autocomplete,
+} from "@mui/material";
 import DialogBasic from "../commons/DialogBasic/DialogBasic";
-import "./ProductAddDialog.scss";
-import { aget, apost } from "../../utils/util_axios";
-import { showErrorToast, showSuccessToast } from "../../utils/util_toastify";
+import "./PlantsEditDialog.scss";
+import { showErrorToast, showSuccessToast } from "@utils/util_toastify";
+import { aget, aupdate } from "@utils/util_axios";
 
 const plantFields = [
   { label: "Name", name: "name" },
@@ -12,8 +18,8 @@ const plantFields = [
   { label: "Plant Type ID", name: "plant_type_id", type: "select" },
   { label: "Image URL", name: "img_url" },
   { label: "Video URL", name: "video_url" },
-  { label: "Height", name: "height", type: "number" },
-  { label: "Width", name: "width", type: "number" },
+  { label: "Height", name: "height", type: "text" },
+  { label: "Width", name: "width", type: "text" },
   { label: "Zones", name: "zones" },
   { label: "Uses", name: "uses" },
   { label: "Tolerance", name: "tolerance" },
@@ -35,15 +41,15 @@ const plantFields = [
   { label: "Price", name: "price", type: "number" },
 ];
 
-export default function ProductAddDialog({
-  open,
-  onClose,
-  fields = plantFields,
-  apiEndpoint = "/plants",
+export default function PlantsEditDialog({
+  item = null,
+  onClose = () => {},
+  onFinish = () => {},
+  fields = plantFields
 }) {
   const [isProcessing, setIsProcessing] = useState(false);
-  const [genusList, setGenusList] = useState([]);
-  const [plantTypeList, setPlantTypeList] = useState([]);
+  const [genusList, setGenusList] = useState(null);
+  const [plantTypeList, setPlantTypeList] = useState(null);
 
   const initialFormData = useMemo(
     () => fields.reduce((acc, field) => ({ ...acc, [field.name]: "" }), {}),
@@ -51,6 +57,41 @@ export default function ProductAddDialog({
   );
 
   const [formData, setFormData] = useState(initialFormData);
+
+  // Update formData when item changes
+  useEffect(() => {
+    if (item) {
+      setFormData({
+        name: item.name || "",
+        sub_name: item.sub_name || "",
+        genus_id: item.genus_id?._id || "",
+        plant_type_id: item.plant_type_id?._id || "",
+        img_url: item.img_url?.[0] || "",
+        video_url: item.video_url?.[0] || "",
+        height: item.height || "",
+        width: item.width || "",
+        zones: item.zones || "",
+        uses: item.uses || "",
+        tolerance: item.tolerance || "",
+        bloom_time: item.bloom_time || "",
+        light: item.light || "",
+        moisture: item.moisture || "",
+        maintenance: item.maintenance || "",
+        growth_rate: item.growth_rate || "",
+        plant_seasonal_interest: item.plant_seasonal_interest || "",
+        describe: item.describe || "",
+        noteworthy_characteristics: item.noteworthy_characteristics || "",
+        care: item.care || "",
+        propagation: item.propagation || "",
+        problems: item.problems || "",
+        water: item.water || "",
+        humidity: item.humidity || "",
+        fertilizer: item.fertilizer || "",
+        size: item.size || "",
+        price: item.price || "",
+      });
+    }
+  }, [item]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -62,14 +103,16 @@ export default function ProductAddDialog({
   };
 
   const isFormValid = useMemo(() => {
-    return Object.values(formData).every((value) => value && value.trim() !== "");
+    return Object.values(formData).every((value) => value);
+    return true;
   }, [formData]);
 
   const handleSubmit = () => {
     setIsProcessing(true);
-    apost(apiEndpoint, formData)
+    aupdate(`/plants/${item._id}`, formData)
       .then(() => {
-        showSuccessToast("Product added successfully!");
+        showSuccessToast("Plants edited successfully!");
+        onFinish();
         onClose();
       })
       .catch((err) => {
@@ -77,7 +120,7 @@ export default function ProductAddDialog({
         if (status === 403) {
           showErrorToast("No permission to use this!");
         } else {
-          showErrorToast("Error adding product.");
+          showErrorToast("Error editing product.");
         }
       })
       .finally(() => {
@@ -86,25 +129,31 @@ export default function ProductAddDialog({
   };
 
   useEffect(() => {
-    if (open) {
+    if (item != null) {
       aget("/genus")
         .then((res) => {
           setGenusList(res.data);
         })
         .catch((err) => {
+          setGenusList([]);
           console.error(err);
         });
-      aget("/plant-types").then((res) => {
-        setPlantTypeList(res.data);
-      });
+
+      aget("/plant-types")
+        .then((res) => {
+          setPlantTypeList(res.data);
+        })
+        .catch((err) => {
+          setPlantTypeList([]);
+        });
     }
-  }, [open]);
+  }, [item]);
 
   return (
     <DialogBasic
-      className="product-add-dialog"
-      title="Add New Item"
-      open={open}
+      className="plants-edit-dialog"
+      title="Edit Item"
+      open={item != null}
       onClose={onClose}
       footer={
         <DialogActions>
@@ -127,38 +176,38 @@ export default function ProductAddDialog({
         </DialogActions>
       }
     >
-      <div className="add-item-dialog">
+      <div className="item-dialog">
         <Grid container spacing={2}>
           {fields.map((field, index) => (
             <Grid item xs={12} sm={field.gridSize || 6} key={index}>
-              {field.name === "genus_id" ? (
+              {field.name === "genus_id" && genusList ? (
                 <Autocomplete
+                  defaultValue={
+                    genusList.filter((p) => p._id == formData.genus_id)[0] || {}
+                  }
                   options={genusList}
-                  getOptionLabel={(option) => option.name}
+                  getOptionLabel={(option) => option?.name}
                   onChange={(e, value) =>
                     handleSelectChange("genus_id", value ? value.id : "")
                   }
                   renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Genus"
-                      fullWidth
-                    />
+                    <TextField {...params} label="Genus" fullWidth />
                   )}
                 />
-              ) : field.name === "plant_type_id" ? (
+              ) : field.name === "plant_type_id" && plantTypeList ? (
                 <Autocomplete
+                  defaultValue={
+                    plantTypeList.filter(
+                      (p) => p._id == formData.plant_type_id
+                    )[0] || {}
+                  }
                   options={plantTypeList}
                   getOptionLabel={(option) => option.plant_type_name}
                   onChange={(e, value) =>
                     handleSelectChange("plant_type_id", value ? value.id : "")
                   }
                   renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Plant Type"
-                      fullWidth
-                    />
+                    <TextField {...params} label="Plant Type" fullWidth />
                   )}
                 />
               ) : (

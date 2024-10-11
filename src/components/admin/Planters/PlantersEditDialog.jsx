@@ -1,55 +1,41 @@
 import { useState, useMemo, useEffect } from "react";
-import {
-  Button,
-  TextField,
-  DialogActions,
-  Grid,
-  Autocomplete,
-} from "@mui/material";
+import { Button, TextField, DialogActions, Grid } from "@mui/material";
 import DialogBasic from "../commons/DialogBasic/DialogBasic";
 import "./PlantersEditDialog.scss";
 import { showErrorToast, showSuccessToast } from "@utils/util_toastify";
-import { aget, aupdate } from "@utils/util_axios";
+import { aupdate } from "@utils/util_axios";
 
-const plantFields = [
+const planterFields = [
   { label: "Name", name: "name" },
-  { label: "Sub Name", name: "sub_name" },
-  { label: "Genus ID", name: "genus_id", type: "select" },
-  { label: "Plant Type ID", name: "plant_type_id", type: "select" },
-  { label: "Image URL", name: "img_url" },
-  { label: "Video URL", name: "video_url" },
-  { label: "Height", name: "height", type: "text" },
-  { label: "Width", name: "width", type: "text" },
-  { label: "Zones", name: "zones" },
-  { label: "Uses", name: "uses" },
-  { label: "Tolerance", name: "tolerance" },
-  { label: "Bloom Time", name: "bloom_time" },
-  { label: "Light", name: "light" },
-  { label: "Moisture", name: "moisture" },
-  { label: "Maintenance", name: "maintenance" },
-  { label: "Growth Rate", name: "growth_rate" },
-  { label: "Seasonal Interest", name: "plant_seasonal_interest" },
-  { label: "Description", name: "describe" },
-  { label: "Noteworthy Characteristics", name: "noteworthy_characteristics" },
-  { label: "Care", name: "care" },
-  { label: "Propagation", name: "propagation" },
-  { label: "Problems", name: "problems" },
-  { label: "Water", name: "water" },
-  { label: "Humidity", name: "humidity" },
-  { label: "Fertilizer", name: "fertilizer" },
-  { label: "Size", name: "size" },
+  { label: "Category", name: "category" },
+  { label: "Image URL", name: "img_url" }, // From img_object
   { label: "Price", name: "price", type: "number" },
+  { label: "Size", name: "size" },
+  { label: "Material", name: "material" },
+  { label: "Special Feature", name: "special_feature" },
+  { label: "Style", name: "style" },
+  { label: "Planter Form", name: "planter_form" },
+  { label: "About", name: "about" },
+  { label: "Default Color", name: "default_color" },
+  { label: "Theme", name: "theme" },
+  { label: "Finish Type", name: "finish_type" },
+  { label: "Item Weight", name: "item_weight" },
+  { label: "Manufacturer", name: "manufacturer" },
+  { label: "ASIN", name: "asin" },
+  { label: "Item Model Number", name: "item_model_number" },
+  { label: "Best Seller Rank", name: "best_seller_rank" },
+  { label: "Date First Available", name: "date_first_available" },
+  { label: "Status", name: "status" },
+  { label: "Description", name: "describe" },
 ];
 
 export default function PlantersEditDialog({
   item = null,
   onClose = () => {},
   onFinish = () => {},
-  fields = plantFields
+  fields = planterFields
 }) {
   const [isProcessing, setIsProcessing] = useState(false);
-  const [genusList, setGenusList] = useState(null);
-  const [plantTypeList, setPlantTypeList] = useState(null);
 
   const initialFormData = useMemo(
     () => fields.reduce((acc, field) => ({ ...acc, [field.name]: "" }), {}),
@@ -58,37 +44,30 @@ export default function PlantersEditDialog({
 
   const [formData, setFormData] = useState(initialFormData);
 
-  // Update formData when item changes
   useEffect(() => {
     if (item) {
       setFormData({
         name: item.name || "",
-        sub_name: item.sub_name || "",
-        genus_id: item.genus_id?._id || "",
-        plant_type_id: item.plant_type_id?._id || "",
-        img_url: item.img_url?.[0] || "",
-        video_url: item.video_url?.[0] || "",
-        height: item.height || "",
-        width: item.width || "",
-        zones: item.zones || "",
-        uses: item.uses || "",
-        tolerance: item.tolerance || "",
-        bloom_time: item.bloom_time || "",
-        light: item.light || "",
-        moisture: item.moisture || "",
-        maintenance: item.maintenance || "",
-        growth_rate: item.growth_rate || "",
-        plant_seasonal_interest: item.plant_seasonal_interest || "",
-        describe: item.describe || "",
-        noteworthy_characteristics: item.noteworthy_characteristics || "",
-        care: item.care || "",
-        propagation: item.propagation || "",
-        problems: item.problems || "",
-        water: item.water || "",
-        humidity: item.humidity || "",
-        fertilizer: item.fertilizer || "",
-        size: item.size || "",
+        category: item.category || "",
+        img_url: item.img_object?.url || "", // Assuming img_object holds the URL
         price: item.price || "",
+        size: item.size || "",
+        material: item.material || "",
+        special_feature: item.special_feature || "",
+        style: item.style || "",
+        planter_form: item.planter_form || "",
+        about: item.about || "",
+        default_color: item.default_color || "",
+        theme: item.theme || "",
+        finish_type: item.finish_type || "",
+        item_weight: item.item_weight || "",
+        manufacturer: item.manufacturer || "",
+        asin: item.asin || "",
+        item_model_number: item.item_model_number || "",
+        best_seller_rank: item.best_seller_rank || "",
+        date_first_available: item.date_first_available || "",
+        status: item.status || "",
+        describe: item.describe || "",
       });
     }
   }, [item]);
@@ -98,20 +77,22 @@ export default function PlantersEditDialog({
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSelectChange = (name, value) => {
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
+  // Validation logic: unlock save only when Name, Category, Image URL, and Price are filled
   const isFormValid = useMemo(() => {
-    return Object.values(formData).every((value) => value);
-    return true;
+    return (
+      formData.name.trim() !== "" &&
+      formData.category.trim() !== "" &&
+      formData.img_url.trim() !== "" &&
+      formData.price > 0
+    );
   }, [formData]);
 
   const handleSubmit = () => {
     setIsProcessing(true);
-    aupdate(`/plants/${item._id}`, formData)
+    // Send full formData to API
+    aupdate(`/planters/${item._id}`, formData)
       .then(() => {
-        showSuccessToast("Planters edited successfully!");
+        showSuccessToast("Planter edited successfully!");
         onFinish();
         onClose();
       })
@@ -120,7 +101,7 @@ export default function PlantersEditDialog({
         if (status === 403) {
           showErrorToast("No permission to use this!");
         } else {
-          showErrorToast("Error editing product.");
+          showErrorToast("Error editing planter.");
         }
       })
       .finally(() => {
@@ -128,31 +109,10 @@ export default function PlantersEditDialog({
       });
   };
 
-  useEffect(() => {
-    if (item != null) {
-      aget("/genus")
-        .then((res) => {
-          setGenusList(res.data);
-        })
-        .catch((err) => {
-          setGenusList([]);
-          console.error(err);
-        });
-
-      aget("/plant-types")
-        .then((res) => {
-          setPlantTypeList(res.data);
-        })
-        .catch((err) => {
-          setPlantTypeList([]);
-        });
-    }
-  }, [item]);
-
   return (
     <DialogBasic
       className="planters-edit-dialog"
-      title="Edit Item"
+      title="Edit Planter"
       open={item != null}
       onClose={onClose}
       footer={
@@ -169,7 +129,7 @@ export default function PlantersEditDialog({
             onClick={handleSubmit}
             color="primary"
             className="btn-save"
-            disabled={isProcessing || !isFormValid}
+            disabled={isProcessing || !isFormValid} // Disable until required fields are filled
           >
             Save
           </Button>
@@ -179,47 +139,15 @@ export default function PlantersEditDialog({
       <div className="item-dialog">
         <Grid container spacing={2}>
           {fields.map((field, index) => (
-            <Grid item xs={12} sm={field.gridSize || 6} key={index}>
-              {field.name === "genus_id" && genusList ? (
-                <Autocomplete
-                  defaultValue={
-                    genusList.filter((p) => p._id == formData.genus_id)[0] || {}
-                  }
-                  options={genusList}
-                  getOptionLabel={(option) => option?.name}
-                  onChange={(e, value) =>
-                    handleSelectChange("genus_id", value ? value.id : "")
-                  }
-                  renderInput={(params) => (
-                    <TextField {...params} label="Genus" fullWidth />
-                  )}
-                />
-              ) : field.name === "plant_type_id" && plantTypeList ? (
-                <Autocomplete
-                  defaultValue={
-                    plantTypeList.filter(
-                      (p) => p._id == formData.plant_type_id
-                    )[0] || {}
-                  }
-                  options={plantTypeList}
-                  getOptionLabel={(option) => option.plant_type_name}
-                  onChange={(e, value) =>
-                    handleSelectChange("plant_type_id", value ? value.id : "")
-                  }
-                  renderInput={(params) => (
-                    <TextField {...params} label="Plant Type" fullWidth />
-                  )}
-                />
-              ) : (
-                <TextField
-                  label={field.label}
-                  name={field.name}
-                  value={formData[field.name]}
-                  onChange={handleInputChange}
-                  type={field.type || "text"}
-                  fullWidth
-                />
-              )}
+            <Grid item xs={12} sm={6} key={index}>
+              <TextField
+                label={field.label}
+                name={field.name}
+                value={formData[field.name]}
+                onChange={handleInputChange}
+                type={field.type || "text"}
+                fullWidth
+              />
             </Grid>
           ))}
         </Grid>

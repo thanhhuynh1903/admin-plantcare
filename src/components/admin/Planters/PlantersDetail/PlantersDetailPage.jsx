@@ -31,7 +31,7 @@ export default function PlantersDetailPage() {
 
   const obtainPlantersAPI = async () => {
     setLoading(true);
-    aget(`/plants/${id}`)
+    aget(`/planters/${id}`)
       .then((response) => {
         setPlanters(response.data);
       })
@@ -43,7 +43,7 @@ export default function PlantersDetailPage() {
   useEffect(() => {
     setItemToEdit(null);
     setItemToDelete(null);
-    setPageHeadTitle("Planters detail");
+    setPageHeadTitle("Planter detail");
     obtainPlantersAPI();
   }, []);
 
@@ -53,10 +53,10 @@ export default function PlantersDetailPage() {
         <Button component={Link} to="/planters">
           <ArrowCircleLeftOutlinedIcon className="btn-back" />
         </Button>
-        <p>Planters detail{product && ` - ${product.name}`}</p>
+        <p>Planter detail{product && ` - ${product.name}`}</p>
       </div>
       <div className="content">
-        {loading ? ( // Show CircularProgress while loading
+        {loading ? (
           <div className="loading-container">
             <CircularProgress />
           </div>
@@ -64,26 +64,24 @@ export default function PlantersDetailPage() {
           product && (
             <>
               <div className="content-tool">
-                <div className="content-tool">
-                  <Button
-                    className="btn-edit"
-                    variant="contained"
-                    color="primary"
-                    startIcon={<EditIcon />}
-                    onClick={() => setItemToEdit(product)}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    className="btn-delete"
-                    variant="outlined"
-                    color="error"
-                    startIcon={<DeleteIcon />}
-                    onClick={() => setItemToDelete(product)}
-                  >
-                    Delete
-                  </Button>
-                </div>
+                <Button
+                  className="btn-edit"
+                  variant="contained"
+                  color="primary"
+                  startIcon={<EditIcon />}
+                  onClick={() => setItemToEdit(product)}
+                >
+                  Edit
+                </Button>
+                <Button
+                  className="btn-delete"
+                  variant="outlined"
+                  color="error"
+                  startIcon={<DeleteIcon />}
+                  onClick={() => setItemToDelete(product)}
+                >
+                  Delete
+                </Button>
               </div>
               <Grid2
                 className="product-title"
@@ -94,7 +92,7 @@ export default function PlantersDetailPage() {
                 <Grid2 item xs={12} sm={4}>
                   <img
                     className="product-img"
-                    src={product.img_url[0]}
+                    src={product.img_object[0].img_url}
                     alt={product.name}
                     style={{ width: "100%", height: "auto" }}
                   />
@@ -106,7 +104,7 @@ export default function PlantersDetailPage() {
                     {product.name}
                   </Typography>
                   <Typography variant="subtitle1" color="text.secondary">
-                    {product.sub_name}
+                    {product.introduction}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -116,18 +114,18 @@ export default function PlantersDetailPage() {
                     {product.describe}
                   </Typography>
                   <div className="product-info">
-                    <p className="product-info-label">Genus:</p>
-                    <p>{product.genus_id?.name || "Unknown"}</p>
+                    <p className="product-info-label">Material:</p>
+                    <p>{product.material}</p>
                   </div>
                   <div className="product-info">
-                    <p className="product-info-label">Plant type:</p>
-                    <p>{product.plant_type_id?.plant_type_name || "Unknown"}</p>
+                    <p className="product-info-label">Special Feature:</p>
+                    <p>{product.special_feature}</p>
                   </div>
                 </Grid2>
               </Grid2>
 
               {/* Planters Properties Table */}
-              <p className="sub-label">Plant specification</p>
+              <p className="sub-label">Planter specification</p>
               <Paper elevation={3}>
                 <Table>
                   <TableBody>
@@ -136,65 +134,64 @@ export default function PlantersDetailPage() {
                       <TableCell>${(product.price / 100).toFixed(2)}</TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell>Height</TableCell>
-                      <TableCell>{product.height}</TableCell>
+                      <TableCell>Size</TableCell>
+                      <TableCell>{product.size}</TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell>Width</TableCell>
-                      <TableCell>{product.width}</TableCell>
+                      <TableCell>Style</TableCell>
+                      <TableCell>{product.style}</TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell>Zones</TableCell>
-                      <TableCell>{product.zones}</TableCell>
+                      <TableCell>Planter Form</TableCell>
+                      <TableCell>{product.planter_form}</TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell>Uses</TableCell>
-                      <TableCell>{product.uses}</TableCell>
+                      <TableCell>Theme</TableCell>
+                      <TableCell>{product.theme}</TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell>Tolerance</TableCell>
-                      <TableCell>{product.tolerance}</TableCell>
+                      <TableCell>Finish Type</TableCell>
+                      <TableCell>{product.finish_type}</TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell>Bloom Time</TableCell>
-                      <TableCell>{product.bloom_time}</TableCell>
+                      <TableCell>Item Weight</TableCell>
+                      <TableCell>{product.item_weight}</TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell>Light</TableCell>
-                      <TableCell>{product.light}</TableCell>
+                      <TableCell>Manufacturer</TableCell>
+                      <TableCell>{product.manufacturer}</TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell>Moisture</TableCell>
-                      <TableCell>{product.moisture}</TableCell>
+                      <TableCell>ASIN</TableCell>
+                      <TableCell>{product.ASIN}</TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell>Plant Type</TableCell>
+                      <TableCell>Model Number</TableCell>
+                      <TableCell>{product.item_model_number}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>Best Seller Rank</TableCell>
+                      <TableCell>{product.best_seller_rank}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>Status</TableCell>
+                      <TableCell>{product.status}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>First Available</TableCell>
                       <TableCell>
-                        {product.plant_type_id.plant_type_name}
+                        {new Date(product.date_first_available).toLocaleDateString()}
                       </TableCell>
                     </TableRow>
-                    <TableRow>
-                      <TableCell>Seasonal Interest</TableCell>
-                      <TableCell>{product.plant_seasonal_interest}</TableCell>
-                    </TableRow>
-
                     <TableRow>
                       <TableCell>Average Rating</TableCell>
                       <TableCell>
                         <Rating
-                          value={parseFloat(product.average_rating)}
+                          value={parseFloat(product.customer_reviews)}
                           readOnly
                           precision={0.5}
                         />
                       </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Care</TableCell>
-                      <TableCell>{product.care}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Problems</TableCell>
-                      <TableCell>{product.problems}</TableCell>
                     </TableRow>
                   </TableBody>
                 </Table>

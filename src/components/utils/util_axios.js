@@ -32,7 +32,7 @@ export const apost = async (path, data) => {
 
 export const apostfile = async (path, selectedFile, dataObject) => {
   const formData = new FormData();
-  formData.append("file", selectedFile);
+  formData.append("img_object", selectedFile);
   Object.entries(dataObject).forEach(([key, value]) => {
     formData.append(key, value);
   });

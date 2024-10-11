@@ -36,7 +36,7 @@ export default function FilterPlanters({ data, selectedFilterType, handleChangeF
         >
           {data.reduce((acc, cur) => acc + cur.price, 0)}
         </span>{" "}
-        <span style={{ fontSize: "20px" }}>USD</span>
+        <span style={{ fontSize: "20px" }}>VND</span>
       </Typography>
     </Box>
   );

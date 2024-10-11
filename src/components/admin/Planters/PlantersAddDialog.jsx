@@ -1,49 +1,41 @@
 import { useState, useMemo, useEffect } from "react";
-import { Button, TextField, DialogActions, Grid, Autocomplete } from "@mui/material";
+import { Button, TextField, DialogActions, Grid } from "@mui/material";
 import DialogBasic from "../commons/DialogBasic/DialogBasic";
 import "./PlantersAddDialog.scss";
-import { aget, apost } from "../../utils/util_axios";
+import { apost } from "../../utils/util_axios";
 import { showErrorToast, showSuccessToast } from "../../utils/util_toastify";
 
-const plantFields = [
+const planterFields = [
   { label: "Name", name: "name" },
-  { label: "Sub Name", name: "sub_name" },
-  { label: "Genus ID", name: "genus_id", type: "select" },
-  { label: "Plant Type ID", name: "plant_type_id", type: "select" },
+  { label: "Category", name: "category" },
   { label: "Image URL", name: "img_url" },
-  { label: "Video URL", name: "video_url" },
-  { label: "Height", name: "height", type: "number" },
-  { label: "Width", name: "width", type: "number" },
-  { label: "Zones", name: "zones" },
-  { label: "Uses", name: "uses" },
-  { label: "Tolerance", name: "tolerance" },
-  { label: "Bloom Time", name: "bloom_time" },
-  { label: "Light", name: "light" },
-  { label: "Moisture", name: "moisture" },
-  { label: "Maintenance", name: "maintenance" },
-  { label: "Growth Rate", name: "growth_rate" },
-  { label: "Seasonal Interest", name: "plant_seasonal_interest" },
-  { label: "Description", name: "describe" },
-  { label: "Noteworthy Characteristics", name: "noteworthy_characteristics" },
-  { label: "Care", name: "care" },
-  { label: "Propagation", name: "propagation" },
-  { label: "Problems", name: "problems" },
-  { label: "Water", name: "water" },
-  { label: "Humidity", name: "humidity" },
-  { label: "Fertilizer", name: "fertilizer" },
-  { label: "Size", name: "size" },
   { label: "Price", name: "price", type: "number" },
+  { label: "Size", name: "size" },
+  { label: "Material", name: "material" },
+  { label: "Special Feature", name: "special_feature" },
+  { label: "Style", name: "style" },
+  { label: "Planter Form", name: "planter_form" },
+  { label: "About", name: "about" },
+  { label: "Default Color", name: "default_color" },
+  { label: "Theme", name: "theme" },
+  { label: "Finish Type", name: "finish_type" },
+  { label: "Item Weight", name: "item_weight" },
+  { label: "Manufacturer", name: "manufacturer" },
+  { label: "ASIN", name: "asin" },
+  { label: "Item Model Number", name: "item_model_number" },
+  { label: "Best Seller Rank", name: "best_seller_rank" },
+  { label: "Date First Available", name: "date_first_available" },
+  { label: "Status", name: "status" },
+  { label: "Description", name: "describe" },
 ];
 
 export default function PlantersAddDialog({
   open,
   onClose,
-  fields = plantFields,
-  apiEndpoint = "/plants",
+  fields = planterFields,
+  apiEndpoint = "/planters",
 }) {
   const [isProcessing, setIsProcessing] = useState(false);
-  const [genusList, setGenusList] = useState([]);
-  const [plantTypeList, setPlantTypeList] = useState([]);
 
   const initialFormData = useMemo(
     () => fields.reduce((acc, field) => ({ ...acc, [field.name]: "" }), {}),
@@ -57,19 +49,20 @@ export default function PlantersAddDialog({
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSelectChange = (name, value) => {
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
   const isFormValid = useMemo(() => {
-    return Object.values(formData).every((value) => value && value.trim() !== "");
+    return (
+      formData.name.trim() !== "" &&
+      formData.category.trim() !== "" &&
+      formData.img_url.trim() !== "" &&
+      formData.price > 0
+    );
   }, [formData]);
 
   const handleSubmit = () => {
     setIsProcessing(true);
     apost(apiEndpoint, formData)
       .then(() => {
-        showSuccessToast("Planters added successfully!");
+        showSuccessToast("Planter added successfully!");
         onClose();
       })
       .catch((err) => {
@@ -77,7 +70,7 @@ export default function PlantersAddDialog({
         if (status === 403) {
           showErrorToast("No permission to use this!");
         } else {
-          showErrorToast("Error adding product.");
+          showErrorToast("Error adding planter.");
         }
       })
       .finally(() => {
@@ -85,25 +78,10 @@ export default function PlantersAddDialog({
       });
   };
 
-  useEffect(() => {
-    if (open) {
-      aget("/genus")
-        .then((res) => {
-          setGenusList(res.data);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-      aget("/plant-types").then((res) => {
-        setPlantTypeList(res.data);
-      });
-    }
-  }, [open]);
-
   return (
     <DialogBasic
       className="planters-add-dialog"
-      title="Add New Item"
+      title="Add New Planter"
       open={open}
       onClose={onClose}
       footer={
@@ -130,47 +108,15 @@ export default function PlantersAddDialog({
       <div className="add-item-dialog">
         <Grid container spacing={2}>
           {fields.map((field, index) => (
-            <Grid item xs={12} sm={field.gridSize || 6} key={index}>
-              {field.name === "genus_id" ? (
-                <Autocomplete
-                  options={genusList}
-                  getOptionLabel={(option) => option.name}
-                  onChange={(e, value) =>
-                    handleSelectChange("genus_id", value ? value.id : "")
-                  }
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Genus"
-                      fullWidth
-                    />
-                  )}
-                />
-              ) : field.name === "plant_type_id" ? (
-                <Autocomplete
-                  options={plantTypeList}
-                  getOptionLabel={(option) => option.plant_type_name}
-                  onChange={(e, value) =>
-                    handleSelectChange("plant_type_id", value ? value.id : "")
-                  }
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Plant Type"
-                      fullWidth
-                    />
-                  )}
-                />
-              ) : (
-                <TextField
-                  label={field.label}
-                  name={field.name}
-                  value={formData[field.name]}
-                  onChange={handleInputChange}
-                  type={field.type || "text"}
-                  fullWidth
-                />
-              )}
+            <Grid item xs={12} sm={6} key={index}>
+              <TextField
+                label={field.label}
+                name={field.name}
+                value={formData[field.name]}
+                onChange={handleInputChange}
+                type={field.type || "text"}
+                fullWidth
+              />
             </Grid>
           ))}
         </Grid>
