@@ -1,4 +1,10 @@
-import { Routes, Route, useLocation, useNavigate, Navigate } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  useLocation,
+  useNavigate,
+  Navigate,
+} from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getCookie } from "./components/utils/util_cookie";
 import LoginPage from "./components/admin/Login/LoginPage/LoginPage";
@@ -28,6 +34,8 @@ import TicketsDetailPage from "./components/admin/Tickets/TicketsDetail/TicketsD
 
 import "./App.scss";
 import SearchProductPage from "./components/admin/Search/SearchProduct/SearchProductPage";
+import PlantersHomepage from "./components/admin/Planters/PlantersHomePage";
+import PlantersDetailPage from "./components/admin/Planters/PlantersDetail/PlantersDetailPage";
 
 const ProtectedRoute = ({ element, ...rest }) => {
   const token = getCookie("e_token");
@@ -43,7 +51,7 @@ const LayoutWithSidebar = ({ children }) => {
   const location = useLocation();
 
   useEffect(() => {
-    const contentMain = document.querySelector('.content-main');
+    const contentMain = document.querySelector(".content-main");
     if (contentMain) {
       const timer = setInterval(() => {
         if (contentMain.scrollTop === 0) {
@@ -73,9 +81,7 @@ const LayoutWithoutSidebar = ({ children }) => {
 };
 
 // Routes configuration
-const publicRoutes = [
-  { path: "/login", element: <LoginPage /> }
-];
+const publicRoutes = [{ path: "/login", element: <LoginPage /> }];
 
 const protectedRoutes = [
   { path: "*", element: <Navigate to="/" /> },
@@ -83,6 +89,8 @@ const protectedRoutes = [
   { path: "/employees", element: <EmployeesHomePage /> },
   { path: "/products", element: <ProductHomepage /> },
   { path: "/products/p/:id", element: <ProductDetailPage /> },
+  { path: "/planters", element: <PlantersHomepage /> },
+  { path: "/planters/p/:id", element: <PlantersDetailPage /> },
   { path: "/customers", element: <CustomerHomepage /> },
   { path: "/customers/edit/:userId", element: <CustomerEditPage /> },
   { path: "/employees/add", element: <EmployeeAddPage /> },
@@ -99,7 +107,7 @@ const protectedRoutes = [
   { path: "/tickets", element: <TicketsPage /> },
   { path: "/tickets/create", element: <TicketsCreateManualPage /> },
   { path: "/tickets/t/:id", element: <TicketsDetailPage /> },
-  { path: '/searches/products/:query', element: <SearchProductPage /> }
+  { path: "/searches/products/:query", element: <SearchProductPage /> },
 ];
 
 function App() {

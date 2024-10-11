@@ -13,6 +13,8 @@ import {
   CalendarTodayOutlined as CalendarTodayIcon,
   SettingsOutlined as SettingsIcon,
 } from "@mui/icons-material";
+import ParkOutlinedIcon from "@mui/icons-material/ParkOutlined";
+import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
 import ConfirmationNumberOutlinedIcon from "@mui/icons-material/ConfirmationNumberOutlined";
 import { Link, useLocation } from "react-router-dom";
 
@@ -33,9 +35,15 @@ export default function SideBar() {
     { icon: <PersonIcon />, label: "Customers", link: "/customers", notify: 0 },
     { icon: <ShoppingCartIcon />, label: "Orders", link: "/orders", notify: 0 },
     {
-      icon: <StorefrontIcon />,
+      icon: <ParkOutlinedIcon />,
       label: "Products",
       link: "/products",
+      notify: 0,
+    },
+    {
+      icon: <Inventory2OutlinedIcon />,
+      label: "Planters",
+      link: "/planters",
       notify: 0,
     },
     { icon: <RateReviewIcon />, label: "Reviews", link: "/reviews", notify: 0 },
