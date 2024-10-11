@@ -29,13 +29,7 @@ export default function SideBar() {
       link: "/dashboard",
       notify: 0,
     },
-    {
-      icon: <PeopleIcon />,
-      label: "Employees",
-      link: "/employees",
-      notify: 0,
-      hidden: true,
-    },
+  
     { icon: <PersonIcon />, label: "Customers", link: "/customers", notify: 0 },
     { icon: <ShoppingCartIcon />, label: "Orders", link: "/orders", notify: 0 },
     {
@@ -68,6 +62,13 @@ export default function SideBar() {
       label: "System config",
       link: "/settings",
       notify: 0,
+    },
+    {
+      icon: <PeopleIcon />,
+      label: "Employees",
+      link: "/employees",
+      notify: 0,
+      hidden: true,
     },
   ];
 
