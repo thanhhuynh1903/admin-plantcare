@@ -17,6 +17,7 @@ import ModalDelete from "../ModalDelete/ModalDelete";
 import logo from "@assets/pages/Employees/EmployeesAddPage/ImageUpload.png";
 import { aget } from "../../../utils/util_axios";
 import { useParams } from "react-router-dom";
+import Avatar from "@mui/material/Avatar";
 
 // Validation schema removed since we're not using formik anymore
 
@@ -29,12 +30,15 @@ export default function CustomerEditPage() {
     lastName: "",
     firstName: "",
     dob: "",
+    rank: "",
+    status: "",
     email: "",
     address: "",
     contactNumber: "",
-    city: "",
-    state: "",
+    country: "",
+    gender: "",
     password: "",
+    avatar_url: "",
   });
 
   let { userId } = useParams();
@@ -67,15 +71,18 @@ export default function CustomerEditPage() {
       const userData = response.data;
       setProfile(userData);
       setFormData({
-        lastName: userData?.name?.split(" ")[0] || "",
-        firstName: userData?.name?.split(" ")[1] || "",
+        lastName: userData?.name?.split(" ")[0] || "User not update yet",
+        firstName: userData?.name?.split(" ")[1] || "User not update yet",
         dob: formatDate(userData.createdAt),
-        email: userData.email || "",
-        address: "33062 Zboncak Isle",
-        contactNumber: "58077.79",
-        city: "Mehrab",
-        state: "Bozorgi",
+        rank: userData.rank || "Rank of user is updating",
+        status: userData.status,
+        email: userData.email || "User not update yet",
+        address: userData.address || "User not update yet",
+        contactNumber: userData.phone || "User not update yet",
+        country: userData?.country || "User not update yet",
+        gender: userData.gender || "User not update yet",
         password: userData.password || "",
+        avatar_url: userData.avatar_url || "",
       });
     } catch (error) {
       console.error("Error fetching user:", error);
@@ -85,21 +92,24 @@ export default function CustomerEditPage() {
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = new FormData();
     data.append("lastName", formData.lastName);
     data.append("firstName", formData.firstName);
     data.append("dob", formData.dob);
+    data.append("rank", formData.rank);
+    data.append("status", formData.status);
     data.append("email", formData.email);
     data.append("address", formData.address);
     data.append("contactNumber", formData.contactNumber);
-    data.append("city", formData.city);
-    data.append("state", formData.state);
+    data.append("country", formData.country);
+    data.append("gender", formData.gender);
     data.append("password", formData.password);
-    data.append("image", image);
+    data.append("image", formData.avatar_url);
 
+    
     // Implement the submission logic here
     // For example, you could call the API to update the user
     try {
@@ -127,26 +137,34 @@ export default function CustomerEditPage() {
             Profile customer
           </div>
           <div>
-            <div
-              className="input-file-avatar"
-              style={{
-                backgroundImage: `url(${imagePreview ? imagePreview : logo})`,
-              }}
-            >
-              <input
-                type="file"
-                id="employees-edit-input-avatar"
-                accept="image/*"
-                style={{ display: "none" }}
-                onChange={handleImageChange}
+            {formData.avatar_url ? (
+              <Avatar
+                alt="Remy Sharp"
+                src={formData.avatar_url}
+                sx={{ width: "120px", height: "120px"}}
               />
-              <label
-                htmlFor="employees-edit-input-avatar"
-                className="input-file-avatar-btn"
+            ) : (
+              <div
+                className="input-file-avatar"
+                style={{
+                  backgroundImage: `url(${imagePreview ? imagePreview : logo})`,
+                }}
               >
-                <p>Upload</p>
-              </label>
-            </div>
+                <input
+                  type="file"
+                  id="employees-edit-input-avatar"
+                  accept="image/*"
+                  style={{ display: "none" }}
+                  onChange={handleImageChange}
+                />
+                <label
+                  htmlFor="employees-edit-input-avatar"
+                  className="input-file-avatar-btn"
+                >
+                  <p>Upload</p>
+                </label>
+              </div>
+            )}
           </div>
         </div>
         <Box sx={{ display: "flex", gap: 3 }}>
@@ -186,7 +204,31 @@ export default function CustomerEditPage() {
             // Add error handling if needed
           />
         </Box>
+        <Box sx={{ display: "flex", gap: 3 }}>
+          <TextField
+            label="Rank"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            id="rank"
+            name="Rank"
+            value={formData.rank}
+            onChange={handleChange}
+            // Add error handling if needed
+          />
 
+          <TextField
+            label="Status"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            id="status"
+            name="Status"
+            value={formData.status ? "Active" : "Inactive"}
+            onChange={handleChange}
+            // Add error handling if needed
+          />
+        </Box>
         {/* Email */}
         <TextField
           label="Email"
@@ -228,27 +270,27 @@ export default function CustomerEditPage() {
         {/* City and State Dropdowns */}
         <div className="dropdown-fields">
           <FormControl fullWidth margin="normal">
-            <InputLabel>City</InputLabel>
+            <InputLabel>Country</InputLabel>
             <Select
-              id="city"
-              name="city"
-              value={formData.city}
+              id="country"
+              name="country"
+              value={formData.country}
               onChange={handleChange}
             >
-              <MenuItem value="Mehrab">Mehrab</MenuItem>
+              <MenuItem value={formData.country}>{formData.country}</MenuItem>
               {/* Add more cities */}
             </Select>
           </FormControl>
 
           <FormControl fullWidth margin="normal">
-            <InputLabel>State</InputLabel>
+            <InputLabel>Gender</InputLabel>
             <Select
               id="state"
-              name="state"
-              value={formData.state}
+              name="gender"
+              value={formData.gender}
               onChange={handleChange}
             >
-              <MenuItem value="Bozorgi">Bozorgi</MenuItem>
+              <MenuItem value={formData.gender}>{formData.gender}</MenuItem>
               {/* Add more states */}
             </Select>
           </FormControl>

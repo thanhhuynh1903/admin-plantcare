@@ -13,8 +13,14 @@ import CloseIcon from "@mui/icons-material/Close";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import WarningIcon from "@mui/icons-material/Warning";
 
-const ModalDelete = ({ open, onClose }) => {
+const ModalDelete = ({ open, onClose, onDelete }) => {
   const [confirmDeletion, setConfirmDeletion] = useState(false);
+
+  const handleDelete = () => {
+    if (confirmDeletion) {
+      onDelete();
+    }
+  };
 
   return (
     <Modal open={open} onClose={onClose}>
@@ -79,7 +85,7 @@ const ModalDelete = ({ open, onClose }) => {
           sx={{ mb: 2 ,color:'gray'}}
         />
 
-        <Button fullWidth variant="contained" color="error" sx={{ mb: 1 }}>
+        <Button fullWidth variant="contained" color="error" sx={{ mb: 1 }} onClick={handleDelete} disabled={!confirmDeletion}>
           Accept
         </Button>
 

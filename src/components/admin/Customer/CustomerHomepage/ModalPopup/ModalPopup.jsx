@@ -11,11 +11,14 @@ import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Link } from "react-router-dom";
 import ModalDelete from "../../ModalDelete/ModalDelete";
-
-const ModalPopup = ({ employee }) => {
+import { apatch } from "../../../../utils/util_axios";
+import { adelete } from "../../../../utils/util_axios";
+const ModalPopup = ({ employee ,onUpdate }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [openModal, setOpenModal] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
+  const [employeeStatus, setEmployeeStatus] = useState(employee.status);
+
   const handleOpenDelete = () => setOpenDelete(true);
   const handleCloseDelete = () => setOpenDelete(false);
   const handleClick = (event) => {
@@ -34,6 +37,30 @@ const ModalPopup = ({ employee }) => {
 
   const handleCloseModal = () => {
     setOpenModal(false);
+  };
+
+
+  
+  const handleStatusChange = async () => {
+    try {
+      const response = await apatch(
+        `/users/banAccountByAdmin/${employee._id}`);
+      setEmployeeStatus(response.data.status);
+
+    } catch (error) {
+      console.error("Failed to update status:", error);
+    }
+  };
+
+  const handleDeleteUser = async () => {
+    try {
+      // Replace with your actual delete API call
+      console.log(employee._id);
+     await adelete(`/users/${employee._id}`)
+      handleCloseDelete();
+    } catch (error) {
+      console.error("Failed to delete user:", error);
+    }
   };
 
   const open = Boolean(anchorEl);
@@ -63,20 +90,15 @@ const ModalPopup = ({ employee }) => {
             onClick={handleOpenModal}
             sx={{ cursor: "pointer", mb: 1 }}
           >
-            {/* <TableCell>
-                      <IconButton
-                        onClick={() => props.onDelete(employee.id)}
-                        className="delete-icon"
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    </TableCell> */}
             <Link to={`/customers/edit/${employee._id}`} className="edit-link">
               View Profile
             </Link>
           </Typography>
-          <Typography sx={{ cursor: "pointer", mb: 1 }}>
-            Activate User
+          <Typography
+            onClick={handleStatusChange}
+            sx={{ cursor: "pointer", mb: 1 }}
+          >
+            {employeeStatus ? "Deactivate User" : "Activate User"}
           </Typography>
           <hr style={{ borderColor: "#FFF" }} />
           <Typography
@@ -88,7 +110,7 @@ const ModalPopup = ({ employee }) => {
         </Box>
       </Popover>
       <Modal open={openDelete} onClose={handleCloseDelete}>
-        <ModalDelete open={openDelete} onClose={handleCloseDelete} />
+        <ModalDelete open={openDelete} onClose={handleCloseDelete} onDelete={handleDeleteUser}/>
       </Modal>
     </div>
   );

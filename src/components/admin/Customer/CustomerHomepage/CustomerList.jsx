@@ -44,7 +44,9 @@ const statusClasses = {
 
 const headCells = [
   { id: "ID", numeric: false, disablePadding: false, label: "#" },
+  { id: "AVATAR", numeric: false, disablePadding: false, label: "" },
   { id: "NAME", numeric: false, disablePadding: false, label: "NAME" },
+
   {
     id: "EMAIL",
     numeric: false,
@@ -304,19 +306,38 @@ export default function CustomerList({ employees }) {
                       />
                     </TableCell>
                     <TableCell>{index + 1 + page * rowsPerPage}</TableCell>
+                    <TableCell>
+                    <Avatar alt="Remy Sharp" src={row.avatar_url} />
+
+
+                    </TableCell>
                     <TableCell
                       component="th"
                       id={labelId}
                       scope="row"
                       padding="16px"
                     >
-                      <Box
-                        display="flex"
-                        alignItems="center"
-                        sx={{ fontSize: "13.4px", fontWeight: "bold" }}
-                      >
-                        {row.name}
-                      </Box>
+                      {row.name ? (
+                        <Box
+                          display="flex"
+                          alignItems="center"
+                          sx={{ fontSize: "13.4px", fontWeight: "bold" }}
+                        >
+                          {row.name}
+                        </Box>
+                      ) : (
+                        <Box
+                          display="flex"
+                          alignItems="center"
+                          sx={{
+                            fontSize: "13.4px",
+                            fontWeight: 300,
+                            opacity: 0.5,
+                          }}
+                        >
+                          Not updated yet...
+                        </Box>
+                      )}
                     </TableCell>
                     <TableCell
                       component="th"

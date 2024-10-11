@@ -14,15 +14,15 @@ import PermIdentityOutlinedIcon from '@mui/icons-material/PermIdentityOutlined';
 import { aget } from "../../../utils/util_axios";
 import CircularIndeterminate from "../Loading/Loading";
 
-const initialEmployeeData = [
-  { name: 'Darlene Robertson', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla...', status: 'Open', rate:"150.000" ,balance: '+270.000',deposite:'500.000'  },
-  { name: 'Devon Lane', description: 'LOremmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', status: 'Paid',  rate:"150.000",balance: '+270.000', deposite:'500.000' },
-  { name: 'Cody Fisher', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla...', status: 'Open',  rate:"150.000",balance: '-270.000',  deposite:'500.000'},
-  { name: 'Theresa Webb', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla...', status: 'Inactive', rate:"150.000", balance: '-270.000', deposite:'500.000' },
-  { name: 'Marvin McKinney', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla...', status: 'Due',rate:"70.000", balance: '+270.000', deposite:'500.000' },
-  { name: 'Jerome Bell', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla...', status: 'Due',rate:"70.000", balance: '-270.000',deposite:'500.000'  },
-  { name: 'Eleanor Pena', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla...', status: 'Open', rate:"70.000",balance: '+400.000', deposite:'500.000' }
-];
+// const initialEmployeeData = [
+//   { name: 'Darlene Robertson', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla...', status: 'Open', rate:"150.000" ,balance: '+270.000',deposite:'500.000'  },
+//   { name: 'Devon Lane', description: 'LOremmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', status: 'Paid',  rate:"150.000",balance: '+270.000', deposite:'500.000' },
+//   { name: 'Cody Fisher', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla...', status: 'Open',  rate:"150.000",balance: '-270.000',  deposite:'500.000'},
+//   { name: 'Theresa Webb', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla...', status: 'Inactive', rate:"150.000", balance: '-270.000', deposite:'500.000' },
+//   { name: 'Marvin McKinney', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla...', status: 'Due',rate:"70.000", balance: '+270.000', deposite:'500.000' },
+//   { name: 'Jerome Bell', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla...', status: 'Due',rate:"70.000", balance: '-270.000',deposite:'500.000'  },
+//   { name: 'Eleanor Pena', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla...', status: 'Open', rate:"70.000",balance: '+400.000', deposite:'500.000' }
+// ];
 
 export default function CustomerHomepage() {
   const [loading, setLoading] = useState(true); // Initial loading state

@@ -73,3 +73,12 @@ export const aupdate = async (path, data) => {
     throw error;
   }
 };
+
+export const apatch = async (path, data) => {
+  try {
+    const response = await axiosInstance.patch(path, data);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
