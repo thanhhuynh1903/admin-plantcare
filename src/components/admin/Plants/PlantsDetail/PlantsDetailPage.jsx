@@ -17,23 +17,23 @@ import {
   CircularProgress
 } from "@mui/material";
 
-import "./ProductDetailPage.scss";
+import "./PlantsDetailPage.scss";
 import { aget } from "../../../utils/util_axios";
-import ProductEditDialog from "./ProductEditDialog";
-import ProductDetailDeleteDialog from "./ProductDetailDeleteDialog";
+import PlantsEditDialog from "./PlantsEditDialog";
+import PlantsDetailDeleteDialog from "./PlantsDetailDeleteDialog";
 
-export default function ProductDetailPage() {
-  const [product, setProduct] = useState(null);
+export default function PlantsDetailPage() {
+  const [product, setPlants] = useState(null);
   const [loading, setLoading] = useState(false);
   const [itemToEdit, setItemToEdit] = useState(null);
   const [itemToDelete, setItemToDelete] = useState(null);
   const { id } = useParams();
 
-  const obtainProductAPI = async () => {
+  const obtainPlantsAPI = async () => {
     setLoading(true);
     aget(`/plants/${id}`)
       .then((response) => {
-        setProduct(response.data);
+        setPlants(response.data);
       })
       .finally(() => {
         setLoading(false);
@@ -43,20 +43,20 @@ export default function ProductDetailPage() {
   useEffect(() => {
     setItemToEdit(null);
     setItemToDelete(null);
-    setPageHeadTitle("Product detail");
-    obtainProductAPI();
+    setPageHeadTitle("Plant detail");
+    obtainPlantsAPI();
   }, []);
 
   return (
-    <div className="product-detail-page">
+    <div className="plants-detail-page">
       <div className="main-label">
-        <Button component={Link} to="/products">
+        <Button component={Link} to="/plants">
           <ArrowCircleLeftOutlinedIcon className="btn-back" />
         </Button>
-        <p>Product detail{product && ` - ${product.name}`}</p>
+        <p>Plant detail{product && ` - ${product.name}`}</p>
       </div>
       <div className="content">
-        {loading ? ( // Show CircularProgress while loading
+        {loading ? ( 
           <div className="loading-container">
             <CircularProgress />
           </div>
@@ -126,7 +126,7 @@ export default function ProductDetailPage() {
                 </Grid2>
               </Grid2>
 
-              {/* Product Properties Table */}
+              {/* Plants Properties Table */}
               <p className="sub-label">Plant specification</p>
               <Paper elevation={3}>
                 <Table>
@@ -202,16 +202,16 @@ export default function ProductDetailPage() {
             </>
           )
         )}
-        <ProductEditDialog
+        <PlantsEditDialog
           item={itemToEdit}
           onFinish={() => {
-            obtainProductAPI();
+            obtainPlantsAPI();
           }}
           onClose={() => {
             setItemToEdit(null);
           }}
         />
-        <ProductDetailDeleteDialog
+        <PlantsDetailDeleteDialog
           open={itemToDelete != null}
           onClose={() => {
             setItemToDelete(null);

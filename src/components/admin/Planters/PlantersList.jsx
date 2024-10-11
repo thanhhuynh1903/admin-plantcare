@@ -20,9 +20,9 @@ import { useNavigate } from "react-router-dom";
 import PlantersDeleteDialog from "./PlantersDeleteDialog";
 import PlantersEditDialog from "./PlantersEditDialog";
 
-export default function PlantersList({ data, onFinishEditing }) {
+export default function PlantersList({ data = [], onFinishEditing }) {
   const [anchorEl, setAnchorEl] = useState(null);
-  
+
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const navigate = useNavigate();
@@ -87,7 +87,7 @@ export default function PlantersList({ data, onFinishEditing }) {
               <TableCell>Name / Subname</TableCell>
               <TableCell>Price</TableCell>
               <TableCell>Size</TableCell>
-              <TableCell>Rating</TableCell>
+              <TableCell>Model</TableCell>
               <TableCell>Status</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
@@ -102,8 +102,8 @@ export default function PlantersList({ data, onFinishEditing }) {
               >
                 <TableCell>
                   <Avatar
-                    src={item.img_url[0]}
-                    alt={item.name}
+                    src={item.img_object && item.img_object?.img_url}
+                    alt={item?.name}
                     sx={{ width: 56, height: 56 }}
                   />
                 </TableCell>
@@ -112,18 +112,12 @@ export default function PlantersList({ data, onFinishEditing }) {
                     {item.name}
                   </Typography>
                   <Typography variant="body2" color="textSecondary">
-                    {item.sub_name}
+                    {item.introduction}
                   </Typography>
                 </TableCell>
                 <TableCell>{item.price.toFixed(2)} VND</TableCell>
                 <TableCell>{item.size}</TableCell>
-                <TableCell>
-                  <Rating
-                    value={parseFloat(item.average_rating)}
-                    readOnly
-                    precision={0.5}
-                  />
-                </TableCell>
+                <TableCell>{item.item_model_number}</TableCell>
                 <TableCell>{item.status || "Censored"}</TableCell>
                 <TableCell>
                   <IconButton onClick={(e) => handleMenuOpen(e, item)}>

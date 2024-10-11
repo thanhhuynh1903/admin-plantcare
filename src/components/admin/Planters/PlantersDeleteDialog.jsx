@@ -11,7 +11,7 @@ export default function PlantersDeleteDialog({ onClose, onFinish, item }) {
 
   const handleDelete = () => {
     setIsProcessing(true);
-    adelete(`/products/${item.id}`)
+    adelete(`/planters/${item.id}`)
       .then((p) => {
         showSuccessToast("Planter deleted successfully");
         onFinish();

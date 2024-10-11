@@ -1,19 +1,19 @@
 import DialogBasic from "../../commons/DialogBasic/DialogBasic";
 import Button from "@mui/material/Button";
 import LinearProgress from "@mui/material/LinearProgress";
-import "./ProductDetailDeleteDialog.scss";
+import "./PlantsDetailDeleteDialog.scss";
 import { adelete } from "@utils/util_axios";
 import { showSuccessToast } from "@utils/util_toastify";
 import { useState } from "react";
 
-export default function ProductDetailDeleteDialog({ open, onClose, onFinish, item }) {
+export default function PlantsDetailDeleteDialog({ open, onClose, onFinish, item }) {
   const [isProcessing, setIsProcessing] = useState(false);
 
   const handleDelete = () => {
     setIsProcessing(true);
-    adelete(`/products/${item.id}`)
+    adelete(`/plants/${item.id}`)
       .then((p) => {
-        showSuccessToast("Product deleted successfully");
+        showSuccessToast("Plant deleted successfully");
         onFinish();
       })
       .finally(() => {
@@ -24,8 +24,8 @@ export default function ProductDetailDeleteDialog({ open, onClose, onFinish, ite
 
   return (
     <DialogBasic
-      className="product-delete-dialog"
-      title="Now deleting product"
+      className="plants-delete-dialog"
+      title="Now deleting plant"
       open={item && open}
       onClose={onClose}
       maxWidth="sm"
@@ -51,7 +51,7 @@ export default function ProductDetailDeleteDialog({ open, onClose, onFinish, ite
       }
     >
       <p>
-        Are you sure you want to delete product: <b>{item?.name}</b>?<br />
+        Are you sure you want to delete plant: <b>{item?.name}</b>?<br />
         Please note that you cannot undo this action.
       </p>
     </DialogBasic>

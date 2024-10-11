@@ -17,10 +17,10 @@ import {
 } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useNavigate } from "react-router-dom";
-import ProductDeleteDialog from "./ProductDeleteDialog";
-import ProductEditDialog from "./ProductEditDialog";
+import PlantsDeleteDialog from "./PlantsDeleteDialog";
+import PlantsEditDialog from "./PlantsEditDialog";
 
-export default function ProductList({ data, onFinishEditing }) {
+export default function PlantsList({ data, onFinishEditing }) {
   const [anchorEl, setAnchorEl] = useState(null);
   
   const [page, setPage] = useState(0);
@@ -45,10 +45,9 @@ export default function ProductList({ data, onFinishEditing }) {
     setAnchorEl(null);
   };
 
-  const handleProductClick = (id) => {
-    // Only navigate if no menu is open
+  const handlePlantsClick = (id) => {
     if (!anchorEl) {
-      navigate(`/products/p/${id}`);
+      navigate(`/plants/p/${id}`);
     }
   };
 
@@ -98,7 +97,7 @@ export default function ProductList({ data, onFinishEditing }) {
                 key={item._id}
                 sx={{ cursor: "pointer" }}
                 hover
-                onClick={() => handleProductClick(item._id)}
+                onClick={() => handlePlantsClick(item._id)}
               >
                 <TableCell>
                   <Avatar
@@ -180,7 +179,7 @@ export default function ProductList({ data, onFinishEditing }) {
         </MenuItem>
       </Menu>
 
-      <ProductEditDialog
+      <PlantsEditDialog
         item={editedItem}
         onClose={handleMenuClose}
         onFinish={() => {
@@ -188,7 +187,7 @@ export default function ProductList({ data, onFinishEditing }) {
           onFinishEditing();
         }}
       />
-      <ProductDeleteDialog
+      <PlantsDeleteDialog
         onClose={() => setDeletedItem(null)}
         onFinish={() => setDeletedItem(null)}
         item={deletedItem}

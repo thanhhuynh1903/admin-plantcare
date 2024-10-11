@@ -36,8 +36,8 @@ export default function SideBar() {
     { icon: <ShoppingCartIcon />, label: "Orders", link: "/orders", notify: 0 },
     {
       icon: <ParkOutlinedIcon />,
-      label: "Products",
-      link: "/products",
+      label: "Plants",
+      link: "/plants",
       notify: 0,
     },
     {

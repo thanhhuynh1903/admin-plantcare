@@ -20,7 +20,7 @@ export default function PlantersHomepage() {
   const [openAddPlantersDialog, setOpenAddPlantersDialog] = useState(false);
 
   const obtainPlantersAPI = async () => {
-    aget("/plants")
+    aget("/planters")
       .then((response) => {
         setData(response.data);
         setFilteredData(

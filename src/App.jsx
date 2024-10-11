@@ -15,7 +15,6 @@ import EmployeesHomePage from "./components/admin/Employees/EmployeeHomePage/Emp
 import EmployeeAddPage from "./components/admin/Employees/EmployeeAddPage/EmployeeAddPage";
 import EmployeesEditPage from "./components/admin/Employees/EmployeesEditPage/EmployeesEditPage";
 import OrderHomePage from "./components/admin/Orders/OrderHomePage";
-import OrderDetail from "./components/admin/Orders/OrderDetail";
 import SettingsPage from "./components/admin/Settings/SettingsPage";
 import CalendarPage from "./components/admin/Calendar/CalendarPage";
 import CalendarDetailPage from "./components/admin/Calendar/CalendarDetail/CalendarDetailPage";
@@ -24,8 +23,6 @@ import ReviewDetail from "./components/admin/Reviews/ReviewDetail";
 import NewsPage from "./components/admin/News/NewsPage";
 import NewsCreatePage from "./components/admin/News/NewsCreate/NewsCreatePage";
 import NewsEditPage from "./components/admin/News/NewsEdit/NewsEditPage";
-import ProductHomepage from "./components/admin/Products/ProductHomePage";
-import ProductDetailPage from "./components/admin/Products/ProductDetail/ProductDetailPage";
 import CustomerHomepage from "./components/admin/Customer/CustomerHomepage/CustomerHomepage";
 import CustomerEditPage from "./components/admin/Customer/CustomerEditpage/CustomerEditPage";
 import TicketsPage from "./components/admin/Tickets/TicketsPage";
@@ -36,6 +33,8 @@ import "./App.scss";
 import SearchProductPage from "./components/admin/Search/SearchProduct/SearchProductPage";
 import PlantersHomepage from "./components/admin/Planters/PlantersHomePage";
 import PlantersDetailPage from "./components/admin/Planters/PlantersDetail/PlantersDetailPage";
+import PlantsHomepage from "./components/admin/Plants/PlantsHomePage";
+import PlantsDetailPage from "./components/admin/Plants/PlantsDetail/PlantsDetailPage";
 
 const ProtectedRoute = ({ element, ...rest }) => {
   const token = getCookie("e_token");
@@ -87,8 +86,8 @@ const protectedRoutes = [
   { path: "*", element: <Navigate to="/" /> },
   { path: "/dashboard", element: <DashboardPage /> },
   { path: "/employees", element: <EmployeesHomePage /> },
-  { path: "/products", element: <ProductHomepage /> },
-  { path: "/products/p/:id", element: <ProductDetailPage /> },
+  { path: "/plants", element: <PlantsHomepage /> },
+  { path: "/plants/p/:id", element: <PlantsDetailPage /> },
   { path: "/planters", element: <PlantersHomepage /> },
   { path: "/planters/p/:id", element: <PlantersDetailPage /> },
   { path: "/customers", element: <CustomerHomepage /> },
@@ -129,7 +128,7 @@ function App() {
   }
 
   if (isAuthenticated && isLoginPage) {
-    return <Navigate to="/" />; // Redirect authenticated users away from /login
+    return <Navigate to="/" />;
   }
 
   return (

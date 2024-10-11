@@ -1,9 +1,9 @@
-import "./ProductBudget.scss";
+import "./PlantsBudget.scss";
 import ArrowDropUpOutlinedIcon from "@mui/icons-material/ArrowDropUpOutlined";
 import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
 import { useState, useEffect } from "react";
 import { formatNumber } from "../../utils/util_string";
-export default function ProductBudget() {
+export default function PlantsBudget() {
   const [budgetList, setBudgetList] = useState(null);
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export default function ProductBudget() {
   }, []);
 
   return (
-    <div className="employees-home-budget-list">
+    <div className="plants-budget">
       {budgetList &&
         budgetList.map((item, index) => (
           <div className="node" key={index}>

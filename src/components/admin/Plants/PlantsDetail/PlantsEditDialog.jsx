@@ -6,10 +6,11 @@ import {
   Grid,
   Autocomplete,
 } from "@mui/material";
-import DialogBasic from "../commons/DialogBasic/DialogBasic";
-import "./ProductEditDialog.scss";
+import DialogBasic from "../../commons/DialogBasic/DialogBasic";
+import "./PlantsEditDialog.scss";
+import { aget, apost } from "@utils/util_axios";
 import { showErrorToast, showSuccessToast } from "@utils/util_toastify";
-import { aget, aupdate } from "@utils/util_axios";
+import { aupdate } from "../../../utils/util_axios";
 
 const plantFields = [
   { label: "Name", name: "name" },
@@ -41,7 +42,7 @@ const plantFields = [
   { label: "Price", name: "price", type: "number" },
 ];
 
-export default function ProductEditDialog({
+export default function PlantsEditDialog({
   item = null,
   onClose = () => {},
   onFinish = () => {},
@@ -111,7 +112,7 @@ export default function ProductEditDialog({
     setIsProcessing(true);
     aupdate(`/plants/${item._id}`, formData)
       .then(() => {
-        showSuccessToast("Product edited successfully!");
+        showSuccessToast("Plants edited successfully!");
         onFinish();
         onClose();
       })
@@ -151,7 +152,7 @@ export default function ProductEditDialog({
 
   return (
     <DialogBasic
-      className="product-edit-dialog"
+      className="plants-edit-dialog"
       title="Edit Item"
       open={item != null}
       onClose={onClose}
