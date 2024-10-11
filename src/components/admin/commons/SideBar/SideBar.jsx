@@ -16,7 +16,7 @@ import {
 import ConfirmationNumberOutlinedIcon from "@mui/icons-material/ConfirmationNumberOutlined";
 import { Link, useLocation } from "react-router-dom";
 
-import logo from '@assets/logo.png';
+import logo from "@assets/logo.png";
 
 export default function SideBar() {
   const location = useLocation(); // Hook to get the current location
@@ -29,7 +29,13 @@ export default function SideBar() {
       link: "/dashboard",
       notify: 0,
     },
-    { icon: <PeopleIcon />, label: "Employees", link: "/employees", notify: 0 },
+    {
+      icon: <PeopleIcon />,
+      label: "Employees",
+      link: "/employees",
+      notify: 0,
+      hidden: true,
+    },
     { icon: <PersonIcon />, label: "Customers", link: "/customers", notify: 0 },
     { icon: <ShoppingCartIcon />, label: "Orders", link: "/orders", notify: 0 },
     {
@@ -93,25 +99,36 @@ export default function SideBar() {
           {menuItems.map((item, index) => (
             <ListItem
               key={index}
-              className={`list-item ${
-                location.pathname.startsWith(item.link)
+              className={
+                `list-item ${!item.hidden && location.pathname.startsWith(item.link)
                   ? "list-item-active"
                   : ""
-              }`}
-              component={Link}
-              to={item.link}
+                } ${item.hidden ? "list-item-hidden" : ""}`
+              }
+              component={item.hidden ? "div" : Link}
+              to={item.hidden ? "" : item.link}
             >
-              <ListItemIcon className="list-item-icon">
-                {item.icon}
-                {isCollapsed && item.notify > 0 && (
-                  <p className="list-item-badge">{item.notify}</p>
-                )}
-              </ListItemIcon>
+              {
+                item.hidden && (
+                  <div className="list-item-unavailable">
+                  <p className="list-item-unavailable-text">Unavailable</p>
+                </div>
+                )
+              }
+             
+              <div className="list-item-grid">
+                <ListItemIcon className="list-item-icon">
+                  {item.icon}
+                  {isCollapsed && item.notify > 0 && (
+                    <p className="list-item-badge">{item.notify}</p>
+                  )}
+                </ListItemIcon>
 
-              {!isCollapsed && <p className="list-item-text">{item.label}</p>}
-              {!isCollapsed && item.notify > 0 && (
-                <p className="list-item-notify">{item.notify}</p>
-              )}
+                {!isCollapsed && <p className="list-item-text">{item.label}</p>}
+                {!isCollapsed && item.notify > 0 && (
+                  <p className="list-item-notify">{item.notify}</p>
+                )}
+              </div>
             </ListItem>
           ))}
         </List>
