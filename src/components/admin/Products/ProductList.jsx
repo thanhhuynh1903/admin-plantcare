@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -9,58 +9,66 @@ import {
   Paper,
   Avatar,
   IconButton,
-  Menu,
-  MenuItem,
   Typography,
   Rating,
   TablePagination,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useNavigate } from "react-router-dom";
 import ProductDeleteDialog from "./ProductDeleteDialog";
+import ProductEditDialog from "./ProductEditDialog";
 
-export default function ProductList({ data }) {
+export default function ProductList({ data, onFinishEditing }) {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [menuId, setMenuId] = useState(null);
+  
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const navigate = useNavigate();
 
+  const [actionedItem, setActionedItem] = useState(null);
+  const [editedItem, setEditedItem] = useState(null);
   const [deletedItem, setDeletedItem] = useState(null);
 
-  const handleMenuOpen = (event, id) => {
+  const handleMenuOpen = (event, item) => {
     event.stopPropagation();
     setAnchorEl(event.currentTarget);
-    setMenuId(id);
+    setActionedItem(item);
   };
 
-  const handleMenuClose = () => {
+  const handleMenuClose = (event) => {
+    event?.stopPropagation();
+    setEditedItem(null);
+    setDeletedItem(null);
+    setActionedItem(null);
     setAnchorEl(null);
-    setMenuId(null);
   };
 
   const handleProductClick = (id) => {
-    navigate(`/products/p/${id}`);
+    // Only navigate if no menu is open
+    if (!anchorEl) {
+      navigate(`/products/p/${id}`);
+    }
   };
 
-  const handleEdit = (id) => {
-    console.log("Edit product with id:", id);
+  const handleEdit = (item) => {
     handleMenuClose();
+    setEditedItem(item);
   };
 
   const handleDelete = (item) => {
-    setDeletedItem(item);
     handleMenuClose();
+    setDeletedItem(item);
   };
 
-  // Pagination Handlers
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0); // Reset to first page when rows per page changes
+    setPage(0);
   };
 
   // Paginate the data
@@ -118,39 +126,9 @@ export default function ProductList({ data }) {
                 </TableCell>
                 <TableCell>{item.status || "Censored"}</TableCell>
                 <TableCell>
-                  <IconButton onClick={(e) => handleMenuOpen(e, item._id)}>
+                  <IconButton onClick={(e) => handleMenuOpen(e, item)}>
                     <MoreVertIcon />
                   </IconButton>
-                  <Menu
-                    anchorEl={anchorEl}
-                    open={menuId === item._id}
-                    onClose={handleMenuClose}
-                    anchorOrigin={{
-                      vertical: "top",
-                      horizontal: "right",
-                    }}
-                    transformOrigin={{
-                      vertical: "top",
-                      horizontal: "right",
-                    }}
-                  >
-                    <MenuItem
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleEdit(item._id);
-                      }}
-                    >
-                      Edit
-                    </MenuItem>
-                    <MenuItem
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDelete(item);
-                      }}
-                    >
-                      Delete
-                    </MenuItem>
-                  </Menu>
                 </TableCell>
               </TableRow>
             ))}
@@ -169,8 +147,48 @@ export default function ProductList({ data }) {
           sx={{ display: "flex", justifyContent: "flex-end" }}
         />
       </TableContainer>
+
+      <Menu
+        anchorEl={anchorEl}
+        open={actionedItem != null}
+        onClose={handleMenuClose}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <MenuItem
+          onClick={(e) => {
+            e.stopPropagation();
+            handleEdit(actionedItem);
+          }}
+        >
+          Edit
+        </MenuItem>
+        <MenuItem
+          onClick={(e) => {
+            e.stopPropagation();
+            handleDelete(actionedItem);
+          }}
+        >
+          Delete
+        </MenuItem>
+      </Menu>
+
+      <ProductEditDialog
+        item={editedItem}
+        onClose={handleMenuClose}
+        onFinish={() => {
+          handleMenuClose();
+          onFinishEditing();
+        }}
+      />
       <ProductDeleteDialog
-        open={deletedItem !== null}
         onClose={() => setDeletedItem(null)}
         onFinish={() => setDeletedItem(null)}
         item={deletedItem}

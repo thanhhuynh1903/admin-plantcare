@@ -12,6 +12,7 @@ import FilterProduct from "./FilterProduct";
 import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
 import { aget } from "../../utils/util_axios";
 import ProductAddDialog from "./ProductAddDialog";
+import ProductEditDialog from "./ProductEditDialog";
 
 export default function ProductHomepage() {
   const [data, setData] = useState([]);
@@ -19,9 +20,7 @@ export default function ProductHomepage() {
 
   const [openAddProductDialog, setOpenAddProductDialog] = useState(false);
 
-  useEffect(() => {
-    setPageHeadTitle("Products");
-
+  const obtainProductAPI = async () => {
     aget("/plants")
       .then((response) => {
         setData(response.data);
@@ -37,6 +36,12 @@ export default function ProductHomepage() {
       .catch((error) => {
         console.error(error);
       });
+  };
+
+  useEffect(() => {
+    setPageHeadTitle("Products");
+
+    obtainProductAPI();
   }, []);
 
   const filterType = [
@@ -126,7 +131,12 @@ export default function ProductHomepage() {
         />
       </div>
       <div>
-        <ProductList data={filteredData} />
+        <ProductList
+          data={filteredData}
+          onFinishEditing={() => {
+            obtainProductAPI();
+          }}
+        />
       </div>
       <ProductAddDialog
         open={openAddProductDialog}

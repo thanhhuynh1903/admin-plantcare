@@ -3,32 +3,48 @@ import ArrowCircleLeftOutlinedIcon from "@mui/icons-material/ArrowCircleLeftOutl
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { setPageHeadTitle } from "../../../utils/util_web";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 import {
-  Grid,
-  Card,
-  CardContent,
+  Grid2,
   Typography,
   Table,
   TableBody,
   TableRow,
   TableCell,
   Paper,
+  Rating,
+  CircularProgress
 } from "@mui/material";
 
 import "./ProductDetailPage.scss";
 import { aget } from "../../../utils/util_axios";
+import ProductEditDialog from "./ProductEditDialog";
+import ProductDetailDeleteDialog from "./ProductDetailDeleteDialog";
 
 export default function ProductDetailPage() {
   const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [itemToEdit, setItemToEdit] = useState(null);
+  const [itemToDelete, setItemToDelete] = useState(null);
+  const { id } = useParams();
 
-  const {id} = useParams();
+  const obtainProductAPI = async () => {
+    setLoading(true);
+    aget(`/plants/${id}`)
+      .then((response) => {
+        setProduct(response.data);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
   useEffect(() => {
+    setItemToEdit(null);
+    setItemToDelete(null);
     setPageHeadTitle("Product detail");
-
-    aget(`/plants/${id}`).then((response) => {
-      setProduct(response.data);
-    });
+    obtainProductAPI();
   }, []);
 
   return (
@@ -37,25 +53,55 @@ export default function ProductDetailPage() {
         <Button component={Link} to="/products">
           <ArrowCircleLeftOutlinedIcon className="btn-back" />
         </Button>
-        <p>Product detail - {product?.name}</p>
+        <p>Product detail{product && ` - ${product.name}`}</p>
       </div>
-
       <div className="content">
-        {product && (
-          <Grid container spacing={3} sx={{ marginTop: 2 }}>
-            {/* Image and Title Section */}
-            <Grid item xs={12} sm={4}>
-              <img
-                className="product-img"
-                src={product.img_url[0]}
-                alt={product.name}
-                style={{ width: "100%", height: "auto" }}
-              />
-            </Grid>
+        {loading ? ( // Show CircularProgress while loading
+          <div className="loading-container">
+            <CircularProgress />
+          </div>
+        ) : (
+          product && (
+            <>
+              <div className="content-tool">
+                <div className="content-tool">
+                  <Button
+                    className="btn-edit"
+                    variant="contained"
+                    color="primary"
+                    startIcon={<EditIcon />}
+                    onClick={() => setItemToEdit(product)}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    className="btn-delete"
+                    variant="outlined"
+                    color="error"
+                    startIcon={<DeleteIcon />}
+                    onClick={() => setItemToDelete(product)}
+                  >
+                    Delete
+                  </Button>
+                </div>
+              </div>
+              <Grid2
+                className="product-title"
+                container
+                spacing={3}
+                sx={{ marginTop: 2 }}
+              >
+                <Grid2 item xs={12} sm={4}>
+                  <img
+                    className="product-img"
+                    src={product.img_url[0]}
+                    alt={product.name}
+                    style={{ width: "100%", height: "auto" }}
+                  />
+                </Grid2>
 
-            <Grid item xs={12} sm={8}>
-              <Card>
-                <CardContent>
+                <Grid2 item xs={12}>
+                  <p className="product-id">ID: {product._id}</p>
                   <Typography variant="h5" component="div" gutterBottom>
                     {product.name}
                   </Typography>
@@ -69,15 +115,26 @@ export default function ProductDetailPage() {
                   >
                     {product.describe}
                   </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
+                  <div className="product-info">
+                    <p className="product-info-label">Genus:</p>
+                    <p>{product.genus_id?.name || "Unknown"}</p>
+                  </div>
+                  <div className="product-info">
+                    <p className="product-info-label">Plant type:</p>
+                    <p>{product.plant_type_id?.plant_type_name || "Unknown"}</p>
+                  </div>
+                </Grid2>
+              </Grid2>
 
-            {/* Product Properties Table */}
-            <Grid item xs={12}>
+              {/* Product Properties Table */}
+              <p className="sub-label">Plant specification</p>
               <Paper elevation={3}>
                 <Table>
                   <TableBody>
+                    <TableRow>
+                      <TableCell>Price</TableCell>
+                      <TableCell>${(product.price / 100).toFixed(2)}</TableCell>
+                    </TableRow>
                     <TableRow>
                       <TableCell>Height</TableCell>
                       <TableCell>{product.height}</TableCell>
@@ -120,13 +177,16 @@ export default function ProductDetailPage() {
                       <TableCell>Seasonal Interest</TableCell>
                       <TableCell>{product.plant_seasonal_interest}</TableCell>
                     </TableRow>
-                    <TableRow>
-                      <TableCell>Price</TableCell>
-                      <TableCell>${(product.price / 100).toFixed(2)}</TableCell>
-                    </TableRow>
+
                     <TableRow>
                       <TableCell>Average Rating</TableCell>
-                      <TableCell>{product.average_rating}</TableCell>
+                      <TableCell>
+                        <Rating
+                          value={parseFloat(product.average_rating)}
+                          readOnly
+                          precision={0.5}
+                        />
+                      </TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell>Care</TableCell>
@@ -139,9 +199,28 @@ export default function ProductDetailPage() {
                   </TableBody>
                 </Table>
               </Paper>
-            </Grid>
-          </Grid>
+            </>
+          )
         )}
+        <ProductEditDialog
+          item={itemToEdit}
+          onFinish={() => {
+            obtainProductAPI();
+          }}
+          onClose={() => {
+            setItemToEdit(null);
+          }}
+        />
+        <ProductDetailDeleteDialog
+          open={itemToDelete != null}
+          onClose={() => {
+            setItemToDelete(null);
+          }}
+          onFinish={() => {
+            setItemToDelete(null);
+          }}
+          item={itemToDelete}
+        />
       </div>
     </div>
   );
