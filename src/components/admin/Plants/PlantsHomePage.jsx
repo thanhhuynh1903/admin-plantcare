@@ -109,7 +109,7 @@ export default function PlantsHomepage() {
                 className="btn-add-product"
                 onClick={() => setOpenAddPlantsDialog(true)}
               >
-                + Add product
+                + Add plant
               </Button>
               <Button className="btn-tool">
                 <FilterAltOutlinedIcon />
@@ -145,10 +145,17 @@ export default function PlantsHomepage() {
               onFinishEditing={() => {
                 obtainPlantsAPI();
               }}
+              onFinishDeleting={() => {
+                obtainPlantsAPI();
+              }}
             />
           </div>
           <PlantsAddDialog
             open={openAddPlantsDialog}
+            onFinish={() => {
+              setOpenAddPlantsDialog(false);
+              obtainPlantsAPI();
+            }}
             onClose={() => setOpenAddPlantsDialog(false)}
           />
         </>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
@@ -10,7 +10,6 @@ import {
   Avatar,
   IconButton,
   Typography,
-  Rating,
   TablePagination,
   Menu,
   MenuItem,
@@ -20,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 import PlantersDeleteDialog from "./PlantersDeleteDialog";
 import PlantersEditDialog from "./PlantersEditDialog";
 
-export default function PlantersList({ data = [], onFinishEditing }) {
+export default function PlantersList({ data = [], onFinishEditing, onFinishDeleting }) {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const [page, setPage] = useState(0);
@@ -102,7 +101,7 @@ export default function PlantersList({ data = [], onFinishEditing }) {
               >
                 <TableCell>
                   <Avatar
-                    src={item.img_object && item.img_object?.img_url}
+                    src={item.img_object && item.img_object[0]?.img_url}
                     alt={item?.name}
                     sx={{ width: 56, height: 56 }}
                   />
@@ -184,7 +183,10 @@ export default function PlantersList({ data = [], onFinishEditing }) {
       />
       <PlantersDeleteDialog
         onClose={() => setDeletedItem(null)}
-        onFinish={() => setDeletedItem(null)}
+        onFinish={() => {
+          handleMenuClose();
+          onFinishDeleting();
+        }}
         item={deletedItem}
       />
     </>

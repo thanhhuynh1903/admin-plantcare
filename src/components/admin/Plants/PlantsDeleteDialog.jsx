@@ -11,7 +11,7 @@ export default function PlantsDeleteDialog({ onClose, onFinish, item }) {
 
   const handleDelete = () => {
     setIsProcessing(true);
-    adelete(`/plants/${item.id}`)
+    adelete(`/plants/${item._id}`)
       .then((p) => {
         showSuccessToast("Plants deleted successfully");
         onFinish();
@@ -26,7 +26,7 @@ export default function PlantsDeleteDialog({ onClose, onFinish, item }) {
     <DialogBasic
       className="plants-delete-dialog"
       title="Now deleting plant"
-      open={item}
+      open={item != null}
       onClose={onClose}
       maxWidth="sm"
       footer={

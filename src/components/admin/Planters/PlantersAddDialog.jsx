@@ -1,40 +1,38 @@
 import { useState, useMemo } from "react";
-import { Button, TextField, DialogActions, Grid, Input } from "@mui/material";
+import { Button, TextField, DialogActions, Grid, Input, Typography } from "@mui/material";
 import DialogBasic from "../commons/DialogBasic/DialogBasic";
 import "./PlantersAddDialog.scss";
-import { apost, apostfile } from "@utils/util_axios";
+import { apost } from "@utils/util_axios";
 import { showErrorToast, showSuccessToast } from "@utils/util_toastify";
+import { uploadFileAndReturnUrl } from "@supabase_client";
+import { uuidv4 } from "../../utils/util_string";
 
+// Grouping fields by categories
 const planterFields = [
-  { label: "Name", name: "name" },
-  { label: "Category", name: "category" },
-  { label: "Image", name: "img_url" },
-  { label: "Price", name: "price", type: "number" },
-  { label: "Size", name: "size" },
-  { label: "Material", name: "material" },
-  { label: "Special Feature", name: "special_feature" },
-  { label: "Style", name: "style" },
-  { label: "Planter Form", name: "planter_form" },
-  { label: "About", name: "about" },
-  { label: "Default Color", name: "default_color" },
-  { label: "Theme", name: "theme" },
-  { label: "Finish Type", name: "finish_type" },
-  { label: "Item Weight", name: "item_weight" },
-  { label: "Manufacturer", name: "manufacturer" },
-  { label: "ASIN", name: "asin" },
-  { label: "Item Model Number", name: "item_model_number" },
-  { label: "Best Seller Rank", name: "best_seller_rank" },
-  { label: "Date First Available", name: "date_first_available" },
-  { label: "Status", name: "status" },
-  { label: "Description", name: "describe" },
+  { label: "Name", name: "name", section: "Basic Details" },
+  { label: "Category", name: "category", section: "Basic Details" },
+  { label: "Image", name: "img_object", section: "Image" },
+  { label: "Price", name: "price", type: "number", section: "Pricing" },
+  { label: "Size", name: "size", section: "Dimensions" },
+  { label: "Material", name: "material", section: "Additional Details" },
+  { label: "Special Feature", name: "special_feature", section: "Additional Details" },
+  { label: "Style", name: "style", section: "Additional Details" },
+  { label: "Planter Form", name: "planter_form", section: "Additional Details" },
+  { label: "About", name: "about", section: "Description" },
+  { label: "Default Color", name: "default_color", section: "Additional Details" },
+  { label: "Theme", name: "theme", section: "Additional Details" },
+  { label: "Finish Type", name: "finish_type", section: "Additional Details" },
+  { label: "Item Weight", name: "item_weight", section: "Dimensions" },
+  { label: "Manufacturer", name: "manufacturer", section: "Manufacturer Details" },
+  { label: "ASIN", name: "asin", section: "Manufacturer Details" },
+  { label: "Item Model Number", name: "item_model_number", section: "Manufacturer Details" },
+  { label: "Best Seller Rank", name: "best_seller_rank", section: "Additional Details" },
+  { label: "Date First Available", name: "date_first_available", section: "Additional Details" },
+  { label: "Status", name: "status", section: "Status" },
+  { label: "Description", name: "describe", section: "Description" },
 ];
 
-export default function PlantersAddDialog({
-  open,
-  onClose,
-  fields = planterFields,
-  apiEndpoint = "/planters",
-}) {
+export default function PlantersAddDialog({ open, onClose, fields = planterFields }) {
   const [isProcessing, setIsProcessing] = useState(false);
   const [formData, setFormData] = useState(() =>
     fields.reduce((acc, field) => ({ ...acc, [field.name]: "" }), {})
@@ -63,26 +61,44 @@ export default function PlantersAddDialog({
   const handleSubmit = () => {
     setIsProcessing(true);
 
-    console.log(formData)
-
-    apostfile(apiEndpoint, imageFile, formData)
-      .then(() => {
-        showSuccessToast("Planter added successfully!");
-        onClose();
-      })
-      .catch((err) => {
-        const status = err?.response?.status;
-        if (status === 403) {
-          showErrorToast("No permission to use this!");
-        } else {
-          console.log(err)
-          showErrorToast("Error adding planter.");
-        }
-      })
-      .finally(() => {
-        setIsProcessing(false);
-      });
+    uploadFileAndReturnUrl(`/public/planters/${uuidv4()}.jpg`, imageFile).then((url) => {
+      let finalForm = {
+        ...formData,
+        img_object: {
+          img_url: url,
+          color: "white",
+        },
+      };
+      setFormData(finalForm);
+      apost("/planters", finalForm)
+        .then(() => {
+          showSuccessToast("Planter added successfully!");
+          onClose();
+        })
+        .catch((err) => {
+          const status = err?.response?.status;
+          if (status === 403) {
+            showErrorToast("No permission to use this!");
+          } else {
+            console.log(err);
+            showErrorToast("Error adding planter.");
+          }
+        })
+        .finally(() => {
+          setIsProcessing(false);
+        });
+    });
   };
+
+  // Group fields by section
+  const groupedFields = fields.reduce((acc, field) => {
+    const { section } = field;
+    if (!acc[section]) {
+      acc[section] = [];
+    }
+    acc[section].push(field);
+    return acc;
+  }, {});
 
   return (
     <DialogBasic
@@ -113,25 +129,33 @@ export default function PlantersAddDialog({
     >
       <div className="add-item-dialog">
         <Grid container spacing={2}>
-          {fields.map((field, index) => (
-            <Grid item xs={12} sm={6} key={index}>
-              {field.name === "img_url" ? (
-                <Input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleFileChange}
-                  fullWidth
-                />
-              ) : (
-                <TextField
-                  label={field.label}
-                  name={field.name}
-                  value={formData[field.name]}
-                  onChange={handleInputChange}
-                  type={field.type || "text"}
-                  fullWidth
-                />
-              )}
+          {/* Dynamically render sections based on field grouping */}
+          {Object.keys(groupedFields).map((sectionTitle, sectionIndex) => (
+            <Grid item xs={12} key={sectionIndex}>
+              <div className="section-title">{sectionTitle}</div>
+              <Grid container spacing={2}>
+                {groupedFields[sectionTitle].map((field, index) => (
+                  <Grid item xs={12} sm={6} key={index}>
+                    {field.name === "img_object" ? (
+                      <Input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleFileChange}
+                        fullWidth
+                      />
+                    ) : (
+                      <TextField
+                        label={field.label}
+                        name={field.name}
+                        value={formData[field.name]}
+                        onChange={handleInputChange}
+                        type={field.type || "text"}
+                        fullWidth
+                      />
+                    )}
+                  </Grid>
+                ))}
+              </Grid>
             </Grid>
           ))}
         </Grid>

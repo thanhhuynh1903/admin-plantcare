@@ -145,6 +145,9 @@ export default function PlantersHomepage() {
               onFinishEditing={() => {
                 obtainPlantersAPI();
               }}
+              onFinishDeleting={() => {
+                obtainPlantersAPI();
+              }}
             />
           </div>
         </>

@@ -11,12 +11,16 @@ export default defineConfig({
       }
     }
   },
+  define: {
+    'process.env': {}
+  },
   plugins: [react()],
   resolve: {
     alias: {
       '@assets': resolve(__dirname, 'src/assets'),
       '@scss': resolve(__dirname, 'src/scss'),
       '@utils': resolve(__dirname, 'src/components/utils'),
+      '@supabase_client': resolve(__dirname, 'src/supabase/supabase.js'),
     },
   },
 })

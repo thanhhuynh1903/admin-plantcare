@@ -30,7 +30,7 @@ export default function FilterPlants({ data, selectedFilterType, handleChangeFil
         variant="body2"
         style={{ marginRight: "16px", color: "#6E6893" }}
       >
-        Total products payable amount:{" "}
+        Total plants payable amount:{" "}
         <span
           style={{ color: "#009e71", fontSize: "20px", fontWeight: "bold" }}
         >

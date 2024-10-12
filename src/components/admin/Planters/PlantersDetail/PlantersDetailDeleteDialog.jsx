@@ -5,15 +5,18 @@ import "./PlantersDetailDeleteDialog.scss";
 import { adelete } from "@utils/util_axios";
 import { showSuccessToast } from "@utils/util_toastify";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function PlantersDetailDeleteDialog({ open, onClose, onFinish, item }) {
   const [isProcessing, setIsProcessing] = useState(false);
+  const navigate = useNavigate();
 
   const handleDelete = () => {
     setIsProcessing(true);
-    adelete(`/planters/${item.id}`)
+    adelete(`/planters/${item._id}`)
       .then((p) => {
         showSuccessToast("Product deleted successfully");
+        navigate("/planters");
         onFinish();
       })
       .finally(() => {

@@ -20,7 +20,7 @@ import { useNavigate } from "react-router-dom";
 import PlantsDeleteDialog from "./PlantsDeleteDialog";
 import PlantsEditDialog from "./PlantsEditDialog";
 
-export default function PlantsList({ data, onFinishEditing }) {
+export default function PlantsList({ data, onFinishEditing, onFinishDeleting }) {
   const [anchorEl, setAnchorEl] = useState(null);
   
   const [page, setPage] = useState(0);
@@ -189,7 +189,10 @@ export default function PlantsList({ data, onFinishEditing }) {
       />
       <PlantsDeleteDialog
         onClose={() => setDeletedItem(null)}
-        onFinish={() => setDeletedItem(null)}
+        onFinish={() => {
+          setDeletedItem(null)
+          onFinishDeleting();
+        }}
         item={deletedItem}
       />
     </>

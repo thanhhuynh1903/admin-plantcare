@@ -10,19 +10,16 @@ const axiosInstance = axios.create({
   },
 });
 
-axiosInstance.interceptors.request.use(
-  (config) => {
-    const token = getCookie("e_token");
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
+axiosInstance.interceptors.request.use((config) => {
+  const token = getCookie("e_token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
-);
+  
+  return config;
+}, (error) => {
+  return Promise.reject(error);
+});
 
 export const apost = async (path, data) => {
   try {
@@ -33,27 +30,26 @@ export const apost = async (path, data) => {
   }
 };
 
-export const apostfile = async (path, selectedFile, jsonData) => {
+export const apostfile = async (path, selectedFile, dataObject) => {
   const formData = new FormData();
 
-  Object.entries(jsonData).forEach(([key, value]) => {
+  Object.entries(dataObject).forEach(([key, value]) => {
     formData.append(key, value);
   });
 
-  jsonData.img_object = {
-    img_url: URL.createObjectURL(selectedFile),
-    color: "White"
+  if (selectedFile) {
+    formData.append("image", selectedFile);
   }
 
   try {
-    const response = await axiosInstance.post(path, jsonData);
-    console.log(response)
+    const response = await axiosInstance.post(path, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
     return response;
   } catch (error) {
     throw error;
   }
 };
-
 
 export const aget = async (path) => {
   try {
