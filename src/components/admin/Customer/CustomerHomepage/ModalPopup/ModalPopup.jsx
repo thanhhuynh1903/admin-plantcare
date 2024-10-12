@@ -83,7 +83,7 @@ const ModalPopup = ({ employee ,onUpdate }) => {
           vertical: "bottom",
           horizontal: "left",
         }}
-        sx={{ left: "-120px", top: "-5px", zIndex: 5 }}
+        sx={{ left: "-90px", top: "-5px", zIndex: 5 }}
       >
         <Box sx={{ p: 2, width: "150px !important" }}>
           <Typography
