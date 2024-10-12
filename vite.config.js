@@ -20,6 +20,7 @@ export default defineConfig({
       '@assets': resolve(__dirname, 'src/assets'),
       '@scss': resolve(__dirname, 'src/scss'),
       '@utils': resolve(__dirname, 'src/components/utils'),
+      '@commons': resolve(__dirname, 'src/components/admin/commons'),
       '@supabase_client': resolve(__dirname, 'src/supabase/supabase.js'),
     },
   },

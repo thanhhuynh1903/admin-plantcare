@@ -90,45 +90,49 @@ export default function PlantsHomepage() {
 
   return (
     <div className="page-plants-home">
+      <div
+        className="main-label"
+        style={{ display: "flex", alignItems: "center" }}
+      >
+        <Inventory2OutlinedIcon sx={{ marginRight: 1 }} /> Plants
+      </div>
+      <div className="tool-container">
+        <div>
+          <p>{data.length} results found</p>
+        </div>
+        <div className="tool-container-btn">
+          {!isLoading && (
+            <Button
+              className="btn-add-product"
+              onClick={() => setOpenAddPlantsDialog(true)}
+            >
+              + Add plant
+            </Button>
+          )}
+
+          <Button className="btn-tool">
+            <FilterAltOutlinedIcon />
+          </Button>
+          <Button className="btn-tool">
+            <SortOutlinedIcon />
+            <p>Sort: Chronological</p>
+          </Button>
+          <div className="btn-tool">
+            <Button className="btn-tool-nav">
+              <KeyboardArrowLeftOutlinedIcon />
+            </Button>
+            <p>August 2021</p>
+            <Button className="btn-tool-nav">
+              <KeyboardArrowRightOutlinedIcon />
+            </Button>
+          </div>
+        </div>
+      </div>
+
       {isLoading ? (
         <LoadingIcon />
       ) : (
         <>
-          <div
-            className="main-label"
-            style={{ display: "flex", alignItems: "center" }}
-          >
-            <Inventory2OutlinedIcon sx={{ marginRight: 1 }} /> Plants
-          </div>
-          <div className="tool-container">
-            <div>
-              <p>{data.length} results found</p>
-            </div>
-            <div className="tool-container-btn">
-              <Button
-                className="btn-add-product"
-                onClick={() => setOpenAddPlantsDialog(true)}
-              >
-                + Add plant
-              </Button>
-              <Button className="btn-tool">
-                <FilterAltOutlinedIcon />
-              </Button>
-              <Button className="btn-tool">
-                <SortOutlinedIcon />
-                <p>Sort: Chronological</p>
-              </Button>
-              <div className="btn-tool">
-                <Button className="btn-tool-nav">
-                  <KeyboardArrowLeftOutlinedIcon />
-                </Button>
-                <p>August 2021</p>
-                <Button className="btn-tool-nav">
-                  <KeyboardArrowRightOutlinedIcon />
-                </Button>
-              </div>
-            </div>
-          </div>
           <div>
             <PlantsBudget />
           </div>
@@ -163,5 +167,3 @@ export default function PlantsHomepage() {
     </div>
   );
 }
-
-

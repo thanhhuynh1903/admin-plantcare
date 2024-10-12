@@ -12,7 +12,7 @@ import CustomerList from "./CustomerList";
 import { Link } from "react-router-dom";
 import PermIdentityOutlinedIcon from '@mui/icons-material/PermIdentityOutlined';
 import { aget } from "../../../utils/util_axios";
-import CircularIndeterminate from "../Loading/Loading";
+import LoadingIcon from "../../commons/LoadingIcon/LoadingIcon";
 
 // const initialEmployeeData = [
 //   { name: 'Darlene Robertson', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla...', status: 'Open', rate:"150.000" ,balance: '+270.000',deposite:'500.000'  },
@@ -95,7 +95,7 @@ export default function CustomerHomepage() {
       </div>
       <div>
       {loading ? (
-        <CircularIndeterminate />
+        <LoadingIcon />
       ) : (
         <CustomerList employees={employees} />
       )

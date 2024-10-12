@@ -35,6 +35,7 @@ import PlantersHomepage from "./components/admin/Planters/PlantersHomePage";
 import PlantersDetailPage from "./components/admin/Planters/PlantersDetail/PlantersDetailPage";
 import PlantsHomepage from "./components/admin/Plants/PlantsHomePage";
 import PlantsDetailPage from "./components/admin/Plants/PlantsDetail/PlantsDetailPage";
+import OrderDetail from "./components/admin/Orders/OrderDetail";
 
 const ProtectedRoute = ({ element, ...rest }) => {
   const token = getCookie("e_token");
@@ -96,6 +97,7 @@ const protectedRoutes = [
   { path: "/employees/add", element: <EmployeeAddPage /> },
   { path: "/employees/edit/:id", element: <EmployeesEditPage /> },
   { path: "/orders", element: <OrderHomePage /> },
+  { path: "/orders/o/:id", element: <OrderDetail /> },
   { path: "/reviews", element: <ReviewsGrid /> },
   { path: "/reviews/detail", element: <ReviewDetail /> },
   { path: "/settings", element: <SettingsPage /> },
