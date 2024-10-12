@@ -40,10 +40,13 @@ export const apostfile = async (path, selectedFile, jsonData) => {
     formData.append(key, value);
   });
 
-  formData.append("img_object", [selectedFile]);
+  jsonData.img_object = {
+    img_url: URL.createObjectURL(selectedFile),
+    color: "White"
+  }
 
   try {
-    const response = await axiosInstance.post(path, formData);
+    const response = await axiosInstance.post(path, jsonData);
     console.log(response)
     return response;
   } catch (error) {

@@ -20,6 +20,7 @@
     "chart.js": "^4.4.4",
     "date-fns": "^4.1.0",
     "dayjs": "^1.11.13",
+    "dotenv": "^16.4.5",
     "everfresh": "file:",
     "formik": "^2.4.6",
     "jwt-decode": "^4.0.0",
