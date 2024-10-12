@@ -13,14 +13,17 @@ import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
 import { aget } from "../../utils/util_axios";
 import PlantsAddDialog from "./PlantsAddDialog";
 import PlantsEditDialog from "./PlantsEditDialog";
+import LoadingIcon from "../commons/LoadingIcon/LoadingIcon";
 
 export default function PlantsHomepage() {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [openAddPlantsDialog, setOpenAddPlantsDialog] = useState(false);
 
   const obtainPlantsAPI = async () => {
+    setIsLoading(true);
     aget("/plants")
       .then((response) => {
         setData(response.data);
@@ -35,6 +38,9 @@ export default function PlantsHomepage() {
       })
       .catch((error) => {
         console.error(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -84,63 +90,71 @@ export default function PlantsHomepage() {
 
   return (
     <div className="page-plants-home">
-      <div
-        className="main-label"
-        style={{ display: "flex", alignItems: "center" }}
-      >
-        <Inventory2OutlinedIcon sx={{ marginRight: 1 }} /> Plants
-      </div>
-      <div className="tool-container">
-        <div>
-          <p>{data.length} results found</p>
-        </div>
-        <div className="tool-container-btn">
-          <Button
-            className="btn-add-product"
-            onClick={() => setOpenAddPlantsDialog(true)}
+      {isLoading ? (
+        <LoadingIcon />
+      ) : (
+        <>
+          <div
+            className="main-label"
+            style={{ display: "flex", alignItems: "center" }}
           >
-            + Add product
-          </Button>
-          <Button className="btn-tool">
-            <FilterAltOutlinedIcon />
-          </Button>
-          <Button className="btn-tool">
-            <SortOutlinedIcon />
-            <p>Sort: Chronological</p>
-          </Button>
-          <div className="btn-tool">
-            <Button className="btn-tool-nav">
-              <KeyboardArrowLeftOutlinedIcon />
-            </Button>
-            <p>August 2021</p>
-            <Button className="btn-tool-nav">
-              <KeyboardArrowRightOutlinedIcon />
-            </Button>
+            <Inventory2OutlinedIcon sx={{ marginRight: 1 }} /> Plants
           </div>
-        </div>
-      </div>
-      <div>
-        <PlantsBudget />
-      </div>
-      <div>
-        <FilterPlants
-          data={data}
-          selectedFilterType={selectedFilterType}
-          handleChangeFilterType={handleChangeFilterType}
-        />
-      </div>
-      <div>
-        <PlantsList
-          data={filteredData}
-          onFinishEditing={() => {
-            obtainPlantsAPI();
-          }}
-        />
-      </div>
-      <PlantsAddDialog
-        open={openAddPlantsDialog}
-        onClose={() => setOpenAddPlantsDialog(false)}
-      />
+          <div className="tool-container">
+            <div>
+              <p>{data.length} results found</p>
+            </div>
+            <div className="tool-container-btn">
+              <Button
+                className="btn-add-product"
+                onClick={() => setOpenAddPlantsDialog(true)}
+              >
+                + Add product
+              </Button>
+              <Button className="btn-tool">
+                <FilterAltOutlinedIcon />
+              </Button>
+              <Button className="btn-tool">
+                <SortOutlinedIcon />
+                <p>Sort: Chronological</p>
+              </Button>
+              <div className="btn-tool">
+                <Button className="btn-tool-nav">
+                  <KeyboardArrowLeftOutlinedIcon />
+                </Button>
+                <p>August 2021</p>
+                <Button className="btn-tool-nav">
+                  <KeyboardArrowRightOutlinedIcon />
+                </Button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <PlantsBudget />
+          </div>
+          <div>
+            <FilterPlants
+              data={data}
+              selectedFilterType={selectedFilterType}
+              handleChangeFilterType={handleChangeFilterType}
+            />
+          </div>
+          <div>
+            <PlantsList
+              data={filteredData}
+              onFinishEditing={() => {
+                obtainPlantsAPI();
+              }}
+            />
+          </div>
+          <PlantsAddDialog
+            open={openAddPlantsDialog}
+            onClose={() => setOpenAddPlantsDialog(false)}
+          />
+        </>
+      )}
     </div>
   );
 }
+
+
