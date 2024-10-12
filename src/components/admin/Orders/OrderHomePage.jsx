@@ -1,6 +1,5 @@
 import { Button } from "@mui/material";
 import "./OrderHomePage.scss";
-import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import SortOutlinedIcon from "@mui/icons-material/SortOutlined";
 import KeyboardArrowLeftOutlinedIcon from "@mui/icons-material/KeyboardArrowLeftOutlined";
 import KeyboardArrowRightOutlinedIcon from "@mui/icons-material/KeyboardArrowRightOutlined";
@@ -12,6 +11,7 @@ import OrderList from "./OrderList";
 import FilterOrder from "./FilterOrder";
 import { aget } from "@utils/util_axios";
 import LoadingIcon from "@commons/LoadingIcon/LoadingIcon";
+import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 
 export default function OrderHomePage() {
   const [orders, setOrders] = useState([]);
@@ -61,6 +61,9 @@ export default function OrderHomePage() {
           <p className="text-result">{orders.length} results found</p>
         </div>
         <div className="tool-container-btn">
+        <Button className="btn-tool">
+            <FilterAltOutlinedIcon />
+          </Button>
           <Button className="btn-tool">
             <SortOutlinedIcon />
             <p>Sort: Chronological</p>

@@ -12,7 +12,6 @@ import FilterPlants from "./FilterPlants";
 import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
 import { aget } from "../../utils/util_axios";
 import PlantsAddDialog from "./PlantsAddDialog";
-import PlantsEditDialog from "./PlantsEditDialog";
 import LoadingIcon from "../commons/LoadingIcon/LoadingIcon";
 
 export default function PlantsHomepage() {
