@@ -22,6 +22,7 @@
     "dayjs": "^1.11.13",
     "dotenv": "^16.4.5",
     "everfresh": "file:",
+    "firebase": "^10.14.1",
     "formik": "^2.4.6",
     "jwt-decode": "^4.0.0",
     "moment": "^2.30.1",
