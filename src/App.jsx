@@ -84,6 +84,7 @@ const publicRoutes = [{ path: "/login", element: <LoginPage /> }];
 
 const protectedRoutes = [
   { path: "*", element: <Navigate to="/" /> },
+  { path: "/", element: <Navigate to="/dashboard" /> },
   { path: "/dashboard", element: <DashboardPage /> },
   { path: "/employees", element: <EmployeesHomePage /> },
   { path: "/plants", element: <PlantsHomepage /> },
