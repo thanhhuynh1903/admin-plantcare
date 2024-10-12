@@ -18,10 +18,11 @@ import logo from "@assets/pages/Employees/EmployeesAddPage/ImageUpload.png";
 import { aget } from "../../../utils/util_axios";
 import { useParams } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
-
+import { useNavigate } from "react-router-dom";
 // Validation schema removed since we're not using formik anymore
 
 export default function CustomerEditPage() {
+  const navigate = useNavigate();
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
   const [open, setOpen] = useState(false);
@@ -117,6 +118,17 @@ export default function CustomerEditPage() {
       showSuccessToast("User updated successfully!");
     } catch (error) {
       showErrorToast("Failed to update user.");
+    }
+  };
+
+  const handleDeleteUser = async () => {
+    try {
+      // Replace with your actual delete API call
+     await adelete(`/users/${userId}`)
+      handleCloseDelete();
+      navigate('/customers');
+    } catch (error) {
+      console.error("Failed to delete user:", error);
     }
   };
 
@@ -325,7 +337,7 @@ export default function CustomerEditPage() {
           </Button> */}
 
           <Modal open={open} onClose={handleClose}>
-            <ModalDelete open={open} onClose={handleClose} />
+            <ModalDelete open={open} onClose={handleClose} onDelete={handleDeleteUser}/>
           </Modal>
         </div>
       </form>

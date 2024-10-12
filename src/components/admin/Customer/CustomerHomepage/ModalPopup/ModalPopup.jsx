@@ -41,10 +41,20 @@ const ModalPopup = ({ employee ,onUpdate }) => {
 
 
   
-  const handleStatusChange = async () => {
+  const handleStatusChangeBan = async () => {
     try {
       const response = await apatch(
         `/users/banAccountByAdmin/${employee._id}`);
+      setEmployeeStatus(response.data.status);
+
+    } catch (error) {
+      console.error("Failed to update status:", error);
+    }
+  };
+  const handleStatusChangeUnban = async () => {
+    try {
+      const response = await apatch(
+        `/users/unBanAccountByAdmin/${employee._id}`);
       setEmployeeStatus(response.data.status);
 
     } catch (error) {
@@ -95,7 +105,7 @@ const ModalPopup = ({ employee ,onUpdate }) => {
             </Link>
           </Typography>
           <Typography
-            onClick={handleStatusChange}
+            onClick={employeeStatus ? handleStatusChangeBan : handleStatusChangeUnban}
             sx={{ cursor: "pointer", mb: 1 }}
           >
             {employeeStatus ? "Deactivate User" : "Activate User"}
