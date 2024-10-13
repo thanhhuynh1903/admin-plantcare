@@ -84,16 +84,8 @@ function QontoStepIcon(props) {
 }
 
 QontoStepIcon.propTypes = {
-  /**
-   * Whether this step is active.
-   * @default false
-   */
   active: PropTypes.bool,
   className: PropTypes.string,
-  /**
-   * Mark the step as completed. Is passed to child components.
-   * @default false
-   */
   completed: PropTypes.bool,
 };
 
@@ -177,51 +169,66 @@ function ColorlibStepIcon(props) {
 }
 
 ColorlibStepIcon.propTypes = {
-  /**
-   * Whether this step is active.
-   * @default false
-   */
   active: PropTypes.bool,
   className: PropTypes.string,
-  /**
-   * Mark the step as completed. Is passed to child components.
-   * @default false
-   */
   completed: PropTypes.bool,
-  /**
-   * The label displayed in the step icon.
-   */
   icon: PropTypes.node,
 };
 
-const steps = [
-  "Received products",
-  "Picked products",
-  "Delivery products",
-  "Already in destination",
+// Sample tracking status dates data
+const stepKeys = [
+  "received_date",
+  "picked_date",
+  "shipped_date",
+  "out_of_delivery_date",
+  "delivered_date",
 ];
 
-export default function StepperShipping() {
+const getLatestStep = (dates) => {
+  let latestStep = 0;
+  dates.forEach((status) => {
+    const stepIndex = stepKeys.indexOf(status.key) + 1;
+    if (stepIndex > latestStep) {
+      latestStep = stepIndex;
+    }
+  });
+  return latestStep - 1; // Adjust to 0-based index
+};
+
+const steps = [
+  "Shipped",
+  "Picked products",
+  "Delivery",
+];
+
+const StepperShipping = ({ statusship }) => {
+  const activeStep = getLatestStep(statusship);
+
   return (
     <Stack sx={{ width: "100%" }} spacing={4}>
-      {/* <Stepper alternativeLabel activeStep={1} connector={<QontoConnector />}>
-        {steps.map((label) => (
-          <Step key={label}>
-            <StepLabel StepIconComponent={QontoStepIcon}>{label}</StepLabel>
-          </Step>
-        ))}
-      </Stepper> */}
       <Stepper
         alternativeLabel
-        activeStep={1}
+        activeStep={activeStep}
         connector={<ColorlibConnector />}
       >
-        {steps.map((label) => (
-          <Step key={label}>
+        {steps.map((label, index) => (
+          <Step key={index}>
             <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
           </Step>
         ))}
       </Stepper>
     </Stack>
   );
-}
+};
+
+StepperShipping.propTypes = {
+  statusship: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired,
+      _id: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+};
+
+export default StepperShipping;
