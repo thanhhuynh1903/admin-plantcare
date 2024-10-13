@@ -30,12 +30,15 @@ import { aget } from "../../utils/util_axios";
 import NoteOrderStatus from "./NoteOrderStatus";
 import Grid from "@mui/material/Grid";
 import IndeterminateCheckBoxIcon from "@mui/icons-material/IndeterminateCheckBox";
+import LoadingIcon from "../commons/LoadingIcon/LoadingIcon";
 
 const OrderDetail = () => {
   const [page, setPage] = useState(0);
   const [Order, setOrder] = useState();
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const { id } = useParams();
+  const [loading, setLoading] = useState(true); // Initial loading state
+
   const data = [
     {
       id: 1,
@@ -67,10 +70,17 @@ const OrderDetail = () => {
   }, []);
 
   const fetchApiOrderId = async () => {
-    await aget(`/orders/${id}`).then((res) => {
-      setOrder(res.data);
-      console.log(res.data);
-    });
+    try {
+      setLoading(true); // Start loading
+      await aget(`/orders/${id}`).then((res) => {
+        setOrder(res.data);
+        console.log(res.data);
+      });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleChangeRowsPerPage = (event) => {
@@ -91,7 +101,18 @@ const OrderDetail = () => {
     }
   };
 
-  return (
+  const formattedNumber = (number) => {
+    // Format the number with dots as thousands separators and no decimal places
+    const formatted = Math.floor(number)
+      .toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+    return formatted;
+  };
+
+  return loading ? (
+    <LoadingIcon />
+  ) : (
     <>
       <Box sx={{ borderRadius: "20px", backgroundColor: "#FFF" }}>
         <Box sx={{ width: "90%", margin: "0 auto", paddingY: "20px" }}>
@@ -191,7 +212,7 @@ const OrderDetail = () => {
                         NOT update yet
                       </TableCell>
                       <TableCell sx={{ fontSize: "15px", color: "#6E6893" }}>
-                        {row.item_total_price}
+                        {formattedNumber(row.item_total_price)}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -211,7 +232,7 @@ const OrderDetail = () => {
             Payment method: {Order?.payment_method}
           </Typography>
           <Typography variant="h6" gutterBottom sx={{ textAlign: "end" }}>
-            TOTAL PRICE: {Order?.total_price} VND
+            TOTAL PRICE: {formattedNumber(Order?.total_price)} VND
           </Typography>
           <Grid container spacing={2}>
             <Grid item xs={6} md={7}>
@@ -276,7 +297,7 @@ const OrderDetail = () => {
                   />
                   <TextField
                     label="Delivery price"
-                    value={`${Order?.delivery_method?.price}`}
+                    value={`${formattedNumber(Order?.delivery_method?.price)}`}
                     fullWidth
                     margin="normal"
                     InputProps={{
