@@ -1,31 +1,32 @@
-import "./SearchProductPage.scss";
+import "./SearchSeedsPage.scss";
 import Button from "@mui/material/Button";
 import ArrowCircleLeftOutlinedIcon from "@mui/icons-material/ArrowCircleLeftOutlined";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { setPageHeadTitle } from "../../../utils/util_web";
 import Pagination from "@mui/material/Pagination";
 import Typography from "@mui/material/Typography";
 import { aget } from "@utils/util_axios";
 import CircularProgress from "@mui/material/CircularProgress";
+import LoadingIcon from "../../commons/LoadingIcon/LoadingIcon";
 
-export default function SearchProductPage() {
+export default function SearchSeedsPage() {
   const [page, setPage] = useState(1);
   const [productData, setProductData] = useState([]);
   const [loading, setLoading] = useState(false);
   const { query } = useParams();
   const itemsPerPage = 10;
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setPageHeadTitle("Search result - Products");
+    setPageHeadTitle("Search result - Seeds");
 
     setLoading(true);
 
     setProductData([]);
 
     if (query) {
-      aget(`/plants/search?searchName=${query}`).then((res) => {
-        console.log(res.data);
+      aget(`/seeds/search?searchName=${query}`).then((res) => {
         setProductData(res.data);
         setLoading(false);
       });
@@ -44,42 +45,49 @@ export default function SearchProductPage() {
   );
 
   return (
-    <div className="search-product-page">
+    <div className="search-seeds-page">
       <div className="main-label">
-        <Button component={Link} to="/dashboard">
+        <Button component={Link} to="/seeds">
           <ArrowCircleLeftOutlinedIcon className="btn-back" />
         </Button>
-        <p>Search result - Products</p>
+        <p>Search result - Seeds</p>
       </div>
 
       <div className="content">
         {loading ? (
-          <CircularProgress className="loading-icon" />
+          <LoadingIcon />
         ) : (
           <>
-            <p className="text-result">{productData.length} results matches for: <span className="query">{query}</span> </p>
-            {
-              productData.length === 0 && (
-                <p className="text-result-empty">No results found</p>
-              )
-            }
-            <div className="product-list">
-              {displayedProducts.map((product) => (
-                <div className="product-card" key={product._id}>
+            <p className="text-result">
+              {productData.length} results matches for:{" "}
+              <span className="query">{query}</span>{" "}
+            </p>
+            {productData.length === 0 && (
+              <p className="text-result-empty">No results found</p>
+            )}
+            <div className="seed-list">
+              {displayedProducts.map((seed) => (
+                <div
+                  className="seed-card"
+                  key={seed._id}
+                  onClick={() => {
+                    navigate(`/seeds/s/${seed._id}`);
+                  }}
+                >
                   <img
-                    src={product.img_url[0]}
-                    alt={product.name}
-                    className="product-image"
+                    src={seed.img_url[0]}
+                    alt={seed.name}
+                    className="seed-image"
                   />
-                  <div className="product-info">
+                  <div className="seed-info">
                     <Typography variant="h5" component="div">
-                      {product.name}
+                      {seed.name}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      {product.sub_name}
+                      {seed.sub_name}
                     </Typography>
                     <Typography variant="caption" color="text.secondary">
-                      ID: {product._id}
+                      ID: {seed._id}
                     </Typography>
                   </div>
                 </div>
@@ -106,4 +114,3 @@ export default function SearchProductPage() {
     </div>
   );
 }
-

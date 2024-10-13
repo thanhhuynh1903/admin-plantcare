@@ -19,10 +19,15 @@ import ConfirmationNumberOutlinedIcon from "@mui/icons-material/ConfirmationNumb
 import { Link, useLocation } from "react-router-dom";
 
 import logo from "@assets/logo.png";
+import seed_icon from "@assets/seed_icon.svg";
+
+const SeedIcon = (props) => {
+  return <img src={seed_icon} style={{ width: "24px"}} alt="Logo" {...props} />;  
+};
 
 export default function SideBar() {
-  const location = useLocation(); // Hook to get the current location
-  const [isCollapsed, setIsCollapsed] = useState(false); // State to control sidebar collapse
+  const location = useLocation();
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   const menuItems = [
     {
@@ -44,6 +49,12 @@ export default function SideBar() {
       icon: <Inventory2OutlinedIcon />,
       label: "Planters",
       link: "/planters",
+      notify: 0,
+    },
+    {
+      icon: <SeedIcon />,
+      label: "Seeds",
+      link: "/seeds",
       notify: 0,
     },
     { icon: <RateReviewIcon />, label: "Reviews", link: "/reviews", notify: 0 },

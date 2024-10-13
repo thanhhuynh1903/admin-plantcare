@@ -30,12 +30,15 @@ import TicketsCreateManualPage from "./components/admin/Tickets/TicketsCreateMan
 import TicketsDetailPage from "./components/admin/Tickets/TicketsDetail/TicketsDetailPage";
 
 import "./App.scss";
-import SearchProductPage from "./components/admin/Search/SearchProduct/SearchProductPage";
 import PlantersHomepage from "./components/admin/Planters/PlantersHomePage";
 import PlantersDetailPage from "./components/admin/Planters/PlantersDetail/PlantersDetailPage";
 import PlantsHomepage from "./components/admin/Plants/PlantsHomePage";
 import PlantsDetailPage from "./components/admin/Plants/PlantsDetail/PlantsDetailPage";
 import OrderDetail from "./components/admin/Orders/OrderDetail";
+import SeedsHomepage from "./components/admin/Seeds/SeedsHomePage";
+import SeedsDetailPage from "./components/admin/Seeds/SeedsDetail/SeedsDetailPage";
+import SearchPlantsPage from "./components/admin/Search/SearchPlants/SearchPlantsPage";
+import SearchSeedsPage from "./components/admin/Search/SearchSeeds/SearchSeedsPage";
 
 const ProtectedRoute = ({ element, ...rest }) => {
   const token = getCookie("e_token");
@@ -98,6 +101,8 @@ const protectedRoutes = [
   { path: "/employees/edit/:id", element: <EmployeesEditPage /> },
   { path: "/orders", element: <OrderHomePage /> },
   { path: "/orders/o/:id", element: <OrderDetail /> },
+  { path: "/seeds", element: <SeedsHomepage /> },
+  { path: "/seeds/s/:id", element: <SeedsDetailPage /> },
   { path: "/reviews", element: <ReviewsGrid /> },
   { path: "/reviews/detail", element: <ReviewDetail /> },
   { path: "/settings", element: <SettingsPage /> },
@@ -109,7 +114,9 @@ const protectedRoutes = [
   { path: "/tickets", element: <TicketsPage /> },
   { path: "/tickets/create", element: <TicketsCreateManualPage /> },
   { path: "/tickets/t/:id", element: <TicketsDetailPage /> },
-  { path: "/searches/products/:query", element: <SearchProductPage /> },
+  { path: "/searches/plants/:query", element: <SearchPlantsPage /> },
+  { path: "/searches/seeds/:query", element: <SearchSeedsPage /> },
+
 ];
 
 function App() {
