@@ -46,14 +46,6 @@ const StatisticItem = ({ icon, number, label, increase }) => {
   );
 };
 
-const MapTopSaleProduct = () => {
-  return (
-    <div className="map-top-sale-product">
-      <p>Soon</p>
-    </div>
-  );
-};
-
 export default function DashboardPage() {
   useEffect(() => {
     setPageHeadTitle("Dashboard");

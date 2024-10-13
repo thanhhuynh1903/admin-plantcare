@@ -131,7 +131,7 @@ export default function PlantersDetailPage() {
                   <TableBody>
                     <TableRow>
                       <TableCell>Price</TableCell>
-                      <TableCell>${(product.price / 100).toFixed(2)}</TableCell>
+                      <TableCell>${product.price} VND</TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell>Size</TableCell>

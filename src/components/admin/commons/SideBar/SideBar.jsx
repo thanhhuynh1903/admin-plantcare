@@ -22,7 +22,9 @@ import logo from "@assets/logo.png";
 import seed_icon from "@assets/seed_icon.svg";
 
 const SeedIcon = (props) => {
-  return <img src={seed_icon} style={{ width: "24px"}} alt="Logo" {...props} />;  
+  return (
+    <img src={seed_icon} style={{ width: "24px" }} alt="Logo" {...props} />
+  );
 };
 
 export default function SideBar() {
@@ -40,6 +42,12 @@ export default function SideBar() {
     { icon: <PersonIcon />, label: "Customers", link: "/customers", notify: 0 },
     { icon: <ShoppingCartIcon />, label: "Orders", link: "/orders", notify: 0 },
     {
+      icon: <SeedIcon />,
+      label: "Seeds",
+      link: "/seeds",
+      notify: 0,
+    },
+    {
       icon: <ParkOutlinedIcon />,
       label: "Plants",
       link: "/plants",
@@ -49,12 +57,6 @@ export default function SideBar() {
       icon: <Inventory2OutlinedIcon />,
       label: "Planters",
       link: "/planters",
-      notify: 0,
-    },
-    {
-      icon: <SeedIcon />,
-      label: "Seeds",
-      link: "/seeds",
       notify: 0,
     },
     { icon: <RateReviewIcon />, label: "Reviews", link: "/reviews", notify: 0 },
