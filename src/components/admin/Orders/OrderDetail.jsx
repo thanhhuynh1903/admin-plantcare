@@ -536,17 +536,17 @@ const OrderDetail = () => {
                 Order?.status === "Out of Delivery" ? (
                 <div>
                   <h2>{Order?.status}</h2>
-                  This order have been {Order?.status}!! Please check again !!
+                  This order have been {Order?.status} at {Order?.tracking_status_dates[2]?.value}!! Please check again !!
                 </div>
               ) : Order?.status === "Confirmed" ? (
                 <div>
                   <h2>{Order?.status}</h2>
-                  This Order have been confirmed!!
+                  This Order have been confirmed at {Order?.tracking_status_dates[0]?.value}!!
                 </div>
               ) : (
                 <div>
                   <h2>{Order?.status}</h2>
-                  This Order is shipping to customer!!
+                  This Order is shipping to customer at  {Order?.tracking_status_dates[1]?.value}!!
                 </div>
               )}
               <Typography sx={{ textAlign: "center", fontSize: "15px" }}>

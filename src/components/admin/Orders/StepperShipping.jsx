@@ -12,7 +12,8 @@ import StepConnector, {
 import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
 import PublishedWithChangesOutlinedIcon from "@mui/icons-material/PublishedWithChangesOutlined";
 import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined";
-import ProductionQuantityLimitsOutlinedIcon from '@mui/icons-material/ProductionQuantityLimitsOutlined';
+import ProductionQuantityLimitsOutlinedIcon from "@mui/icons-material/ProductionQuantityLimitsOutlined";
+import { Typography } from "@mui/material";
 
 const QontoConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -152,10 +153,10 @@ function ColorlibStepIcon(props) {
   const { active, completed, className } = props;
 
   const icons = {
-    1: <PublishedWithChangesOutlinedIcon/>,
+    1: <PublishedWithChangesOutlinedIcon />,
     2: <Inventory2OutlinedIcon />,
     3: <ProductionQuantityLimitsOutlinedIcon />,
-    4: <LocalShippingOutlinedIcon/>,
+    4: <LocalShippingOutlinedIcon />,
   };
 
   return (
@@ -194,15 +195,11 @@ const getLatestStep = (dates) => {
   return latestStep - 1; // Adjust to 0-based index
 };
 
-const steps = [
-  "Confirmed",
-  "Shipped",
-  "Out of Delivered",
-  "Delivered",
-];
+const steps = ["Confirmed", "Shipped", "Out of Delivered", "Delivered"];
 
 const StepperShipping = ({ statusship }) => {
   const activeStep = getLatestStep(statusship);
+  console.log(statusship);
 
   return (
     <Stack sx={{ width: "100%" }} spacing={4}>
@@ -213,7 +210,17 @@ const StepperShipping = ({ statusship }) => {
       >
         {steps.map((label, index) => (
           <Step key={index}>
-            <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
+            <StepLabel StepIconComponent={ColorlibStepIcon}>
+              {label}
+              {statusship.find((item) => item.key === stepKeys[index]) && (
+                <Typography sx={{fontSize:"12px",fontWeight:"bold"}}>
+                  {
+                    statusship.find((item) => item.key === stepKeys[index])
+                      .value
+                  }
+                </Typography>
+              )}
+            </StepLabel>
           </Step>
         ))}
       </Stepper>
