@@ -19,6 +19,7 @@ import {
   InputAdornment,
   TablePagination,
   Chip,
+  Button
 } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import CircleIcon from "@mui/icons-material/Circle";
@@ -32,6 +33,8 @@ import Grid from "@mui/material/Grid";
 import IndeterminateCheckBoxIcon from "@mui/icons-material/IndeterminateCheckBox";
 import LoadingIcon from "../commons/LoadingIcon/LoadingIcon";
 import FloatingActionButtons from "./FloatingActionButtons";
+import { useNavigate } from "react-router-dom";
+import { adelete } from "../../utils/util_axios";
 
 const OrderDetail = () => {
   const [page, setPage] = useState(0);
@@ -39,7 +42,7 @@ const OrderDetail = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const { id } = useParams();
   const [loading, setLoading] = useState(true); // Initial loading state
-
+  const navigate = useNavigate();
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -65,6 +68,15 @@ const OrderDetail = () => {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
+  };
+
+  const handleDeleteOrder = async () => {
+    try {
+      await adelete(`/orders/${id}`);
+      navigate("/orders"); // Redirect to the orders list after deletion
+    } catch (error) {
+      console.error("Failed to delete the order:", error);
+    }
   };
 
   const getStatusColor = (status) => {
@@ -542,8 +554,17 @@ const OrderDetail = () => {
               </Typography>
             </Typography>
           </Box>
+          <Button
+                variant="contained"
+                color="error"
+                onClick={handleDeleteOrder}
+                sx={{ mb: 2 }}
+              >
+                Delete Order
+              </Button>
         </div>
       )}
+      
       <FloatingActionButtons status={Order} />
     </div>
   );
