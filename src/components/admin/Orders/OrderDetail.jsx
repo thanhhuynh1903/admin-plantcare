@@ -19,7 +19,7 @@ import {
   InputAdornment,
   TablePagination,
   Chip,
-  Button
+  Button,
 } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import CircleIcon from "@mui/icons-material/Circle";
@@ -555,16 +555,15 @@ const OrderDetail = () => {
             </Typography>
           </Box>
           <Button
-                variant="contained"
-                color="error"
-                onClick={handleDeleteOrder}
-                sx={{ mb: 2 }}
-              >
-                Delete Order
-              </Button>
+            variant="contained"
+            color="error"
+            onClick={handleDeleteOrder}
+            sx={{ mb: 2 }}
+          >
+            Delete Order
+          </Button>
         </div>
       )}
-      
       <FloatingActionButtons status={Order} />
     </div>
   );
