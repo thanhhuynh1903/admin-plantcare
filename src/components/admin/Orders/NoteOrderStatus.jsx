@@ -4,6 +4,9 @@ import { styled } from '@mui/material/styles';
 import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
 import BusAlertOutlinedIcon from '@mui/icons-material/BusAlertOutlined';
 import PublishedWithChangesOutlinedIcon from '@mui/icons-material/PublishedWithChangesOutlined';
+import ProductionQuantityLimitsOutlinedIcon from '@mui/icons-material/ProductionQuantityLimitsOutlined';
+import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
+
 
 const IconContainer = styled('div')({
   display: 'flex',
@@ -29,10 +32,20 @@ function NoteOrderStatus({status}) {
         <LocalShippingOutlinedIcon sx={{fontSize:'48px'}}/>
       </IconWrapper>
       :
+    status === "Out of Delivery" ?
+      <IconWrapper style={{background:'linear-gradient(102.2deg, rgb(250, 45, 66) 9.6%, rgb(245, 104, 104) 96.1%)'}}>
+        <ProductionQuantityLimitsOutlinedIcon sx={{fontSize:'48px'}}/>
+      </IconWrapper>
+      :
     status === "Confirmed" ?
       <IconWrapper style={{background:'#ff9a00'}}>
         <PublishedWithChangesOutlinedIcon sx={{fontSize:'48px'}}/>
       </IconWrapper>
+      :
+    status === "Shipped" ?
+    <IconWrapper>
+    <Inventory2OutlinedIcon sx={{fontSize:'48px'}}/>
+  </IconWrapper>
       :
       <IconWrapper style={{background:'linear-gradient(102.2deg, rgb(250, 45, 66) 9.6%, rgb(245, 104, 104) 96.1%)'}}>
         <BusAlertOutlinedIcon sx={{fontSize:'45px'}}/>

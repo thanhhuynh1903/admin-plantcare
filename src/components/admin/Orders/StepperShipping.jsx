@@ -12,7 +12,7 @@ import StepConnector, {
 import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
 import PublishedWithChangesOutlinedIcon from "@mui/icons-material/PublishedWithChangesOutlined";
 import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined";
-import SportsScoreOutlinedIcon from "@mui/icons-material/SportsScoreOutlined";
+import ProductionQuantityLimitsOutlinedIcon from '@mui/icons-material/ProductionQuantityLimitsOutlined';
 
 const QontoConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -152,10 +152,10 @@ function ColorlibStepIcon(props) {
   const { active, completed, className } = props;
 
   const icons = {
-    1: <Inventory2OutlinedIcon />,
-    2: <PublishedWithChangesOutlinedIcon />,
-    3: <LocalShippingOutlinedIcon />,
-    4: <SportsScoreOutlinedIcon />,
+    1: <PublishedWithChangesOutlinedIcon/>,
+    2: <Inventory2OutlinedIcon />,
+    3: <ProductionQuantityLimitsOutlinedIcon />,
+    4: <LocalShippingOutlinedIcon/>,
   };
 
   return (
@@ -177,8 +177,7 @@ ColorlibStepIcon.propTypes = {
 
 // Sample tracking status dates data
 const stepKeys = [
-  "received_date",
-  "picked_date",
+  "order_confirmed_date",
   "shipped_date",
   "out_of_delivery_date",
   "delivered_date",
@@ -196,9 +195,10 @@ const getLatestStep = (dates) => {
 };
 
 const steps = [
+  "Confirmed",
   "Shipped",
-  "Picked products",
-  "Delivery",
+  "Out of Delivered",
+  "Delivered",
 ];
 
 const StepperShipping = ({ statusship }) => {
