@@ -18,7 +18,6 @@ import OrderHomePage from "./components/admin/Orders/OrderHomePage";
 import SettingsPage from "./components/admin/Settings/SettingsPage";
 import CalendarPage from "./components/admin/Calendar/CalendarPage";
 import CalendarDetailPage from "./components/admin/Calendar/CalendarDetail/CalendarDetailPage";
-import ReviewsGrid from "./components/admin/Reviews/ReviewsGrid";
 import ReviewDetail from "./components/admin/Reviews/ReviewDetail";
 import NewsPage from "./components/admin/News/NewsPage";
 import NewsCreatePage from "./components/admin/News/NewsCreate/NewsCreatePage";
@@ -39,6 +38,7 @@ import SeedsHomepage from "./components/admin/Seeds/SeedsHomePage";
 import SeedsDetailPage from "./components/admin/Seeds/SeedsDetail/SeedsDetailPage";
 import SearchPlantsPage from "./components/admin/Search/SearchPlants/SearchPlantsPage";
 import SearchSeedsPage from "./components/admin/Search/SearchSeeds/SearchSeedsPage";
+import ReviewsPage from "./components/admin/Reviews/ReviewsPage";
 
 const ProtectedRoute = ({ element, ...rest }) => {
   const token = getCookie("e_token");
@@ -103,7 +103,7 @@ const protectedRoutes = [
   { path: "/orders/o/:id", element: <OrderDetail /> },
   { path: "/seeds", element: <SeedsHomepage /> },
   { path: "/seeds/s/:id", element: <SeedsDetailPage /> },
-  { path: "/reviews", element: <ReviewsGrid /> },
+  { path: "/reviews", element: <ReviewsPage /> },
   { path: "/reviews/detail", element: <ReviewDetail /> },
   { path: "/settings", element: <SettingsPage /> },
   { path: "/calendar", element: <CalendarPage /> },
