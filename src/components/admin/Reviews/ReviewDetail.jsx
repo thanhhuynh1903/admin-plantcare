@@ -5,26 +5,27 @@ import CardReview from './CardReview';
 import SmartPlanter from "../../../assets/pages/OrderDetail/SmartPlanter.jpg";
 import ModalReport from './ModalReport';
 import { useState } from 'react';
+
 const ReviewDetail = () => {
-    const [open, setOpen] = useState(false);
-    const [reportedItem, setReportedItem] = useState('Rating #1');
-    const [reportedUser, setReportedUser] = useState('John A.');
-  
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+  const [open, setOpen] = useState(false);
+  const [reportedItem, setReportedItem] = useState('Rating #1');
+  const [reportedUser, setReportedUser] = useState('John A.');
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   return (
     <Box sx={{ maxWidth: 1200, margin: 'auto', borderRadius: '20px !important' }}>
       <Card sx={{ padding: 3, borderRadius: '20px !important' }}>
         <CardContent>
           <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-            <Avatar sx={{ bgcolor: 'red', mr: 2 ,width: 60, height: 60}}  >JA</Avatar>
+            <Avatar sx={{ bgcolor: 'red', mr: 2, width: 60, height: 60 }}  >JA</Avatar>
             <Box sx={{ display: 'block' }}>
               <Typography variant="subtitle1">#30</Typography>
-              <Typography variant="subtitle1" sx={{fontSize:'18px',fontWeight:'bold'}}>John A.</Typography>
-              <div style={{height:'50px',width:'100%',display:'flex',flexDirection:'column'}}>
+              <Typography variant="subtitle1" sx={{ fontSize: '18px', fontWeight: 'bold' }}>John A.</Typography>
+              <div style={{ height: '50px', width: '100%', display: 'flex', flexDirection: 'column' }}>
                 <Rating value={5} readOnly size="large" />
-                <Typography variant="caption" sx={{textAlign:'start',paddingLeft:1}}>25/06/2024</Typography>
+                <Typography variant="caption" sx={{ textAlign: 'start', paddingLeft: 1 }}>25/06/2024</Typography>
               </div>
             </Box>
             <Box sx={{ ml: 'auto' }}>
@@ -60,7 +61,7 @@ const ReviewDetail = () => {
             <Typography variant="subtitle1" gutterBottom sx={{ fontSize: '21px', color: '#464255', fontWeight: 650 }}>Images, medias</Typography>
             <Grid container spacing={2} >
               {[1, 2, 3, 4].map((item) => (
-                <Grid item xs={3} key={item} sx={{maxWidth:'15% !important',}}>
+                <Grid item xs={3} key={item} sx={{ maxWidth: '15% !important', }}>
                   <img src={SmartPlanter} alt={`Product ${item}`} style={{ width: '150px', height: '150px', borderRadius: '8px' }} />
                 </Grid>
               ))}
@@ -75,11 +76,11 @@ const ReviewDetail = () => {
       </Card>
 
       <Modal open={open} onClose={handleClose}>
-      <ModalReport 
-          open={open} 
-          onClose={handleClose} 
-          reportedItem={reportedItem} 
-          reportedUser={reportedUser} 
+        <ModalReport
+          open={open}
+          onClose={handleClose}
+          reportedItem={reportedItem}
+          reportedUser={reportedUser}
         />
       </Modal>
     </Box>

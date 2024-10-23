@@ -39,6 +39,10 @@ import SeedsDetailPage from "./components/admin/Seeds/SeedsDetail/SeedsDetailPag
 import SearchPlantsPage from "./components/admin/Search/SearchPlants/SearchPlantsPage";
 import SearchSeedsPage from "./components/admin/Search/SearchSeeds/SearchSeedsPage";
 import ReviewsPage from "./components/admin/Reviews/ReviewsPage";
+import VariantsPage from "./components/admin/Variants/VariantsPage";
+import VariantsPlantTypePage from "./components/admin/Variants/VariantPlantType/VariantsPlantTypePage";
+import VariantsGenusPage from "./components/admin/Variants/VariantGenus/VariantsGenusPage";
+import VariantsFormTemplatePage from "./components/admin/Variants/VariantFormTemplate/VariantFormTemplatePage";
 
 const ProtectedRoute = ({ element, ...rest }) => {
   const token = getCookie("e_token");
@@ -116,7 +120,12 @@ const protectedRoutes = [
   { path: "/tickets/t/:id", element: <TicketsDetailPage /> },
   { path: "/searches/plants/:query", element: <SearchPlantsPage /> },
   { path: "/searches/seeds/:query", element: <SearchSeedsPage /> },
-
+  { path: '/variants', element: <VariantsPage /> },
+  { path: '/variants/plant-types', element: <VariantsPlantTypePage /> },
+  { path: '/variants/genus', element: <VariantsGenusPage /> },
+  {
+    path: "/variants/form-templates", element: <VariantsFormTemplatePage />
+  }
 ];
 
 function App() {

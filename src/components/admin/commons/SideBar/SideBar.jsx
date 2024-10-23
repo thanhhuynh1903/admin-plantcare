@@ -15,6 +15,7 @@ import {
 } from "@mui/icons-material";
 import ParkOutlinedIcon from "@mui/icons-material/ParkOutlined";
 import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
+import CategoryOutlinedIcon from '@mui/icons-material/CategoryOutlined';
 import ConfirmationNumberOutlinedIcon from "@mui/icons-material/ConfirmationNumberOutlined";
 import { Link, useLocation } from "react-router-dom";
 
@@ -60,6 +61,12 @@ export default function SideBar() {
       notify: 0,
     },
     { icon: <RateReviewIcon />, label: "Reviews", link: "/reviews", notify: 0 },
+    {
+      icon: <CategoryOutlinedIcon />,
+      label: "Variants",
+      link: "/variants",
+      notify: 0,
+    },
     {
       icon: <ArticleIcon />,
       label: "News / Articles",

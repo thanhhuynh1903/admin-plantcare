@@ -94,8 +94,8 @@ export default function PlantsDetailPage() {
                 <Grid2 item xs={12} sm={4}>
                   <img
                     className="product-img"
-                    src={product.img_url[0]}
-                    alt={product.name}
+                    src={product?.img_url[0]}
+                    alt={product?.name}
                     style={{ width: "100%", height: "auto" }}
                   />
                 </Grid2>
