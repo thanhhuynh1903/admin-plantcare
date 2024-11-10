@@ -36,7 +36,7 @@ export default function MapsChartOrders() {
     datasets: [
       {
         label: "Orders",
-        data: [400, 450, 456, 350, 500, 400, 470],
+        data: [10, 2, 5, 3, 6, 4, 8],
         fill: true,
         backgroundColor: "rgba(76, 175, 80, 0.2)",
         borderColor: "rgba(76, 175, 80, 1)",

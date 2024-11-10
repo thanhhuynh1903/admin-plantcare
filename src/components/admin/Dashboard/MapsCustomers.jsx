@@ -9,7 +9,6 @@ import {
   Title,
   Tooltip,
   Legend,
-  plugins,
 } from "chart.js";
 import "./MapsCustomers.scss";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -30,14 +29,14 @@ export default function MapsCustomers() {
     datasets: [
       {
         label: "New Customers",
-        data: [100, 200, 300, 400, 500, 600],
+        data: [5, 7, 4, 3, 6, 5], // Adjusted values summing to 30
         backgroundColor: "rgba(255, 99, 132, 0.5)",
         borderColor: "rgba(255, 99, 132, 1)",
         fill: true,
       },
       {
         label: "Returning Customers",
-        data: [300, 250, 400, 150, 350, 500],
+        data: [3, 4, 5, 2, 3, 3], // Adjusted values summing to 20
         backgroundColor: "rgba(153, 102, 255, 0.5)",
         borderColor: "rgba(153, 102, 255, 1)",
         fill: true,
@@ -56,6 +55,7 @@ export default function MapsCustomers() {
     scales: {
       y: {
         beginAtZero: true,
+        max: 10,
       },
     },
     elements: {
@@ -85,7 +85,7 @@ export default function MapsCustomers() {
             <div className="dot stat-item-new-customers"></div>
           </div>
           <div className="stat-item-meta">
-            <p className="stat-item-number">1200</p>
+            <p className="stat-item-number">31</p>
             <p className="stat-item-label">New Customers</p>
           </div>
         </div>
@@ -94,7 +94,7 @@ export default function MapsCustomers() {
             <div className="dot stat-item-returning-customers"></div>
           </div>
           <div className="stat-item-meta">
-            <p className="stat-item-number">800</p>
+            <p className="stat-item-number">20</p>
             <p className="stat-item-label">Returning Customers</p>
           </div>
         </div>

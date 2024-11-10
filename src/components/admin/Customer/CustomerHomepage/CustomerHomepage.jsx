@@ -14,18 +14,8 @@ import PermIdentityOutlinedIcon from '@mui/icons-material/PermIdentityOutlined';
 import { aget } from "../../../utils/util_axios";
 import LoadingIcon from "../../commons/LoadingIcon/LoadingIcon";
 
-// const initialEmployeeData = [
-//   { name: 'Darlene Robertson', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla...', status: 'Open', rate:"150.000" ,balance: '+270.000',deposite:'500.000'  },
-//   { name: 'Devon Lane', description: 'LOremmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', status: 'Paid',  rate:"150.000",balance: '+270.000', deposite:'500.000' },
-//   { name: 'Cody Fisher', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla...', status: 'Open',  rate:"150.000",balance: '-270.000',  deposite:'500.000'},
-//   { name: 'Theresa Webb', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla...', status: 'Inactive', rate:"150.000", balance: '-270.000', deposite:'500.000' },
-//   { name: 'Marvin McKinney', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla...', status: 'Due',rate:"70.000", balance: '+270.000', deposite:'500.000' },
-//   { name: 'Jerome Bell', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla...', status: 'Due',rate:"70.000", balance: '-270.000',deposite:'500.000'  },
-//   { name: 'Eleanor Pena', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla...', status: 'Open', rate:"70.000",balance: '+400.000', deposite:'500.000' }
-// ];
-
 export default function CustomerHomepage() {
-  const [loading, setLoading] = useState(true); // Initial loading state
+  const [loading, setLoading] = useState(true);
   const [employees, setEmployees] = useState([
     {
       _id: "",
@@ -49,7 +39,7 @@ export default function CustomerHomepage() {
 
   const fetchUser = async () => {
     try {
-      setLoading(true); // Start loading
+      setLoading(true);
       const response = await aget(`/users`);
       const userData = response.data;
       setEmployees(userData);
@@ -57,7 +47,7 @@ export default function CustomerHomepage() {
       console.error('Error fetching user:', error);
       throw error;
     } finally {
-      setLoading(false); // End loading
+      setLoading(false);
     }
   };
 

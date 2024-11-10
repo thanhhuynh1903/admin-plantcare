@@ -18,37 +18,116 @@ import TotalOrders from '@assets/pages/Dashboard/TotalOrders.png';
 import TotalDelivered from '@assets/pages/Dashboard/TotalDelivered.png';
 import TotalCancelled from '@assets/pages/Dashboard/TotalCancelled.png';
 import TotalRevenue from '@assets/pages/Dashboard/TotalRevenue.png';
+import { aget } from "../../utils/util_axios";
 
-const StatisticItem = ({ icon, number, label, increase }) => {
-  return (
-    <div className="statistic-item">
-      <div className="statistic-item-icon">{icon}</div>
-      <div className="statistic-item-meta">
-        <div className="statistic-item-number">{number}</div>
-        <div className="statistic-item-label">{label}</div>
-        <div className="statistic-item-increase">
-          <div>
-            {increase > 0 && (
-              <div className="statistic-item-increase-icon-i">
-                <ArrowUpwardIcon />
-              </div>
-            )}
-            {increase < 0 && (
-              <div className="statistic-item-increase-icon-d">
-                <ArrowDownwardIcon />
-              </div>
-            )}
-          </div>
-          <div>{increase} (last 30 days)</div>
+const StatisticItem = ({ icon, number, label, increase }) => (
+  <div className="statistic-item">
+    <div className="statistic-item-icon">{icon}</div>
+    <div className="statistic-item-meta">
+      <div className="statistic-item-number">{number}</div>
+      <div className="statistic-item-label">{label}</div>
+      <div className="statistic-item-increase">
+        <div>
+          {increase > 0 ? (
+            <div className="statistic-item-increase-icon-i">
+              <ArrowUpwardIcon />
+            </div>
+          ) : (
+            <div className="statistic-item-increase-icon-d">
+              <ArrowDownwardIcon />
+            </div>
+          )}
         </div>
+        <div>{increase} (last 30 days)</div>
       </div>
     </div>
-  );
-};
+  </div>
+);
 
 export default function DashboardPage() {
+  const [userCount, setUserCount] = useState(0);
+  const [totalOrders, setTotalOrders] = useState(0);
+  const [deliveredOrders, setDeliveredOrders] = useState(0);
+  const [cancelledOrders, setCancelledOrders] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [topProducts, setTopProducts] = useState([]);
+
   useEffect(() => {
     setPageHeadTitle("Dashboard");
+
+    const fetchUsers = async () => {
+      try {
+        const users = await aget('/users');
+        setUserCount(users.data.length);
+      } catch (error) {
+        console.error("Failed to fetch users:", error);
+      }
+    };
+
+    function getTopSaleItems(orders) {
+      const productCount = {};
+    
+      orders.forEach((order) => {
+        order.list_cart_item_id.forEach((cartItem) => {
+          const product = cartItem.item_id.product;
+          const productId = cartItem.item_id._id;
+    
+          if (!productCount[productId] || productCount[productId].name !== product.name) {
+            productCount[productId] = {
+              name: product?.name,
+              price: product?.price,
+              image: product?.img_url?.[0] || "",
+              currency: "đ",
+              count: 1,
+            };
+          } else {
+            productCount[productId].count += 1;
+          }
+        });
+      });
+    
+      const sortedProducts = Object.values(productCount).sort(
+        (a, b) => b.count - a.count
+      );
+    
+      setTopProducts(
+        sortedProducts
+          .reduce((uniqueProducts, product) => {
+            if (!uniqueProducts.some((p) => p.name === product.name)) {
+              return [...uniqueProducts, product];
+            }
+            return uniqueProducts;
+          }, [])
+          .slice(0, 5)
+      );
+    }
+
+    const fetchOrders = async () => {
+      try {
+        const orders = await aget('/orders/admin');
+
+        setTotalOrders(orders.data.length);
+        const delivered = orders.data.filter(order => order.status == "Delivered");
+        setDeliveredOrders(delivered.length);
+
+        const cancelled = orders.data.filter(order => order.status == "Cancelled");
+        setCancelledOrders(cancelled.length);
+
+        let total = 0;
+        for (const order of orders.data) {
+          total += order.total_price;
+        }
+        setTotalPrice(total);
+
+        getTopSaleItems(orders.data);
+
+      } catch (error) {
+        console.error("Failed to fetch orders:", error);
+      }
+    };
+
+    fetchUsers();
+    fetchOrders();
   }, []);
 
   return (
@@ -58,19 +137,19 @@ export default function DashboardPage() {
         <div className="statistic-row">
           <StatisticItem
             icon={<PeopleIcon />}
-            number={100}
+            number={userCount}
             label="Total users"
             increase={10}
           />
           <StatisticItem
             icon={<DownloadForOfflineIcon />}
-            number={formatNumber(100)}
+            number={formatNumber(126)}
             label="Total installations"
             increase={10}
           />
           <StatisticItem
             icon={<GradeIcon />}
-            number={formatNumber(100)}
+            number={formatNumber(4.5)}
             label="Total app ratings"
             increase={10}
           />
@@ -78,25 +157,25 @@ export default function DashboardPage() {
         <div className="statistic-row">
           <StatisticItem
             icon={<img src={TotalOrders} alt="TotalOrders" />}
-            number={formatNumber(100)}
+            number={formatNumber(totalOrders)}
             label="Total orders"
             increase={10}
           />
           <StatisticItem
             icon={<img src={TotalDelivered} alt="TotalDelivered" />}
-            number={formatNumber(100)}
+            number={formatNumber(deliveredOrders)}
             label="Total delivered"
             increase={10}
           />
           <StatisticItem
             icon={<img src={TotalCancelled} alt="TotalCancelled" />}
-            number={formatNumber(100)}
+            number={formatNumber(cancelledOrders)}
             label="Total cancelled"
             increase={10}
           />
           <StatisticItem
             icon={<img src={TotalRevenue} alt="TotalRevenue" />}
-            number={`${formatNumber(1000000)}đ`}
+            number={`${formatNumber(totalPrice)}đ`} 
             label="Total revenue (VND)"
             increase={10}
           />
@@ -113,7 +192,7 @@ export default function DashboardPage() {
           }}
         >
           <MapsPieChart />
-          <MapsTopSaleProduct />
+          <MapsTopSaleProduct topSaleItems={topProducts} />
         </div>
         <div
           style={{
@@ -133,4 +212,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-
