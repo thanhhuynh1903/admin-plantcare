@@ -8,27 +8,30 @@ export default function CustomerStats({ customerData = [] }) {
   const [statsList, setStatsList] = useState(null);
 
   useEffect(() => {
-    console.log(customerData)
     setStatsList([
       {
         label: "Total customers",
         value: customerData.length || 0,
         increase: customerData.totalCustomersIncrease || 1,
+        unit: "",
       },
       {
         label: "Premium users",
-        value: customerData.filter((item) => item.rank == "Premium").length || 0,
+        value: customerData.filter((item) => item.rank === "Premium").length || 0,
         increase: 12,
+        unit: "",
       },
       {
         label: "New sign-ups",
         value: customerData.newSignUps || 21,
         increase: customerData.newSignUpsIncrease || 1,
+        unit: "",
       },
       {
-        label: "Returning users",
-        value: customerData.returningUsers || 0,
-        increase: customerData.returningUsersIncrease || -1,
+        label: "Subscription revenue",
+        value: (customerData.filter((item) => item.rank === "Premium").length || 0) * 79000,
+        increase: customerData.returningUsersIncrease || 1,
+        unit: "VND",
       },
     ]);
   }, [customerData]);
@@ -48,7 +51,9 @@ export default function CustomerStats({ customerData = [] }) {
               )}
             </div>
             <div className="node-value-container">
-              <p className="node-value">{formatNumber(item.value)}</p>
+              <p className="node-value">
+                {formatNumber(item.value)} {item.unit}
+              </p>
             </div>
           </div>
         ))}

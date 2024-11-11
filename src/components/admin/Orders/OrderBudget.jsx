@@ -3,37 +3,48 @@ import ArrowDropUpOutlinedIcon from "@mui/icons-material/ArrowDropUpOutlined";
 import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
 import { useState, useEffect } from "react";
 import { formatNumber } from "../../utils/util_string";
-export default function OrderBudget() {
+export default function OrderBudget({orders = []}) {
   const [budgetList, setBudgetList] = useState(null);
 
   useEffect(() => {
+
     setBudgetList([
       {
         label: "Total budget",
-        value: 10000,
+        value: orders ? orders.reduce((total, order) => total + order.total_price, 0) : 0,
         currency: "VND",
         increase: 1,
       },
       {
         label: "Monthly budget",
-        value: 10000,
+        value: orders ? orders.filter(order => new Date(order.createdAt).getMonth() === new Date().getMonth()).reduce((total, order) => total + order.total_price, 0) : 0,
         currency: "VND",
         increase: 1,
       },
       {
         label: "Weekly budget",
-        value: 1000,
+        value: orders ? orders.filter(order => {
+          const orderDate = new Date(order.createdAt);
+          const currentDate = new Date();
+          const oneWeekAgo = new Date(currentDate.setDate(currentDate.getDate() - 7));
+          return orderDate >= oneWeekAgo;
+        }).reduce((total, order) => total + order.total_price, 0) : 0,
         currency: "VND",
         increase: 1,
       },
       {
         label: "Daily budget",
-        value: 100,
+        value: orders ? orders.filter(order => {
+          const orderDate = new Date(order.createdAt);
+          const currentDate = new Date();
+          const oneDayAgo = new Date(currentDate.setDate(currentDate.getDate() - 1));
+          return orderDate >= oneDayAgo;
+        }).reduce((total, order) => total + order.total_price, 0) : 100,
         currency: "VND",
         increase: -1,
       },
     ]);
-  }, []);
+  }, [orders]);
 
   return (
     <div className="employees-home-budget-list">

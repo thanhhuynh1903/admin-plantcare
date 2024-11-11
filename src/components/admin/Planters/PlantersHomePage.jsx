@@ -121,7 +121,7 @@ export default function PlantersHomepage() {
             <Button className="btn-tool-nav">
               <KeyboardArrowLeftOutlinedIcon />
             </Button>
-            <p>August 2021</p>
+            <p>November 2024</p>
             <Button className="btn-tool-nav">
               <KeyboardArrowRightOutlinedIcon />
             </Button>

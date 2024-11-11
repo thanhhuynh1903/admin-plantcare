@@ -72,7 +72,7 @@ export default function OrderHomePage() {
             <Button className="btn-tool-nav">
               <KeyboardArrowLeftOutlinedIcon />
             </Button>
-            <p>August 2021</p>
+            <p>November 2024</p>
             <Button className="btn-tool-nav">
               <KeyboardArrowRightOutlinedIcon />
             </Button>
@@ -82,7 +82,7 @@ export default function OrderHomePage() {
       {!isLoading ? (
         <>
           <div>
-            <OrderBudget />
+            <OrderBudget orders={orders} />
           </div>
           <div>
             <FilterOrder
