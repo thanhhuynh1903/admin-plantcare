@@ -12,7 +12,7 @@ import CircleRoundedIcon from "@mui/icons-material/CircleRounded";
 const headCells = [
   { id: "ID", label: "#" }, { id: "AVATAR", label: "" }, { id: "NAME", label: "NAME" },
   { id: "EMAIL", label: "EMAIL" }, { id: "STATUS", label: "STATUS" }, { id: "RANK", label: "RANK" },
-  { id: "DOB", label: "DOB" }, { id: "ACTION", label: <MoreVertIcon /> },
+  { id: "DOB", label: "Create date" }, { id: "ACTION", label: <MoreVertIcon /> },
 ];
 
 const rankStyles = {
