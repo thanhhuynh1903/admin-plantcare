@@ -12,6 +12,7 @@ import {
 import DownloadIcon from "@mui/icons-material/Download";
 import "./MapsChartOrders.scss";
 import Tabs from "../commons/Tabs/Tabs";
+import { exportOrdersToExcel } from "../../utils/util_export";
 
 ChartJS.register(
   CategoryScale,
@@ -111,7 +112,9 @@ export default function MapsChartOrders() {
           />
         </div>
         <div className="controls-btn-more">
-          <button className="btn-more">
+          <button className="btn-more" onClick={() => {
+            exportOrdersToExcel();
+          }}>
             <DownloadIcon sx={{ marginTop: "3px" }} />
             <p>Save report</p>
           </button>
