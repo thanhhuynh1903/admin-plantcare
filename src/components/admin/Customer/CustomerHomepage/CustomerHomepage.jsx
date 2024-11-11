@@ -11,6 +11,7 @@ import PermIdentityOutlinedIcon from '@mui/icons-material/PermIdentityOutlined';
 import { aget } from "../../../utils/util_axios";
 import LoadingIcon from "../../commons/LoadingIcon/LoadingIcon";
 import CustomerStats from "./CustomerStats";
+import { exportPremiumUsersToExcel } from "../../../utils/util_export";
 
 export default function CustomerHomepage() {
   const [loading, setLoading] = useState(true);
@@ -55,6 +56,14 @@ export default function CustomerHomepage() {
         <div style={{ display: 'flex', textAlign: 'center', alignItems: "center", }}> <PermIdentityOutlinedIcon sx={{ fontSize: 35, color: '#0A5239', marginRight: 1 }} /><p className="main-label">Customers</p></div>
 
         <div className="tool-container-btn">
+          <Button
+            className="btn-tool"
+            onClick={() => {
+              exportPremiumUsersToExcel();
+            }}
+          >
+            Export premium user
+          </Button>
           <Button className="btn-tool">
             <FilterAltOutlinedIcon />
           </Button>
