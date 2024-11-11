@@ -139,19 +139,19 @@ export default function DashboardPage() {
             icon={<PeopleIcon />}
             number={userCount}
             label="Total users"
-            increase={10}
+            increase={20}
           />
           <StatisticItem
             icon={<DownloadForOfflineIcon />}
             number={formatNumber(126)}
             label="Total installations"
-            increase={10}
+            increase={56}
           />
           <StatisticItem
             icon={<GradeIcon />}
-            number={formatNumber(4.5)}
+            number={formatNumber(4.6)}
             label="Total app ratings"
-            increase={10}
+            increase={0.2}
           />
         </div>
         <div className="statistic-row">
@@ -159,25 +159,25 @@ export default function DashboardPage() {
             icon={<img src={TotalOrders} alt="TotalOrders" />}
             number={formatNumber(totalOrders)}
             label="Total orders"
-            increase={10}
+            increase={12}
           />
           <StatisticItem
             icon={<img src={TotalDelivered} alt="TotalDelivered" />}
             number={formatNumber(deliveredOrders)}
             label="Total delivered"
-            increase={10}
+            increase={1}
           />
           <StatisticItem
             icon={<img src={TotalCancelled} alt="TotalCancelled" />}
             number={formatNumber(cancelledOrders)}
             label="Total cancelled"
-            increase={10}
+            increase={0}
           />
           <StatisticItem
             icon={<img src={TotalRevenue} alt="TotalRevenue" />}
             number={`${formatNumber(totalPrice)}đ`} 
             label="Total revenue (VND)"
-            increase={10}
+            increase={1200000}
           />
         </div>
       </div>

@@ -16,18 +16,18 @@ export default function MapsSales() {
     { id: 3, name: "Custom" },
   ];
 
-  const [selTab, setSelTab] = useState(TabArr[0]);
+  const [selTab, setSelTab] = useState(TabArr[3]);
 
   const handleChangeTab = (tab, newVal) => {
     setSelTab(TabArr[newVal]);
   };
 
   const data = {
-    labels: ["Sep 2023", "Oct 2023", "Nov 2023", "Dec 2023", "Jan 2024", "Feb 2024", "Mar 2024"],
+    labels: ["Jun 2024", "Jul 2024", "Aug 2024", "Sep 2024", "Oct 2024", "Nov 2024", "Dec 2024"],
     datasets: [
       {
         label: "Sales Percentage",
-        data: [30, 50, 64, 40, 45, 55, 60],
+        data: [0, 0, 0, 0, 45, 55, 0],
         fill: true,
         backgroundColor: "rgba(75, 192, 192, 0.2)",
         borderColor: "rgba(75, 192, 192, 1)",
