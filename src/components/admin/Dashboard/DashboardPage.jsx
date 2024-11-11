@@ -51,6 +51,7 @@ export default function DashboardPage() {
   const [cancelledOrders, setCancelledOrders] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
   const [topProducts, setTopProducts] = useState([]);
+  const [premiumUserCount, setPremiumUserCount] = useState(0);
 
   useEffect(() => {
     setPageHeadTitle("Dashboard");
@@ -58,9 +59,33 @@ export default function DashboardPage() {
     const fetchUsers = async () => {
       try {
         const users = await aget('/users');
+        const premiumUsers = users.data.filter(user => user.rank === "Premium").length;
         setUserCount(users.data.length);
+        setPremiumUserCount(premiumUsers);
       } catch (error) {
         console.error("Failed to fetch users:", error);
+      }
+    };
+
+    const fetchOrders = async () => {
+      try {
+        const orders = await aget('/orders/admin');
+        setTotalOrders(orders.data.length);
+
+        const delivered = orders.data.filter(order => order.status === "Delivered");
+        setDeliveredOrders(delivered.length);
+
+        const cancelled = orders.data.filter(order => order.status === "Cancelled");
+        setCancelledOrders(cancelled.length);
+
+        let baseTotalPrice = orders.data.reduce((sum, order) => sum + order.total_price, 0);
+        const premiumRevenue = premiumUserCount * 79000;
+        const finalTotalPrice = baseTotalPrice + premiumRevenue;
+        setTotalPrice(finalTotalPrice);
+
+        getTopSaleItems(orders.data);
+      } catch (error) {
+        console.error("Failed to fetch orders:", error);
       }
     };
 
@@ -102,33 +127,13 @@ export default function DashboardPage() {
       );
     }
 
-    const fetchOrders = async () => {
-      try {
-        const orders = await aget('/orders/admin');
-
-        setTotalOrders(orders.data.length);
-        const delivered = orders.data.filter(order => order.status == "Delivered");
-        setDeliveredOrders(delivered.length);
-
-        const cancelled = orders.data.filter(order => order.status == "Cancelled");
-        setCancelledOrders(cancelled.length);
-
-        let total = 0;
-        for (const order of orders.data) {
-          total += order.total_price;
-        }
-        setTotalPrice(total);
-
-        getTopSaleItems(orders.data);
-
-      } catch (error) {
-        console.error("Failed to fetch orders:", error);
-      }
+    const initializeData = async () => {
+      await fetchUsers();
+      fetchOrders();
     };
 
-    fetchUsers();
-    fetchOrders();
-  }, []);
+    initializeData();
+  }, [premiumUserCount]);
 
   return (
     <div className="page-dashboard">
