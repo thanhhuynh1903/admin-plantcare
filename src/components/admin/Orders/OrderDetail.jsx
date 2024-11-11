@@ -104,15 +104,15 @@ const OrderDetail = () => {
   const ProductCard = ({ row }) => {
     return (
       <Box sx={{ display: "flex", alignItems: "center" }}>
-        {Array.isArray(row?.product?.img_url) &&
-        row.product?.img_url.length > 0 ? (
-          row.product?.img_url
+        {Array.isArray(row?.item_id?.product?.img_url) &&
+        row.item_id?.product?.img_url?.length > 0 ? (
+          row.item_id?.product?.img_url
             .slice(0, 1)
             .map((url, index) => (
               <img
                 key={index}
                 src={url}
-                alt={row.product.name}
+                alt={row?.product?.name}
                 className="w-24 h-24 object-cover mr-4"
                 style={{ width: "95px", height: "90px", objectFit: "cover" }}
               />
@@ -132,7 +132,7 @@ const OrderDetail = () => {
             No Image
           </Box>
         )}
-        <Typography sx={{ marginLeft: 1 }}>{row.product.name}</Typography>
+        <Typography sx={{ marginLeft: 1 }}>{row?.item_id?.product?.name}</Typography>
       </Box>
     );
   };
@@ -211,18 +211,18 @@ const OrderDetail = () => {
                           <TableCell
                             sx={{ fontSize: "15px", color: "#6E6893" }}
                           >
-                            Last update: {row.updatedAt}
+                            Last update: {row.item_id?.updatedAt}
                           </TableCell>
-                          <TableCell>{row.quantity}</TableCell>
+                          <TableCell>{row.item_id?.quantity}</TableCell>
                           <TableCell
                             sx={{ fontSize: "15px", color: "#6E6893" }}
                           >
-                            {row?.product_type}
+                            {row?.item_id?.product_type}
                           </TableCell>
                           <TableCell
                             sx={{ fontSize: "15px", color: "#6E6893" }}
                           >
-                            {formattedNumber(row.item_total_price)}
+                            {formattedNumber(row.item_id.item_total_price)}
                           </TableCell>
                         </TableRow>
                       ))}
