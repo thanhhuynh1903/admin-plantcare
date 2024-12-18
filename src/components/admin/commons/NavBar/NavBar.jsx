@@ -136,7 +136,7 @@ export default function NavBar() {
             <img className="avatar" src={avatar} alt="avatar" />
           </div>
           <div className="user-meta">
-            <p className="user-name">thienbao860</p>
+            <p className="user-name">thanhhuynh1903</p>
             <p className="user-role">Admin</p>
           </div>
           <div className="user-btn-settings">
