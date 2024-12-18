@@ -1,0 +1,109 @@
+@import "@scss/common.scss";
+
+.common-navbar {
+  background-color: $background-color;
+  position: absolute;
+  z-index: 5;
+  width: 100%;
+  
+  .navbar {
+    display: grid;
+    grid-template-columns: 60% 20% 20%;
+    align-items: center;
+    height: 100%;
+    padding: 15px 2rem;
+    width: 100%;
+  }
+
+  .prop {
+    &-tools {
+      display: flex;
+      justify-content: center;
+      padding: 0 1rem;
+      gap: 10px;
+
+      .btn-tool {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        background-color: #fff;
+        cursor: pointer;
+        position: relative;
+      }
+    }
+
+    &-notify {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      right: -5px;
+      top: -5px;
+      border: 2px solid $tertiary-color;
+      background-color: $primary-color;
+      color: $tertiary-color;
+      font-size: 12px;
+      padding: 0 5px;
+      border-radius: 7px;
+      min-width: 20px;
+      font-weight: 600;
+    }
+
+    &-user {
+      padding-left: 15px;
+      border-left: 2px solid #0000001f;
+      display: grid;
+      align-content: center;
+      grid-template-columns: 40px 1fr 30px;
+      column-gap: 15px;
+      color: $semi-black-color;
+      .user {
+
+        &-avatar {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+          }
+        }
+
+        &-meta {
+          .user-name {
+            font-weight: 600;
+          }
+
+          .user-role {
+            font-weight: 500;
+            font-size: 14px;
+          }
+        }
+
+        &-btn-settings {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 30px;
+          border-radius: 12px;
+          cursor: pointer;
+          position: relative;
+
+          .MuiSvgIcon-root {
+            box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            color: #000;
+            &:hover {
+              background-color: #0000000f;
+            }
+          }
+        }
+      }
+    }
+  }
+}

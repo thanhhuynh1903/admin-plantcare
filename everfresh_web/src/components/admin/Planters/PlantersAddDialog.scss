@@ -1,0 +1,28 @@
+@import "@scss/common.scss";
+
+.planters-add-dialog {
+
+    .dialog-content {
+        padding: 20px 2rem;  
+    }
+
+    .btn-cancel {
+        background-color: #ff5454;
+        color: #FFF;
+    }
+
+    .btn-save {
+        background-color: $primary-color;
+        color: #FFF;
+
+        &:disabled {
+            background-color: #b3b3b3;
+            color: #FFF;
+        }
+    }
+
+    .section-title {
+        margin-bottom: 15px;
+        font-size: 24px;
+    }
+}

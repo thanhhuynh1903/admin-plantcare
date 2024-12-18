@@ -1,0 +1,35 @@
+#common-checkbox {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  margin-right: 8px;
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+
+  &:checked {
+
+    &::before {
+      content: "";
+      width: 13px;
+      height: 13px;
+      background-color: var(--selected-color);
+      position: absolute;
+      top: 2px;
+      left: 1.75px;
+      border-radius: 2px;
+    }
+  }
+ 
+}
+
+#common-checkbox + label {
+  font-family: "Arial", sans-serif;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  vertical-align: middle;
+}

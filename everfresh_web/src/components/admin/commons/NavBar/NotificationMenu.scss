@@ -1,0 +1,115 @@
+.navbar-notification-menu {
+
+    .MuiBackdrop-root {
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+  
+    .MuiPaper-root {
+        min-width: 330px;
+        max-width: 330px;
+        border-radius: 10px;
+        min-height: 100px;
+        margin: 0;
+        padding: 0;
+        position: relative;
+    }
+
+    .MuiList-root {
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        height: 100%;
+    }
+
+    .titlebar {
+        background-color: #d5e5f3;
+        color: #2D9CDB;
+        font-weight: 600;
+        width: 100%;
+        padding: 5px 10px;
+    }
+
+    .content {
+        width: 100%;
+        min-height: 60px;
+        flex-grow: 1;
+    }
+
+    .no-notification {
+        text-align: center;
+        margin-top: 18px;
+        font-size: 16px;
+        color: #646464;
+    }
+
+    .notification-item {
+
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
+        cursor: pointer;
+        gap: 15px;
+
+        &-unread {
+            background-color: #f1faff;
+        }
+
+        &:hover {
+            background-color: #eaf8ff;
+
+            .title {
+                text-decoration: underline;
+            }
+        }
+
+        img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        .title {
+            color: #00456d;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+
+            .icon {
+                font-size: 15px;
+            }
+        }
+
+        .meta {
+            color: #4a4a4a;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+
+            .username {
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+
+    .footer {
+        display: flex;
+        align-items: center;
+        font-size: 13px;
+        justify-content: space-between;
+        padding: 3px 15px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+
+        .btn-tool {
+            cursor: pointer;
+            color: #585858;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}

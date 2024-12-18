@@ -1,0 +1,99 @@
+@import "@scss/common.scss";
+
+.page-calendar-detail {
+  .btn-back {
+    cursor: pointer;
+    font-size: 30px;
+    background-color: #fff;
+    color: $black-color;
+    border-radius: 50%;
+    text-decoration: none;
+  }
+
+  .main-label {
+    font-size: 23px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .content {
+    max-height: none !important;
+    padding: 50px 3rem;
+    background-color: #fff;
+    border-radius: 10px;
+    margin-top: 20px;
+    box-sizing: border-box;
+
+    .date-section {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 35px;
+
+      .calendar-icon {
+        font-size: 80px;
+        color: #006400;
+      }
+
+      .date-number {
+        font-weight: bold;
+        color: #006400;
+      }
+
+      .date-month {
+        color: #000;
+        font-size: 16px;
+      }
+    }
+
+    .description-section {
+      margin-bottom: 40px;
+
+      .description-header {
+        display: flex;
+        align-items: center;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      .description-content {
+        font-size: 1.1rem;
+        line-height: 1.5;
+        margin-bottom: 10px;
+      }
+
+      .description-details {
+        margin-left: 20px;
+
+        li {
+          margin-bottom: 5px;
+        }
+      }
+    }
+
+    .events-section {
+      .events-header {
+        margin-bottom: 15px;
+        font-weight: bold;
+      }
+
+      .add-event-button {
+        margin-bottom: 20px;
+        background-color: #006400;
+        &:hover {
+          background-color: #004c00;
+        }
+      }
+
+      .event-list {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        row-gap: 10px;
+        column-gap: 15px;
+      }
+    }
+  }
+}
