@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getCookie } from "./util_cookie";
 
-const MASTER_URL = "https://everfresh-server.onrender.com/api";
+const MASTER_URL = import.meta.env.VITE_MASTER_URL;
 
 const axiosInstance = axios.create({
   baseURL: MASTER_URL,
