@@ -16,8 +16,8 @@ import { setCookie } from "@utils/util_cookie";
 
 const initialState = {
   errorState: "",
-  email: "",
-  password: "",
+  email: "admin@example.com",
+  password: "password123",    
   processing: false,
   rememberMe: false,
   errors: {
