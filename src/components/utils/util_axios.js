@@ -1,13 +1,17 @@
 import axios from "axios";
 import { getCookie } from "./util_cookie";
 
-const MASTER_URL = import.meta.env.VITE_MASTER_URL;
+const MASTER_URL = import.meta.env.VITE_MASTER_URL || "https://everfresh-server.onrender.com/api";
 
 const axiosInstance = axios.create({
   baseURL: MASTER_URL,
   headers: {
     "Content-Type": "application/json",
   },
+  // VITE_MOCK=true: serve fake data in the browser, no backend needed
+  ...(import.meta.env.VITE_MOCK === "true" && {
+    adapter: (config) => import("../../mock/mockAdapter").then((m) => m.default(config)),
+  }),
 });
 
 axiosInstance.interceptors.request.use((config) => {

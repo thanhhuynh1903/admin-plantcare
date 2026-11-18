@@ -4,7 +4,14 @@ const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 const defaultBucket = 'everfresh_bucket';
 
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// createClient throws on a missing URL, which would white-screen the whole app at import time
+const client = supabaseUrl && supabaseAnonKey ? createClient(supabaseUrl, supabaseAnonKey) : null;
+const supabase = new Proxy({}, {
+  get(_, key) {
+    if (!client) throw new Error("Supabase is not configured: set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY");
+    return client[key];
+  },
+});
 
 export const uploadFile = async (filePath, file, bucket = defaultBucket) => {
   const { data, error } = await supabase.storage
@@ -51,6 +58,13 @@ export const getPublicUrl = async (filePath, bucket = defaultBucket) => {
 }
 
 export const uploadFileAndReturnUrl = async (filePath, file, bucket = defaultBucket) => {
+  if (import.meta.env.VITE_MOCK === "true") {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.readAsDataURL(file);
+    });
+  }
   const { data, error } = await supabase.storage
     .from(bucket)
     .upload(filePath, file);
